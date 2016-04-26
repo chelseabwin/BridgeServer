@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="com.qjs.entity.Structure" table="structure" catalog="bridge_server">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native"></generator>
+        </id>
+        <property name="bg_id" type="java.lang.String">
+             <column name="bg_id" length="200" />
+        </property>
+        <property name="bridge_span" type="java.lang.String">
+             <column name="bridge_span" length="200" />
+        </property>
+        <property name="longest_span" type="java.lang.String">
+             <column name="longest_span" length="200" />
+        </property>
+        <property name="total_len" type="java.lang.String">
+             <column name="total_len" length="200" />
+        </property>
+        <property name="bridge_wide" type="java.lang.String">
+             <column name="bridge_wide" length="200" />
+        </property>
+        <property name="full_wide" type="java.lang.String">
+             <column name="full_wide" length="200" />
+        </property>
+        <property name="clear_wide" type="java.lang.String">
+             <column name="clear_wide" length="200" />
+        </property>
+        <property name="bridge_high" type="java.lang.String">
+             <column name="bridge_high" length="200" />
+        </property>
+        <property name="high_limit" type="java.lang.String">
+             <column name="high_limit" length="200" />
+        </property>
+        <property name="building_time" type="java.lang.String">
+             <column name="building_time" length="200" />
+        </property>
+        <property name="navigation_level" type="java.lang.String">
+             <column name="navigation_level" length="200" />
+        </property>
+        <property name="section_high" type="java.lang.String">
+             <column name="section_high" length="200" />
+        </property>
+        <property name="deck_profile_grade" type="java.lang.String">
+             <column name="deck_profile_grade" length="200" />
+        </property>
+        <property name="flag" type="java.lang.String">
+             <column name="flag" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

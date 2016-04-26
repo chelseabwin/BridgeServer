@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+    <constant name="struts.devMode" value="false" />
+    <constant name="struts.objectFactory" value="spring"/>
+    <constant name="struts.i18n.encoding" value="UTF-8" />
+    <constant name="struts.multipart.maxSize" value="10701096"/>
+    
+    <package name="default" namespace="/" extends="struts-default,json-default">
+        <default-action-ref name="index" />
+        <global-results>
+            <result name="error">/jsp/error.jsp</result>
+        </global-results>
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="error"/>
+        </global-exception-mappings>
+        
+        <!-- 登录 -->
+        <action name="login" class="user" method="login">
+            <result name="success">/index.jsp</result>
+            <result name="failed">/login.jsp</result>
+        </action>
+        
+        <!-- 用户管理 -->
+        <action name="user" class="user">
+            <result name="list">/jsp/user/baselist.jsp</result>
+            <result name="table_data">/jsp/user/table.jsp</result>
+            <result name="addpage">/jsp/user/add.jsp</result>
+            <result name="changepwd">/jsp/user/changepwd.jsp</result>
+            <result name="logout">/login.jsp</result>
+            <result name="changeMyPwd">/jsp/user/changeMyPwd.jsp</result>
+            <result name="update">/jsp/user/update.jsp</result>
+        </action>
+        
+        <!-- 角色管理 -->
+        <action name="role" class="role">
+            <result name="list">/jsp/role/baselist.jsp</result>
+            <result name="table_data">/jsp/role/table.jsp</result>
+            <result name="addpage">/jsp/role/add.jsp</result>
+            <result name="view">/jsp/role/view.jsp</result>
+            <result name="input">/jsp/error.jsp</result>
+        </action>
+        
+        <!-- 导航栏管理 -->
+        <action name="navigation_bar" class="navigation_bar">
+            <result name="list">/jsp/navigation_bar/baselist.jsp</result>
+            <result name="table_data">/jsp/navigation_bar/table.jsp</result>
+            <result name="addpage">/jsp/navigation_bar/add.jsp</result>
+            <result name="input">/jsp/error.jsp</result>
+        </action>
+        
+        <!-- 权限管理 -->
+        <action name="permission" class="permission">
+            <result name="list">/jsp/permission/baselist.jsp</result>
+            <result name="table_data">/jsp/permission/table.jsp</result>
+            <result name="addpage">/jsp/permission/add.jsp</result>
+            <result name="input">/jsp/error.jsp</result>
+        </action>        
+        
+        <!-- 桥梁数据管理 -->
+        <action name="bridge" class="bridge">
+            <result name="list">/jsp/bridge/baselist.jsp</result>
+            <result name="table_data">/jsp/bridge/table.jsp</result>
+            <result name="view">/jsp/bridge/view.jsp</result>
+            <result name="input">/jsp/error.jsp</result>       
+            
+            <result name="base1">/jsp/bridge/base1.jsp</result>
+            <result name="base2">/jsp/bridge/base2.jsp</result>
+            <result name="base3">/jsp/bridge/base3.jsp</result>
+            <result name="structure">/jsp/bridge/structure.jsp</result>
+            <result name="parts1">/jsp/bridge/parts1.jsp</result>
+            <result name="parts2">/jsp/bridge/parts2.jsp</result>            
+            <result name="pier_detail">/jsp/bridge/pier_detail.jsp</result>
+            <result name="load_detail">/jsp/bridge/load_detail.jsp</result>
+            <result name="general_detail">/jsp/bridge/general_detail.jsp</result>
+            <result name="support_detail">/jsp/bridge/support_detail.jsp</result>
+            
+        </action>
+        
+    </package>
+
+</struts>

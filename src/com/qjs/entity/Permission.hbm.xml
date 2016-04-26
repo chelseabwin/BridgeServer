@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="com.qjs.entity.Permission" table="permission" catalog="bridge_server">
+        <id name="permission_id" type="java.lang.Integer">
+            <column name="permission_id" />
+            <generator class="native"></generator>
+        </id>
+        <property name="permission_name" type="java.lang.String">
+            <column name="permission_name" length="45" not-null="true" />
+        </property>
+        <property name="permission_note" type="java.lang.String">
+            <column name="permission_note" length="100" />
+        </property>
+    </class>
+</hibernate-mapping>

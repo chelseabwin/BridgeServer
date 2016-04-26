@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="com.qjs.entity.Base3" table="base3" catalog="bridge_server">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native"></generator>
+        </id>
+        <property name="bg_id" type="java.lang.String">
+             <column name="bg_id" length="200" />
+        </property>
+        <property name="pier_material" type="java.lang.String">
+             <column name="pier_material" length="200" />
+        </property>
+        <property name="section_form" type="java.lang.String">
+             <column name="section_form" length="200" />
+        </property>
+        <property name="pier_type" type="java.lang.String">
+             <column name="pier_type" length="200" />
+        </property>
+        <property name="section_shape" type="java.lang.String">
+             <column name="section_shape" length="200" />
+        </property>
+        <property name="abutment_material" type="java.lang.String">
+             <column name="abutment_material" length="200" />
+        </property>
+        <property name="abutment_type" type="java.lang.String">
+             <column name="abutment_type" length="200" />
+        </property>
+        <property name="pier_abutment_material" type="java.lang.String">
+             <column name="pier_abutment_material" length="200" />
+        </property>
+        <property name="pier_abutment_base" type="java.lang.String">
+             <column name="pier_abutment_base" length="200" />
+        </property>
+        <property name="deck_type" type="java.lang.String">
+             <column name="deck_type" length="200" />
+        </property>
+        <property name="joint_type" type="java.lang.String">
+             <column name="joint_type" length="200" />
+        </property>
+        <property name="flag" type="java.lang.String">
+             <column name="flag" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

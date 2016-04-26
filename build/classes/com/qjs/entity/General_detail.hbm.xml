@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="com.qjs.entity.General_detail" table="General_detail" catalog="bridge_server">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native"></generator>
+        </id>
+        <property name="bg_id" type="java.lang.String">
+             <column name="bg_id" length="200" />
+        </property>
+        <property name="general_details" type="java.lang.String">
+             <column name="general_details" length="500" />
+        </property>
+        <property name="general_nums" type="java.lang.String">
+             <column name="general_nums" length="1000" />
+        </property>
+        <property name="flag" type="java.lang.String">
+             <column name="flag" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

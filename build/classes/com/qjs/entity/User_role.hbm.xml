@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="com.qjs.entity.User_role" table="user_role" catalog="bridge_server">
+        <id name="user_role_id" type="java.lang.Integer">
+            <column name="user_role_id" />
+            <generator class="native"></generator>
+        </id>
+        <property name="user_id" type="java.lang.Integer">
+            <column name="user_id" not-null="true" />
+        </property>
+        <property name="role_id" type="java.lang.Integer">
+            <column name="role_id" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

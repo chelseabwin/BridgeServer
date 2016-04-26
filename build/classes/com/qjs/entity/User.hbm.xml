@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="com.qjs.entity.User" table="user" catalog="bridge_server">
+        <id name="user_id" type="java.lang.Integer">
+            <column name="user_id" />
+            <generator class="native"></generator>
+        </id>
+        <property name="loginname" type="java.lang.String">
+            <column name="loginname" length="50" not-null="true" />
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="password" length="100"/>
+        </property>
+        <property name="name" type="java.lang.String">
+            <column name="name" length="45" />
+        </property>
+        <property name="logintime" type="java.sql.Timestamp">
+            <column name="logintime" length="19" />
+        </property>
+        <property name="identity" type="java.lang.String">
+            <column name="identity" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>

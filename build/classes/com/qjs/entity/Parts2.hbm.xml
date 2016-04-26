@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="com.qjs.entity.Parts2" table="parts2" catalog="bridge_server">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native"></generator>
+        </id>
+        <property name="bg_id" type="java.lang.String">
+             <column name="bg_id" length="200" />
+        </property>
+        <property name="load_detail" type="java.lang.String">
+             <column name="load_detail" length="200" />
+        </property>
+        <property name="general_detail" type="java.lang.String">
+             <column name="general_detail" length="200" />
+        </property>
+        <property name="support_detail" type="java.lang.String">
+             <column name="support_detail" length="200" />
+        </property>
+        <property name="deck_num" type="java.lang.String">
+             <column name="deck_num" length="200" />
+        </property>
+        <property name="joint_num" type="java.lang.String">
+             <column name="joint_num" length="200" />
+        </property>
+        <property name="sidewalk" type="java.lang.String">
+             <column name="sidewalk" length="200" />
+        </property>
+        <property name="guardrail" type="java.lang.String">
+             <column name="guardrail" length="200" />
+        </property>
+        <property name="drainage_system" type="java.lang.String">
+             <column name="drainage_system" length="200" />
+        </property>
+        <property name="illuminated_sign" type="java.lang.String">
+             <column name="illuminated_sign" length="200" />
+        </property>
+        <property name="flag" type="java.lang.String">
+             <column name="flag" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

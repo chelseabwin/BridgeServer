@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="com.qjs.entity.Base1" table="base1" catalog="bridge_server">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native"></generator>
+        </id>
+        <property name="bridge_code" type="java.lang.String">
+             <column name="bridge_code" length="200" />
+        </property>
+        <property name="bridge_name" type="java.lang.String">
+             <column name="bridge_name" length="200" />
+        </property>
+        <property name="path_num" type="java.lang.String">
+             <column name="path_num" length="200" />
+        </property>
+        <property name="path_name" type="java.lang.String">
+             <column name="path_name" length="200" />
+        </property>
+        <property name="path_type" type="java.lang.String">
+             <column name="path_type" length="200" />
+        </property>
+        <property name="rode_grade" type="java.lang.String">
+             <column name="rode_grade" length="200" />
+        </property>
+        <property name="order_num" type="java.lang.String">
+             <column name="order_num" length="200" />
+        </property>
+        <property name="location" type="java.lang.String">
+             <column name="location" length="200" />
+        </property>
+        <property name="center_stake" type="java.lang.String">
+             <column name="center_stake" length="200" />
+        </property>
+        <property name="custody_unit" type="java.lang.String">
+             <column name="custody_unit" length="200" />
+        </property>
+        <property name="across_name" type="java.lang.String">
+             <column name="across_name" length="200" />
+        </property>
+        <property name="across_type" type="java.lang.String">
+             <column name="across_type" length="200" />
+        </property>
+        <property name="bridge_nature" type="java.lang.String">
+             <column name="bridge_nature" length="200" />
+        </property>
+        <property name="flag" type="java.lang.String">
+             <column name="flag" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

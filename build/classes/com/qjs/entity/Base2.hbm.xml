@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="com.qjs.entity.Base2" table="base2" catalog="bridge_server">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native"></generator>
+        </id>
+        <property name="bg_id" type="java.lang.String">
+             <column name="bg_id" length="200" />
+        </property>
+        <property name="bridge_classify" type="java.lang.String">
+             <column name="bridge_classify" length="200" />
+        </property>
+        <property name="design_load" type="java.lang.String">
+             <column name="design_load" length="200" />
+        </property>
+        <property name="bridge_use" type="java.lang.String">
+             <column name="bridge_use" length="200" />
+        </property>
+        <property name="bridge_status" type="java.lang.String">
+             <column name="bridge_status" length="200" />
+        </property>
+        <property name="material_code" type="java.lang.String">
+             <column name="material_code" length="200" />
+        </property>
+        <property name="bridge_panel" type="java.lang.String">
+             <column name="bridge_panel" length="200" />
+        </property>
+        <property name="stress_pattern" type="java.lang.String">
+             <column name="stress_pattern" length="200" />
+        </property>
+        <property name="support_type" type="java.lang.String">
+             <column name="support_type" length="200" />
+        </property>
+        <property name="bridge_type" type="java.lang.String">
+             <column name="bridge_type" length="200" />
+        </property>
+        <property name="flag" type="java.lang.String">
+             <column name="flag" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

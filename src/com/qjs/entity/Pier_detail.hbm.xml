@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="com.qjs.entity.Pier_detail" table="pier_detail" catalog="bridge_server">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native"></generator>
+        </id>
+        <property name="bg_id" type="java.lang.String">
+             <column name="bg_id" length="200" />
+        </property>
+        <property name="pier_details" type="java.lang.String">
+             <column name="pier_details" length="500" />
+        </property>
+        <property name="pier_nums" type="java.lang.String">
+             <column name="pier_nums" length="1000" />
+        </property>
+        <property name="bent_cap_nums" type="java.lang.String">
+             <column name="bent_cap_nums" length="200" />
+        </property>
+        <property name="tie_beam_nums" type="java.lang.String">
+             <column name="tie_beam_nums" length="200" />
+        </property>
+        <property name="flag" type="java.lang.String">
+             <column name="flag" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>
