@@ -119,7 +119,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">						<s:set name="uplevel" value="navigation_bar_id"/>						<s:iterator value="#request.navigationLevel2" id="navigation2">						<s:set name="nowlevel" value="up"/>							<s:if test="#uplevel == #nowlevel">
-							<li id="active<s:property value="navigation_bar_id"/>" onclick="active(<s:property value="navigation_bar_id"/>);">
+							<li id="active<s:property value="navigation_bar_id"/>" title="active" onclick="active(<s:property value="navigation_bar_id"/>);">
 								<a href="#" onclick="loadPage('<s:property value="url"/>');">	
 								<s:property value="name"/></a>	
 							</li>							</s:if>						</s:iterator>
@@ -195,7 +195,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 		   Index.initMiniCharts();
 		   Index.initDashboardDaterange();
 		   Index.initIntro();		   		   Gallery.init();
-		});				function loadPage(url){			$("#page_content").html("<img src=\"/BridgeServer/media/image/ajax-loading.gif\"/>");			$.axs(url, null, function(data){				$("#page_content").html(data);            });		};		function active(id){			$("li[name='active']").attr("class", " ");			$("#active"+id).attr("class", "active");		};
+		});				function loadPage(url){			$("#page_content").html("<img src=\"/BridgeServer/media/image/ajax-loading.gif\"/>");			$.axs(url, null, function(data){				$("#page_content").html(data);            });		};		function active(id){			$("li[title='active']").attr("class", " ");			$("#active"+id).attr("class", "active");		};
 	</script>
 	<!-- END JAVASCRIPTS -->
 <script type="text/javascript">  var _gaq = _gaq || [];  _gaq.push(['_setAccount', 'UA-37564768-1']);  _gaq.push(['_setDomainName', 'keenthemes.com']);  _gaq.push(['_setAllowLinker', true]);  _gaq.push(['_trackPageview']);  (function() {    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);  })();</script></body>

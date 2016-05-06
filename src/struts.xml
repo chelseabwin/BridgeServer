@@ -78,8 +78,19 @@
             <result name="pier_detail">/jsp/bridge/pier_detail.jsp</result>
             <result name="load_detail">/jsp/bridge/load_detail.jsp</result>
             <result name="general_detail">/jsp/bridge/general_detail.jsp</result>
-            <result name="support_detail">/jsp/bridge/support_detail.jsp</result>
+            <result name="support_detail">/jsp/bridge/support_detail.jsp</result>            
+        </action>
+        
+        <!-- 病害数据管理 -->
+        <action name="disease" class="disease">
+            <result name="list">/jsp/disease/baselist.jsp</result>
+            <result name="table_data">/jsp/disease/table.jsp</result>
+            <result name="view">/jsp/disease/view.jsp</result>
+            <result name="input">/jsp/error.jsp</result>
             
+            <result name="girder_view">/jsp/disease/view_girder.jsp</result>
+            <result name="wetjoint_view">/jsp/disease/view_wetjoint.jsp</result>
+            <result name="support_view">/jsp/disease/view_support.jsp</result>        
         </action>
         
     </package>

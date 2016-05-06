@@ -74,6 +74,10 @@
 				<value>com/qjs/entity/Load_detail.hbm.xml</value>
 				<value>com/qjs/entity/General_detail.hbm.xml</value>
 				<value>com/qjs/entity/Support_detail.hbm.xml</value>
+				
+				<value>com/qjs/entity/Disease_girder.hbm.xml</value>
+				<value>com/qjs/entity/Disease_wetjoint.hbm.xml</value>
+				<value>com/qjs/entity/Disease_support.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -173,6 +177,16 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
+	<bean id="disease_girderDAO" class="com.qjs.dao.impl.Disease_girderDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="disease_wetjointDAO" class="com.qjs.dao.impl.Disease_wetjointDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="disease_supportDAO" class="com.qjs.dao.impl.Disease_supportDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
 	
 	<!-- Biz -->
 	<bean id="navigation_barBiz"  class="com.qjs.biz.impl.Navigation_barBizImpl">
@@ -231,6 +245,16 @@
 	<bean id="support_detailBiz"  class="com.qjs.biz.impl.Support_detailBizImpl">
 	  <property name="support_detailDAO" ref="support_detailDAO" />
 	</bean>
+	
+	<bean id="disease_girderBiz"  class="com.qjs.biz.impl.Disease_girderBizImpl">
+	  <property name="disease_girderDAO" ref="disease_girderDAO" />
+	</bean>
+	<bean id="disease_wetjointBiz"  class="com.qjs.biz.impl.Disease_wetjointBizImpl">
+	  <property name="disease_wetjointDAO" ref="disease_wetjointDAO" />
+	</bean>
+	<bean id="disease_supportBiz"  class="com.qjs.biz.impl.Disease_supportBizImpl">
+	  <property name="disease_supportDAO" ref="disease_supportDAO" />
+	</bean>
 
 	
 	<!-- Action -->
@@ -264,6 +288,13 @@
 	    <property name="load_detailBiz" ref="load_detailBiz" />
 	    <property name="general_detailBiz" ref="general_detailBiz" />
 	    <property name="support_detailBiz" ref="support_detailBiz" />
+	</bean>
+	
+	<bean name="disease" class="com.qjs.action.DiseaseAction" scope="prototype">
+		<property name="base1Biz" ref="base1Biz" />
+	    <property name="disease_girderBiz" ref="disease_girderBiz" />
+	    <property name="disease_wetjointBiz" ref="disease_wetjointBiz" />
+	    <property name="disease_supportBiz" ref="disease_supportBiz" />
 	</bean>
 	
 </beans>
