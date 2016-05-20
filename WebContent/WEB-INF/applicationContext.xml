@@ -78,6 +78,23 @@
 				<value>com/qjs/entity/Disease_girder.hbm.xml</value>
 				<value>com/qjs/entity/Disease_wetjoint.hbm.xml</value>
 				<value>com/qjs/entity/Disease_support.hbm.xml</value>
+				<value>com/qjs/entity/Disease_pier.hbm.xml</value>
+				<value>com/qjs/entity/Disease_bentcap.hbm.xml</value>
+				<value>com/qjs/entity/Disease_tiebeam.hbm.xml</value>
+				<value>com/qjs/entity/Disease_atbody.hbm.xml</value>
+				<value>com/qjs/entity/Disease_atcapping.hbm.xml</value>
+				<value>com/qjs/entity/Disease_pa.hbm.xml</value>
+				<value>com/qjs/entity/Disease_bed.hbm.xml</value>
+				<value>com/qjs/entity/Disease_regstruc.hbm.xml</value>
+				<value>com/qjs/entity/Disease_wingwall.hbm.xml</value>
+				<value>com/qjs/entity/Disease_conslope.hbm.xml</value>
+				<value>com/qjs/entity/Disease_proslope.hbm.xml</value>
+				<value>com/qjs/entity/Disease_deck.hbm.xml</value>
+				<value>com/qjs/entity/Disease_joint.hbm.xml</value>
+				<value>com/qjs/entity/Disease_sidewalk.hbm.xml</value>
+				<value>com/qjs/entity/Disease_fence.hbm.xml</value>
+				<value>com/qjs/entity/Disease_watertight.hbm.xml</value>
+				<value>com/qjs/entity/Disease_lighting.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -186,6 +203,57 @@
 	<bean id="disease_supportDAO" class="com.qjs.dao.impl.Disease_supportDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	<bean id="disease_pierDAO" class="com.qjs.dao.impl.Disease_pierDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="disease_bentcapDAO" class="com.qjs.dao.impl.Disease_bentcapDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="disease_tiebeamDAO" class="com.qjs.dao.impl.Disease_tiebeamDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="disease_atbodyDAO" class="com.qjs.dao.impl.Disease_atbodyDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="disease_atcappingDAO" class="com.qjs.dao.impl.Disease_atcappingDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
+	<bean id="disease_paDAO" class="com.qjs.dao.impl.Disease_paDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="disease_bedDAO" class="com.qjs.dao.impl.Disease_bedDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="disease_regstrucDAO" class="com.qjs.dao.impl.Disease_regstrucDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
+	<bean id="disease_wingwallDAO" class="com.qjs.dao.impl.Disease_wingwallDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="disease_conslopeDAO" class="com.qjs.dao.impl.Disease_conslopeDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="disease_proslopeDAO" class="com.qjs.dao.impl.Disease_proslopeDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="disease_deckDAO" class="com.qjs.dao.impl.Disease_deckDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="disease_jointDAO" class="com.qjs.dao.impl.Disease_jointDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="disease_sidewalkDAO" class="com.qjs.dao.impl.Disease_sidewalkDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="disease_fenceDAO" class="com.qjs.dao.impl.Disease_fenceDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="disease_watertightDAO" class="com.qjs.dao.impl.Disease_watertightDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="disease_lightingDAO" class="com.qjs.dao.impl.Disease_lightingDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 	
 	
 	<!-- Biz -->
@@ -255,6 +323,57 @@
 	<bean id="disease_supportBiz"  class="com.qjs.biz.impl.Disease_supportBizImpl">
 	  <property name="disease_supportDAO" ref="disease_supportDAO" />
 	</bean>
+	<bean id="disease_pierBiz"  class="com.qjs.biz.impl.Disease_pierBizImpl">
+	  <property name="disease_pierDAO" ref="disease_pierDAO" />
+	</bean>
+	<bean id="disease_bentcapBiz"  class="com.qjs.biz.impl.Disease_bentcapBizImpl">
+	  <property name="disease_bentcapDAO" ref="disease_bentcapDAO" />
+	</bean>
+	<bean id="disease_tiebeamBiz"  class="com.qjs.biz.impl.Disease_tiebeamBizImpl">
+	  <property name="disease_tiebeamDAO" ref="disease_tiebeamDAO" />
+	</bean>
+	<bean id="disease_atbodyBiz"  class="com.qjs.biz.impl.Disease_atbodyBizImpl">
+	  <property name="disease_atbodyDAO" ref="disease_atbodyDAO" />
+	</bean>
+	<bean id="disease_atcappingBiz"  class="com.qjs.biz.impl.Disease_atcappingBizImpl">
+	  <property name="disease_atcappingDAO" ref="disease_atcappingDAO" />
+	</bean>
+	<bean id="disease_paBiz"  class="com.qjs.biz.impl.Disease_paBizImpl">
+	  <property name="disease_paDAO" ref="disease_paDAO" />
+	</bean>
+	<bean id="disease_bedBiz"  class="com.qjs.biz.impl.Disease_bedBizImpl">
+	  <property name="disease_bedDAO" ref="disease_bedDAO" />
+	</bean>
+	<bean id="disease_regstrucBiz"  class="com.qjs.biz.impl.Disease_regstrucBizImpl">
+	  <property name="disease_regstrucDAO" ref="disease_regstrucDAO" />
+	</bean>
+	<bean id="disease_wingwallBiz"  class="com.qjs.biz.impl.Disease_wingwallBizImpl">
+	  <property name="disease_wingwallDAO" ref="disease_wingwallDAO" />
+	</bean>
+	<bean id="disease_conslopeBiz"  class="com.qjs.biz.impl.Disease_conslopeBizImpl">
+	  <property name="disease_conslopeDAO" ref="disease_conslopeDAO" />
+	</bean>
+	<bean id="disease_proslopeBiz"  class="com.qjs.biz.impl.Disease_proslopeBizImpl">
+	  <property name="disease_proslopeDAO" ref="disease_proslopeDAO" />
+	</bean>
+	<bean id="disease_deckBiz"  class="com.qjs.biz.impl.Disease_deckBizImpl">
+	  <property name="disease_deckDAO" ref="disease_deckDAO" />
+	</bean>
+	<bean id="disease_jointBiz"  class="com.qjs.biz.impl.Disease_jointBizImpl">
+	  <property name="disease_jointDAO" ref="disease_jointDAO" />
+	</bean>
+	<bean id="disease_sidewalkBiz"  class="com.qjs.biz.impl.Disease_sidewalkBizImpl">
+	  <property name="disease_sidewalkDAO" ref="disease_sidewalkDAO" />
+	</bean>
+	<bean id="disease_fenceBiz"  class="com.qjs.biz.impl.Disease_fenceBizImpl">
+	  <property name="disease_fenceDAO" ref="disease_fenceDAO" />
+	</bean>
+	<bean id="disease_watertightBiz"  class="com.qjs.biz.impl.Disease_watertightBizImpl">
+	  <property name="disease_watertightDAO" ref="disease_watertightDAO" />
+	</bean>
+	<bean id="disease_lightingBiz"  class="com.qjs.biz.impl.Disease_lightingBizImpl">
+	  <property name="disease_lightingDAO" ref="disease_lightingDAO" />
+	</bean>
 
 	
 	<!-- Action -->
@@ -295,6 +414,23 @@
 	    <property name="disease_girderBiz" ref="disease_girderBiz" />
 	    <property name="disease_wetjointBiz" ref="disease_wetjointBiz" />
 	    <property name="disease_supportBiz" ref="disease_supportBiz" />
+	    <property name="disease_pierBiz" ref="disease_pierBiz" />
+	    <property name="disease_bentcapBiz" ref="disease_bentcapBiz" />
+	    <property name="disease_tiebeamBiz" ref="disease_tiebeamBiz" />
+	    <property name="disease_atbodyBiz" ref="disease_atbodyBiz" />
+	    <property name="disease_atcappingBiz" ref="disease_atcappingBiz" />
+	    <property name="disease_paBiz" ref="disease_paBiz" />
+	    <property name="disease_bedBiz" ref="disease_bedBiz" />
+	    <property name="disease_regstrucBiz" ref="disease_regstrucBiz" />
+	    <property name="disease_wingwallBiz" ref="disease_wingwallBiz" />
+	    <property name="disease_conslopeBiz" ref="disease_conslopeBiz" />
+	    <property name="disease_proslopeBiz" ref="disease_proslopeBiz" />
+	    <property name="disease_deckBiz" ref="disease_deckBiz" />
+	    <property name="disease_jointBiz" ref="disease_jointBiz" />
+	    <property name="disease_sidewalkBiz" ref="disease_sidewalkBiz" />
+	    <property name="disease_fenceBiz" ref="disease_fenceBiz" />
+	    <property name="disease_watertightBiz" ref="disease_watertightBiz" />
+	    <property name="disease_lightingBiz" ref="disease_lightingBiz" />
 	</bean>
 	
 </beans>

@@ -1013,7 +1013,6 @@ public class BridgeAction extends ActionSupport implements RequestAware,SessionA
 		if (this.getBridgeName() != null && !this.getBridgeName().trim().equals("")) {
 			qo.add(new QueryObject("bridge_name", this.getBridgeName().trim(), null));
 		}
-		
 		QueryItems qi = new QueryItems(qo, null, null, this.getPageNo(), Constant.PAGE_SIZE);
 		Map<String, Object> result = (Map<String, Object>) base1Biz.getAllDetailBase1(qi);
 		List<Map<String, Object>> dataList = (List<Map<String, Object>>) result.get("result");

@@ -105,4 +105,13 @@ public class Disease_supportBizImpl implements Disease_supportBiz {
 		}
 		return null;
 	}
+
+	@Override
+	public int getDisease_supportCodeByBridgeCode(String bridgeCode) {
+		@SuppressWarnings("unchecked")
+		List<Disease_support> diseaselist = (List<Disease_support>) disease_supportDAO.findEntityListByProperty("bg_id", bridgeCode, StringType.INSTANCE);
+		if (diseaselist != null)
+			return diseaselist.size();
+		return 0;
+	}
 }

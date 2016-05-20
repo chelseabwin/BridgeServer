@@ -78,7 +78,16 @@ public class Disease_wetjointDAOImpl extends HibernateDaoSupport implements Dise
 		Criteria criteria = this.getNewSession().createCriteria(Disease_wetjoint.class);
 		
 		for(QueryObject qo:qi.getQueryObjects()){
-			if (qo.getPropertyName().equals("item_name")) {
+			if (qo.getPropertyName().equals("bg_id")) {
+				criteria.add(Restrictions.like(qo.getPropertyName(), "%"+qo.getObject()+"%"));
+			}
+			else {
+				criteria.add(Restrictions.eq(qo.getPropertyName(), qo.getObject()));
+			}
+		}
+		
+		for(QueryObject qo:qi.getQueryObjects()){
+			if (qo.getPropertyName().equals("rg_feature")) {
 				criteria.add(Restrictions.like(qo.getPropertyName(), "%"+qo.getObject()+"%"));
 			}
 			else {

@@ -84,13 +84,34 @@
         <!-- 病害数据管理 -->
         <action name="disease" class="disease">
             <result name="list">/jsp/disease/baselist.jsp</result>
-            <result name="table_data">/jsp/disease/table.jsp</result>
+            <result name="table_data">/jsp/disease/bridge_table.jsp</result>
+            <result name="show_disease">/jsp/disease/show_disease.jsp</result>
+            <result name="disease_list">/jsp/disease/disease_list.jsp</result>
+            <result name="disease_table_data">/jsp/disease/disease_table.jsp</result>
+            
             <result name="view">/jsp/disease/view.jsp</result>
             <result name="input">/jsp/error.jsp</result>
             
             <result name="girder_view">/jsp/disease/view_girder.jsp</result>
             <result name="wetjoint_view">/jsp/disease/view_wetjoint.jsp</result>
-            <result name="support_view">/jsp/disease/view_support.jsp</result>        
+            <result name="support_view">/jsp/disease/view_support.jsp</result>
+            <result name="pier_view">/jsp/disease/view_pier.jsp</result>
+            <result name="bentcap_view">/jsp/disease/view_bentcap.jsp</result>
+            <result name="tiebeam_view">/jsp/disease/view_tiebeam.jsp</result>
+            <result name="atbody_view">/jsp/disease/view_atbody.jsp</result>
+            <result name="atcapping_view">/jsp/disease/view_atcapping.jsp</result>
+            <result name="pa_view">/jsp/disease/view_pa.jsp</result>
+            <result name="bed_view">/jsp/disease/view_bed.jsp</result>
+            <result name="regstruc_view">/jsp/disease/view_regstruc.jsp</result>
+            <result name="wingwall_view">/jsp/disease/view_wingwall.jsp</result>
+            <result name="conslope_view">/jsp/disease/view_conslope.jsp</result>
+            <result name="proslope_view">/jsp/disease/view_proslope.jsp</result>
+            <result name="deck_view">/jsp/disease/view_deck.jsp</result>
+            <result name="joint_view">/jsp/disease/view_joint.jsp</result>
+            <result name="sidewalk_view">/jsp/disease/view_sidewalk.jsp</result>
+            <result name="fence_view">/jsp/disease/view_fence.jsp</result>
+            <result name="watertight_view">/jsp/disease/view_watertight.jsp</result>
+            <result name="lighting_view">/jsp/disease/view_lighting.jsp</result>
         </action>
         
     </package>

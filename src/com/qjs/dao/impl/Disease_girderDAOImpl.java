@@ -78,7 +78,7 @@ public class Disease_girderDAOImpl extends HibernateDaoSupport implements Diseas
 		Criteria criteria = this.getNewSession().createCriteria(Disease_girder.class);
 		
 		for(QueryObject qo:qi.getQueryObjects()){
-			if (qo.getPropertyName().equals("item_name")) {
+			if (qo.getPropertyName().equals("bg_id")) {
 				criteria.add(Restrictions.like(qo.getPropertyName(), "%"+qo.getObject()+"%"));
 			}
 			else {
@@ -86,6 +86,15 @@ public class Disease_girderDAOImpl extends HibernateDaoSupport implements Diseas
 			}
 		}
 		
+		for(QueryObject qo:qi.getQueryObjects()){
+			if (qo.getPropertyName().equals("rg_feature")) {
+				criteria.add(Restrictions.like(qo.getPropertyName(), "%"+qo.getObject()+"%"));
+			}
+			else {
+				criteria.add(Restrictions.eq(qo.getPropertyName(), qo.getObject()));
+			}
+		}
+
 		int pageNo = 1;
 		if (qi.getPageNo() != null && qi.getPageNo() > 0) {
 			pageNo = qi.getPageNo();

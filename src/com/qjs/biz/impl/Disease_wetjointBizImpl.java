@@ -113,4 +113,13 @@ public class Disease_wetjointBizImpl implements Disease_wetjointBiz {
 		}
 		return null;
 	}
+
+	@Override
+	public int getDisease_wetjointCodeByBridgeCode(String bridgeCode) {
+		@SuppressWarnings("unchecked")
+		List<Disease_wetjoint> diseaselist = (List<Disease_wetjoint>) disease_wetjointDAO.findEntityListByProperty("bg_id", bridgeCode, StringType.INSTANCE);
+		if (diseaselist != null)
+			return diseaselist.size();
+		return 0;
+	}
 }

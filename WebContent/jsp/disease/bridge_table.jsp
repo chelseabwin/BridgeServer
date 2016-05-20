@@ -10,13 +10,7 @@
 
 			<th>桥梁名称</th>
 
-			<th>部件名称</th>
-
-			<th>部件编号</th>
-
-			<th>病害类型</th>
-			
-			<th>病害描述</th>
+			<th>病害数量</th>
 			
 			<th>操作</th>
 
@@ -30,18 +24,12 @@
 		
 		<tr class="odd gradeX">
 
-			<td><s:property value="bg_name"/></td>
+			<td><s:property value="bridge_name"/></td>
 
-			<td><s:property value="item_name"/></td>
-
-			<td><s:property value="parts_id"/></td>
-
-			<td><s:property value="rg_feature"/></td>
-			
-			<td><s:property value="add_content"/></td>
+			<td><s:property value="disease_count"/></td>
 			
 			<td>
-			<button class="btn green" onclick="loadPage('/BridgeServer/disease!viewDisease?table_name=<s:property value="table_name"/>&id=<s:property value="id"/>&bg_name=<s:property value="bg_name"/>');"><i class="m-icon-swapright m-icon-white"></i> 查看详情</button>
+			<button class="btn green" onclick="loadPage('/BridgeServer/disease!showDisease?bg_id=<s:property value="bridge_code"/>');"><i class="m-icon-swapright m-icon-white"></i> 查看详情</button>
 			<!--<a href="#" onclick="loadPage('/BridgeServer/bridge!update?id=<s:property value="id"/>');" class="btn blue"><i class="m-icon-swapright m-icon-white"></i> 修改</a>
 			<a href="#" onclick="loadPage('/BridgeServer/bridge!delete?id=<s:property value="id"/>');" class="btn red"><i class="m-icon-swapright m-icon-white"></i> 删除</a>
 			  -->
@@ -97,7 +85,7 @@ jQuery("#table_current").html("记录总数:"+totalNumber);
 	    maxVisible: 6 
 	}).on('page', function(event, num){
 		$("#pageNo").val(num);
-		getInformation('/BridgeServer/bridge!getlist');
+		getInformation('/BridgeServer/disease!getlist');
 	});
 
 </script>

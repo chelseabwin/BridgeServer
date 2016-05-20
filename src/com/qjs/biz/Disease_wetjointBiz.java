@@ -22,4 +22,6 @@ public interface Disease_wetjointBiz {
 	public Disease_wetjoint getDisease_wetjointById(int id);
 	
 	public Disease_wetjoint getDisease_wetjointByBridgeCode(String bridgeCode);
+	
+	public int getDisease_wetjointCodeByBridgeCode(String bridgeCode);
 }

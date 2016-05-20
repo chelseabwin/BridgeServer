@@ -22,4 +22,6 @@ public interface Disease_supportBiz {
 	public Disease_support getDisease_supportById(int id);
 	
 	public Disease_support getDisease_supportByBridgeCode(String bridgeCode);
+	
+	public int getDisease_supportCodeByBridgeCode(String bridgeCode);
 }

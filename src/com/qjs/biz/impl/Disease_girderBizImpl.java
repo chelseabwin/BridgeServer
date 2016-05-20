@@ -77,7 +77,7 @@ public class Disease_girderBizImpl implements Disease_girderBiz {
 			obj.put("item_name", dil.getItem_name());
 			obj.put("rg_feature", dil.getRg_feature());
 			obj.put("rg_fissure", dil.getRg_fissure());
-			obj.put("sp_otherDisease", dil.getSp_otherDisease());			
+			obj.put("sp_otherDisease", dil.getSp_otherDisease());
 			obj.put("start", dil.getStart());
 			obj.put("end", dil.getEnd());
 			obj.put("area", dil.getArea());
@@ -116,5 +116,14 @@ public class Disease_girderBizImpl implements Disease_girderBiz {
 			return diseaselist.get(0);
 		}
 		return null;
+	}
+
+	@Override
+	public int getDisease_girderCodeByBridgeCode(String bridgeCode) {
+		@SuppressWarnings("unchecked")
+		List<Disease_girder> diseaselist = (List<Disease_girder>) disease_girderDAO.findEntityListByProperty("bg_id", bridgeCode, StringType.INSTANCE);
+		if (diseaselist != null)
+			return diseaselist.size();
+		return 0;
 	}
 }

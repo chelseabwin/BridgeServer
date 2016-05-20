@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="com.qjs.entity.Disease_sidewalk" table="disease_sidewalk" catalog="bridge_server">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native"></generator>
+        </id>
+        <property name="bg_id" type="java.lang.String">
+             <column name="bg_id" length="200" />
+        </property>
+        <property name="parts_id" type="java.lang.String">
+             <column name="parts_id" length="200" />
+        </property>
+        <property name="item_name" type="java.lang.String">
+             <column name="item_name" length="200" />
+        </property>
+        <property name="rg_feature" type="java.lang.String">
+             <column name="rg_feature" length="200" />
+        </property>
+        <property name="add_content" type="java.lang.String">
+             <column name="add_content" length="200" />
+        </property>
+        <property name="disease_image" type="java.lang.String">
+             <column name="disease_image" length="200" />
+        </property>
+        <property name="flag" type="java.lang.String">
+             <column name="flag" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>
