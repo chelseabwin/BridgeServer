@@ -187,11 +187,11 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		this.rg_fissure = rg_fissure;
 	}
 	
-	public String getSpOtherDisease() {
+	public String getSp_otherDisease() {
 		return sp_otherDisease;
 	}
 
-	public void setSpOtherDisease(String sp_otherDisease) {
+	public void setSp_otherDisease(String sp_otherDisease) {
 		this.sp_otherDisease = sp_otherDisease;
 	}
 	
@@ -365,6 +365,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 	public void setPageSize(Integer pageSize) {
 		this.pageSize = pageSize;
 	}
+	
 	
 	
 	
@@ -941,101 +942,1157 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		response.sendRedirect("disease!getBaseDiseaseList?table_name=" + this.getTable_name() + "&bg_id=" + this.getBg_id() + "&bg_name=" + this.getBg_name());
 		return null;
 	}
-//	
-//	public String deleteBridge() {
-//		base1Biz.deleteBase1ById(this.getId());
-//		return "list";
-//	}
 	
-//	public String addBridge() throws IOException, ServletException {
-//		Base1 b1 = new Base1();
-//		
-//		Date date = new Date();
-//		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-//		String[] bgCode = format.format(date).split(" ");
-//		String bridge_code = bgCode[0] + "-" + bgCode[1]; // 用系统当前时间作为桥梁代码
-//		
-//		b1.setBridge_code(bridge_code);
-//		b1.setBridge_name(this.getBridgeName());
-//		b1.setPath_num(this.getPathNum());
-//		b1.setPath_name(this.getPathName());
-//		b1.setPath_type(this.getPathType());
-//		b1.setRode_grade(this.getRodeGrade());
-//		b1.setOrder_num(this.getOrderNum());
-//		b1.setLocation(this.getLocation());
-//		b1.setCenter_stake(this.getCenterStake());
-//		b1.setCustody_unit(this.getCustodyUnit());
-//		b1.setAcross_name(this.getAcrossName());
-//		b1.setAcross_type(this.getAcrossType());
-//		b1.setBridge_nature(this.getBridgeNature());
-//		b1.setFlag("0");
-//		base1Biz.addBase1(b1);
-//		
-//		HttpServletResponse response = ServletActionContext.getResponse();
-//		response.sendRedirect("bridge!viewBridge?bridgeCode=" + bridge_code);
-//		return null;
-//	}
+	public String addDisease() throws IOException {
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		switch (this.getTable_name()) {
+		case "disease_girder":
+			response.sendRedirect("disease!showGirder?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		case "disease_wetjoint":
+			response.sendRedirect("disease!showWetjoint?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		case "disease_support":
+			response.sendRedirect("disease!showSupport?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		case "disease_pier":
+			response.sendRedirect("disease!showPier?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		case "disease_bentcap":
+			response.sendRedirect("disease!showBentcap?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		case "disease_tiebeam":
+			response.sendRedirect("disease!showTiebeam?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;			
+		case "disease_atbody":
+			response.sendRedirect("disease!showAtbody?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		case "disease_atcapping":
+			response.sendRedirect("disease!showAtcapping?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		case "disease_pa":
+			response.sendRedirect("disease!showPa?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		case "disease_bed":
+			response.sendRedirect("disease!showBed?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		case "disease_regstruc":
+			response.sendRedirect("disease!showRegstruc?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		case "disease_wingwall":
+			response.sendRedirect("disease!showWingwall?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		case "disease_conslope":
+			response.sendRedirect("disease!showConslope?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		case "disease_proslope":
+			response.sendRedirect("disease!showProslope?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		case "disease_deck":
+			response.sendRedirect("disease!showDeck?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		case "disease_joint":
+			response.sendRedirect("disease!showJoint?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		case "disease_sidewalk":
+			response.sendRedirect("disease!showSidewalk?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		case "disease_fence":
+			response.sendRedirect("disease!showFence?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		case "disease_watertight":
+			response.sendRedirect("disease!showWatertight?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		case "disease_lighting":
+			response.sendRedirect("disease!showLighting?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			return null;
+		default:
+			break;
+		}
+		return null;
+	}
 	
-//	public String showBase1() {
-//		Base1 base1 = base1Biz.getBase1ByBridgeCode(this.getBridgeCode());
-//		if (base1 != null) {
-//			request.put("id", base1.getId());
-//			request.put("bridge_code", base1.getBridge_code());
-//			request.put("bridge_name", base1.getBridge_name());
-//			request.put("path_num", base1.getPath_num());
-//			request.put("path_name", base1.getPath_name());
-//			request.put("path_type", base1.getPath_type());
-//			request.put("rode_grade", base1.getRode_grade());
-//			request.put("order_num", base1.getOrder_num());
-//			request.put("location", base1.getLocation());
-//			request.put("center_stake", base1.getCenter_stake());
-//			request.put("custody_unit", base1.getCustody_unit());
-//			request.put("across_name", base1.getAcross_name());
-//			request.put("across_type", base1.getAcross_type());
-//			request.put("bridge_nature", base1.getBridge_nature());
-//		}		
-//		return "base1";
-//	}
-//	
-//	public String changeBase1() throws IOException {
-//		Base1 base1 = new Base1();
-//		base1.setBridge_code(this.getBridgeCode());
-//		base1.setBridge_name(this.getBridgeName());
-//		base1.setPath_num(this.getPathNum());
-//		base1.setPath_name(this.getPathName());
-//		base1.setPath_type(this.getPathType());
-//		base1.setRode_grade(this.getRodeGrade());
-//		base1.setOrder_num(this.getOrderNum());
-//		base1.setLocation(this.getLocation());
-//		base1.setCenter_stake(this.getCenterStake());
-//		base1.setCustody_unit(this.getCustodyUnit());
-//		base1.setAcross_name(this.getAcrossName());
-//		base1.setAcross_type(this.getAcrossType());
-//		base1.setBridge_nature(this.getBridgeNature());
-//
-//		Base1 b1 = base1Biz.getBase1ByBridgeCode(this.getBridgeCode());
-//		
-//		if (b1 != null) { // 修改
-//			base1.setId(b1.getId());
-//			base1.setFlag(b1.getFlag());
-//			
-//			base1Biz.updateBase1(base1);
-//		}
-//		else { // 添加
-//			base1.setFlag("0");
-//			
-//			base1Biz.addBase1(base1);
-//		}
-//		
-//		HttpServletResponse response = ServletActionContext.getResponse();
-//		response.sendRedirect("bridge!viewBridge?bridgeCode=" + this.getBridgeCode());
-//		return null;
-//	}
+	public String showGirder() {
+		if (this.getId() != null) {
+			Disease_girder disease_girder = disease_girderBiz.getDisease_girderById(this.getId());
+			if (disease_girder != null) {
+				request.put("id", disease_girder.getId());
+				request.put("bg_id", disease_girder.getBg_id());
+				request.put("item_name", disease_girder.getItem_name());
+				request.put("parts_id", disease_girder.getParts_id());
+				request.put("rg_feature", disease_girder.getRg_feature());
+				request.put("rg_fissure", disease_girder.getRg_fissure());
+				request.put("sp_otherDisease", disease_girder.getSp_otherDisease());
+				request.put("start", disease_girder.getStart());
+				request.put("end", disease_girder.getEnd());
+				request.put("area", disease_girder.getArea());
+				request.put("length", disease_girder.getLength());
+				request.put("width", disease_girder.getWidth());
+				request.put("side_start", disease_girder.getSide_start());
+				request.put("side_end", disease_girder.getSide_end());
+				request.put("side_length", disease_girder.getSide_length());
+				request.put("side_width", disease_girder.getSide_width());
+				request.put("rg_location", disease_girder.getRg_location());
+				request.put("add_content", disease_girder.getAdd_content());
+				request.put("disease_image", disease_girder.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_girder";
+	}
+	
+	public String showWetjoint() {
+		if (this.getId() != null) {
+			Disease_wetjoint disease_wetjoint = disease_wetjointBiz.getDisease_wetjointById(this.getId());
+			if (disease_wetjoint != null) {
+				request.put("id", disease_wetjoint.getId());
+				request.put("bg_id", disease_wetjoint.getBg_id());
+				request.put("item_name", disease_wetjoint.getItem_name());
+				request.put("parts_id", disease_wetjoint.getParts_id());
+				request.put("rg_feature", disease_wetjoint.getRg_feature());
+				request.put("rg_fissure", disease_wetjoint.getRg_fissure());
+				request.put("sp_otherDisease", disease_wetjoint.getSp_otherDisease());
+				request.put("l1_start", disease_wetjoint.getL1_start());
+				request.put("l1_end", disease_wetjoint.getL1_end());
+				request.put("l1_area", disease_wetjoint.getL1_area());
+				request.put("l2_start", disease_wetjoint.getL2_start());
+				request.put("l2_length", disease_wetjoint.getL2_length());
+				request.put("l2_width", disease_wetjoint.getL2_width());
+				request.put("add_content", disease_wetjoint.getAdd_content());
+				request.put("disease_image", disease_wetjoint.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_wetjoint";
+	}
+	
+	public String showSupport() {
+		if (this.getId() != null) {
+			Disease_support disease_support = disease_supportBiz.getDisease_supportById(this.getId());
+			if (disease_support != null) {
+				request.put("id", disease_support.getId());
+				request.put("bg_id", disease_support.getBg_id());
+				request.put("item_name", disease_support.getItem_name());
+				request.put("parts_id", disease_support.getParts_id());
+				request.put("rg_feature", disease_support.getRg_feature());
+				request.put("add_content", disease_support.getAdd_content());
+				request.put("disease_image", disease_support.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_support";
+	}
+	
+	public String showPier() {
+		if (this.getId() != null) {
+			Disease_pier disease_pier = disease_pierBiz.getDisease_pierById(this.getId());
+			if (disease_pier != null) {
+				request.put("id", disease_pier.getId());
+				request.put("bg_id", disease_pier.getBg_id());
+				request.put("item_name", disease_pier.getItem_name());
+				request.put("parts_id", disease_pier.getParts_id());
+				request.put("rg_feature", disease_pier.getRg_feature());
+				request.put("rg_fissure", disease_pier.getRg_fissure());
+				request.put("sp_otherDisease", disease_pier.getSp_otherDisease());
+				request.put("l1_start", disease_pier.getL1_start());
+				request.put("l1_end", disease_pier.getL1_end());
+				request.put("l1_area", disease_pier.getL1_area());
+				request.put("l2_start", disease_pier.getL2_start());
+				request.put("l2_length", disease_pier.getL2_length());
+				request.put("l2_width", disease_pier.getL2_width());
+				request.put("add_content", disease_pier.getAdd_content());
+				request.put("disease_image", disease_pier.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_pier";
+	}
+	
+	public String showBentcap() {
+		if (this.getId() != null) {
+			Disease_bentcap disease_bentcap = disease_bentcapBiz.getDisease_bentcapById(this.getId());
+			if (disease_bentcap != null) {
+				request.put("id", disease_bentcap.getId());
+				request.put("bg_id", disease_bentcap.getBg_id());
+				request.put("item_name", disease_bentcap.getItem_name());
+				request.put("parts_id", disease_bentcap.getParts_id());
+				request.put("rg_feature", disease_bentcap.getRg_feature());
+				request.put("add_content", disease_bentcap.getAdd_content());
+				request.put("disease_image", disease_bentcap.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_bentcap";
+	}
+	
+	public String showTiebeam() {
+		if (this.getId() != null) {
+			Disease_tiebeam disease_tiebeam = disease_tiebeamBiz.getDisease_tiebeamById(this.getId());
+			if (disease_tiebeam != null) {
+				request.put("id", disease_tiebeam.getId());
+				request.put("bg_id", disease_tiebeam.getBg_id());
+				request.put("item_name", disease_tiebeam.getItem_name());
+				request.put("parts_id", disease_tiebeam.getParts_id());
+				request.put("rg_feature", disease_tiebeam.getRg_feature());
+				request.put("add_content", disease_tiebeam.getAdd_content());
+				request.put("disease_image", disease_tiebeam.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_tiebeam";
+	}
+	
+	public String showAtbody() {
+		if (this.getId() != null) {
+			Disease_atbody disease_atbody = disease_atbodyBiz.getDisease_atbodyById(this.getId());
+			if (disease_atbody != null) {
+				request.put("id", disease_atbody.getId());
+				request.put("bg_id", disease_atbody.getBg_id());
+				request.put("item_name", disease_atbody.getItem_name());
+				request.put("parts_id", disease_atbody.getParts_id());
+				request.put("rg_feature", disease_atbody.getRg_feature());
+				request.put("add_content", disease_atbody.getAdd_content());
+				request.put("disease_image", disease_atbody.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_atbody";
+	}
+	
+	public String showAtcapping() {
+		if (this.getId() != null) {
+			Disease_atcapping disease_atcapping = disease_atcappingBiz.getDisease_atcappingById(this.getId());
+			if (disease_atcapping != null) {
+				request.put("id", disease_atcapping.getId());
+				request.put("bg_id", disease_atcapping.getBg_id());
+				request.put("item_name", disease_atcapping.getItem_name());
+				request.put("parts_id", disease_atcapping.getParts_id());
+				request.put("rg_feature", disease_atcapping.getRg_feature());
+				request.put("add_content", disease_atcapping.getAdd_content());
+				request.put("disease_image", disease_atcapping.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_atcapping";
+	}
+	
+	public String showPa() {
+		if (this.getId() != null) {
+			Disease_pa disease_pa = disease_paBiz.getDisease_paById(this.getId());
+			if (disease_pa != null) {
+				request.put("id", disease_pa.getId());
+				request.put("bg_id", disease_pa.getBg_id());
+				request.put("item_name", disease_pa.getItem_name());
+				request.put("parts_id", disease_pa.getParts_id());
+				request.put("rg_feature", disease_pa.getRg_feature());
+				request.put("add_content", disease_pa.getAdd_content());
+				request.put("disease_image", disease_pa.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_pa";
+	}
+	
+	public String showBed() {
+		if (this.getId() != null) {
+			Disease_bed disease_bed = disease_bedBiz.getDisease_bedById(this.getId());
+			if (disease_bed != null) {
+				request.put("id", disease_bed.getId());
+				request.put("bg_id", disease_bed.getBg_id());
+				request.put("item_name", disease_bed.getItem_name());
+				request.put("parts_id", disease_bed.getParts_id());
+				request.put("rg_feature", disease_bed.getRg_feature());
+				request.put("add_content", disease_bed.getAdd_content());
+				request.put("disease_image", disease_bed.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_bed";
+	}
+	
+	public String showRegstruc() {
+		if (this.getId() != null) {
+			Disease_regstruc disease_regstruc = disease_regstrucBiz.getDisease_regstrucById(this.getId());
+			if (disease_regstruc != null) {
+				request.put("id", disease_regstruc.getId());
+				request.put("bg_id", disease_regstruc.getBg_id());
+				request.put("item_name", disease_regstruc.getItem_name());
+				request.put("parts_id", disease_regstruc.getParts_id());
+				request.put("rg_feature", disease_regstruc.getRg_feature());
+				request.put("add_content", disease_regstruc.getAdd_content());
+				request.put("disease_image", disease_regstruc.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_regstruc";
+	}
+	
+	public String showWingwall() {
+		if (this.getId() != null) {
+			Disease_wingwall disease_wingwall = disease_wingwallBiz.getDisease_wingwallById(this.getId());
+			if (disease_wingwall != null) {
+				request.put("id", disease_wingwall.getId());
+				request.put("bg_id", disease_wingwall.getBg_id());
+				request.put("item_name", disease_wingwall.getItem_name());
+				request.put("parts_id", disease_wingwall.getParts_id());
+				request.put("rg_feature", disease_wingwall.getRg_feature());
+				request.put("add_content", disease_wingwall.getAdd_content());
+				request.put("disease_image", disease_wingwall.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_wingwall";
+	}
+	
+	public String showConslope() {
+		if (this.getId() != null) {
+			Disease_conslope disease_conslope = disease_conslopeBiz.getDisease_conslopeById(this.getId());
+			if (disease_conslope != null) {
+				request.put("id", disease_conslope.getId());
+				request.put("bg_id", disease_conslope.getBg_id());
+				request.put("item_name", disease_conslope.getItem_name());
+				request.put("parts_id", disease_conslope.getParts_id());
+				request.put("rg_feature", disease_conslope.getRg_feature());
+				request.put("add_content", disease_conslope.getAdd_content());
+				request.put("disease_image", disease_conslope.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_conslope";
+	}
+	
+	public String showProslope() {
+		if (this.getId() != null) {
+			Disease_proslope disease_proslope = disease_proslopeBiz.getDisease_proslopeById(this.getId());
+			if (disease_proslope != null) {
+				request.put("id", disease_proslope.getId());
+				request.put("bg_id", disease_proslope.getBg_id());
+				request.put("item_name", disease_proslope.getItem_name());
+				request.put("parts_id", disease_proslope.getParts_id());
+				request.put("rg_feature", disease_proslope.getRg_feature());
+				request.put("add_content", disease_proslope.getAdd_content());
+				request.put("disease_image", disease_proslope.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_proslope";
+	}
+	
+	public String showDeck() {
+		if (this.getId() != null) {
+			Disease_deck disease_deck = disease_deckBiz.getDisease_deckById(this.getId());
+			if (disease_deck != null) {
+				request.put("id", disease_deck.getId());
+				request.put("bg_id", disease_deck.getBg_id());
+				request.put("item_name", disease_deck.getItem_name());
+				request.put("parts_id", disease_deck.getParts_id());
+				request.put("rg_feature", disease_deck.getRg_feature());
+				request.put("add_content", disease_deck.getAdd_content());
+				request.put("disease_image", disease_deck.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_deck";
+	}
+	
+	public String showJoint() {
+		if (this.getId() != null) {
+			Disease_joint disease_joint = disease_jointBiz.getDisease_jointById(this.getId());
+			if (disease_joint != null) {
+				request.put("id", disease_joint.getId());
+				request.put("bg_id", disease_joint.getBg_id());
+				request.put("item_name", disease_joint.getItem_name());
+				request.put("parts_id", disease_joint.getParts_id());
+				request.put("rg_feature", disease_joint.getRg_feature());
+				request.put("add_content", disease_joint.getAdd_content());
+				request.put("disease_image", disease_joint.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_joint";
+	}
+	
+	public String showSidewalk() {
+		if (this.getId() != null) {
+			Disease_sidewalk disease_sidewalk = disease_sidewalkBiz.getDisease_sidewalkById(this.getId());
+			if (disease_sidewalk != null) {
+				request.put("id", disease_sidewalk.getId());
+				request.put("bg_id", disease_sidewalk.getBg_id());
+				request.put("item_name", disease_sidewalk.getItem_name());
+				request.put("parts_id", disease_sidewalk.getParts_id());
+				request.put("rg_feature", disease_sidewalk.getRg_feature());
+				request.put("add_content", disease_sidewalk.getAdd_content());
+				request.put("disease_image", disease_sidewalk.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_sidewalk";
+	}
+	
+	public String showFence() {
+		if (this.getId() != null) {
+			Disease_fence disease_fence = disease_fenceBiz.getDisease_fenceById(this.getId());
+			if (disease_fence != null) {
+				request.put("id", disease_fence.getId());
+				request.put("bg_id", disease_fence.getBg_id());
+				request.put("item_name", disease_fence.getItem_name());
+				request.put("parts_id", disease_fence.getParts_id());
+				request.put("rg_feature", disease_fence.getRg_feature());
+				request.put("add_content", disease_fence.getAdd_content());
+				request.put("disease_image", disease_fence.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_fence";
+	}
+	
+	public String showWatertight() {
+		if (this.getId() != null) {
+			Disease_watertight disease_watertight = disease_watertightBiz.getDisease_watertightById(this.getId());
+			if (disease_watertight != null) {
+				request.put("id", disease_watertight.getId());
+				request.put("bg_id", disease_watertight.getBg_id());
+				request.put("item_name", disease_watertight.getItem_name());
+				request.put("parts_id", disease_watertight.getParts_id());
+				request.put("rg_feature", disease_watertight.getRg_feature());
+				request.put("add_content", disease_watertight.getAdd_content());
+				request.put("disease_image", disease_watertight.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_watertight";
+	}
+	
+	public String showLighting() {
+		if (this.getId() != null) {
+			Disease_lighting disease_lighting = disease_lightingBiz.getDisease_lightingById(this.getId());
+			if (disease_lighting != null) {
+				request.put("id", disease_lighting.getId());
+				request.put("bg_id", disease_lighting.getBg_id());
+				request.put("item_name", disease_lighting.getItem_name());
+				request.put("parts_id", disease_lighting.getParts_id());
+				request.put("rg_feature", disease_lighting.getRg_feature());
+				request.put("add_content", disease_lighting.getAdd_content());
+				request.put("disease_image", disease_lighting.getDisease_image());
+			}
+		}		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
+		return "disease_lighting";
+	}
+	
+	public String changeGirder() throws IOException {
+		Disease_girder girder = new Disease_girder();
+		girder.setBg_id(this.getBg_id());
+		girder.setParts_id(this.getParts_id());
+		girder.setItem_name(this.getItem_name());
+		girder.setRg_feature(this.getRg_feature());
+		girder.setRg_fissure(this.getRg_fissure());
+		girder.setSp_otherDisease(this.getSp_otherDisease());
+		girder.setStart(this.getStart());
+		girder.setEnd(this.getEnd());
+		girder.setArea(this.getArea());
+		girder.setLength(this.getLength());
+		girder.setWidth(this.getWidth());
+		girder.setSide_start(this.getSide_start());
+		girder.setSide_end(this.getSide_end());
+		girder.setSide_length(this.getSide_length());
+		girder.setSide_width(this.getSide_width());
+		girder.setRg_location(this.getRg_location());
+		girder.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_girder dis = disease_girderBiz.getDisease_girderById(this.getId());
+			if (dis != null) { // 修改
+				girder.setId(dis.getId());
+				girder.setFlag(dis.getFlag());
+				
+				disease_girderBiz.updateDisease_girder(girder);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_girder&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			girder.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_girderBiz.addDisease_girder(girder);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_girder&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changeWetjoint() throws IOException {
+		Disease_wetjoint wetjoint = new Disease_wetjoint();
+		wetjoint.setBg_id(this.getBg_id());
+		wetjoint.setParts_id(this.getParts_id());
+		wetjoint.setItem_name(this.getItem_name());
+		wetjoint.setRg_feature(this.getRg_feature());
+		wetjoint.setRg_fissure(this.getRg_fissure());
+		wetjoint.setSp_otherDisease(this.getSp_otherDisease());
+		wetjoint.setL1_start(this.getL1_start());
+		wetjoint.setL1_end(this.getL1_end());
+		wetjoint.setL1_area(this.getL1_area());
+		wetjoint.setL2_start(this.getL2_start());
+		wetjoint.setL2_length(this.getL2_length());
+		wetjoint.setL2_width(this.getL2_width());
+		wetjoint.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_wetjoint dis = disease_wetjointBiz.getDisease_wetjointById(this.getId());
+			if (dis != null) { // 修改
+				wetjoint.setId(dis.getId());
+				wetjoint.setFlag(dis.getFlag());
+				
+				disease_wetjointBiz.updateDisease_wetjoint(wetjoint);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_wetjoint&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			wetjoint.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_wetjointBiz.addDisease_wetjoint(wetjoint);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_wetjoint&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changeSupport() throws IOException {
+		Disease_support support = new Disease_support();
+		support.setBg_id(this.getBg_id());
+		support.setParts_id(this.getParts_id());
+		support.setItem_name(this.getItem_name());
+		support.setRg_feature(this.getRg_feature());
+		support.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_support dis = disease_supportBiz.getDisease_supportById(this.getId());
+			if (dis != null) { // 修改
+				support.setId(dis.getId());
+				support.setFlag(dis.getFlag());
+				
+				disease_supportBiz.updateDisease_support(support);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_support&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			support.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_supportBiz.addDisease_support(support);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_support&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changePier() throws IOException {
+		Disease_pier pier = new Disease_pier();
+		pier.setBg_id(this.getBg_id());
+		pier.setParts_id(this.getParts_id());
+		pier.setItem_name(this.getItem_name());
+		pier.setRg_feature(this.getRg_feature());
+		pier.setRg_fissure(this.getRg_fissure());
+		pier.setSp_otherDisease(this.getSp_otherDisease());
+		pier.setL1_start(this.getL1_start());
+		pier.setL1_end(this.getL1_end());
+		pier.setL1_area(this.getL1_area());
+		pier.setL2_start(this.getL2_start());
+		pier.setL2_length(this.getL2_length());
+		pier.setL2_width(this.getL2_width());
+		pier.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_pier dis = disease_pierBiz.getDisease_pierById(this.getId());
+			if (dis != null) { // 修改
+				pier.setId(dis.getId());
+				pier.setFlag(dis.getFlag());
+				
+				disease_pierBiz.updateDisease_pier(pier);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_pier&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			pier.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_pierBiz.addDisease_pier(pier);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_pier&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changeBentcap() throws IOException {
+		Disease_bentcap bentcap = new Disease_bentcap();
+		bentcap.setBg_id(this.getBg_id());
+		bentcap.setParts_id(this.getParts_id());
+		bentcap.setItem_name(this.getItem_name());
+		bentcap.setRg_feature(this.getRg_feature());
+		bentcap.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_bentcap dis = disease_bentcapBiz.getDisease_bentcapById(this.getId());
+			if (dis != null) { // 修改
+				bentcap.setId(dis.getId());
+				bentcap.setFlag(dis.getFlag());
+				
+				disease_bentcapBiz.updateDisease_bentcap(bentcap);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_bentcap&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			bentcap.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_bentcapBiz.addDisease_bentcap(bentcap);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_bentcap&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changeTiebeam() throws IOException {
+		Disease_tiebeam tiebeam = new Disease_tiebeam();
+		tiebeam.setBg_id(this.getBg_id());
+		tiebeam.setParts_id(this.getParts_id());
+		tiebeam.setItem_name(this.getItem_name());
+		tiebeam.setRg_feature(this.getRg_feature());
+		tiebeam.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_tiebeam dis = disease_tiebeamBiz.getDisease_tiebeamById(this.getId());
+			if (dis != null) { // 修改
+				tiebeam.setId(dis.getId());
+				tiebeam.setFlag(dis.getFlag());
+				
+				disease_tiebeamBiz.updateDisease_tiebeam(tiebeam);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_tiebeam&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			tiebeam.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_tiebeamBiz.addDisease_tiebeam(tiebeam);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_tiebeam&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changeAtbody() throws IOException {
+		Disease_atbody atbody = new Disease_atbody();
+		atbody.setBg_id(this.getBg_id());
+		atbody.setParts_id(this.getParts_id());
+		atbody.setItem_name(this.getItem_name());
+		atbody.setRg_feature(this.getRg_feature());
+		atbody.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_atbody dis = disease_atbodyBiz.getDisease_atbodyById(this.getId());
+			if (dis != null) { // 修改
+				atbody.setId(dis.getId());
+				atbody.setFlag(dis.getFlag());
+				
+				disease_atbodyBiz.updateDisease_atbody(atbody);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_atbody&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			atbody.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_atbodyBiz.addDisease_atbody(atbody);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_atbody&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changeAtcapping() throws IOException {
+		Disease_atcapping atcapping = new Disease_atcapping();
+		atcapping.setBg_id(this.getBg_id());
+		atcapping.setParts_id(this.getParts_id());
+		atcapping.setItem_name(this.getItem_name());
+		atcapping.setRg_feature(this.getRg_feature());
+		atcapping.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_atcapping dis = disease_atcappingBiz.getDisease_atcappingById(this.getId());
+			if (dis != null) { // 修改
+				atcapping.setId(dis.getId());
+				atcapping.setFlag(dis.getFlag());
+				
+				disease_atcappingBiz.updateDisease_atcapping(atcapping);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_atcapping&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			atcapping.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_atcappingBiz.addDisease_atcapping(atcapping);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_atcapping&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changePa() throws IOException {
+		Disease_pa pa = new Disease_pa();
+		pa.setBg_id(this.getBg_id());
+		pa.setParts_id(this.getParts_id());
+		pa.setItem_name(this.getItem_name());
+		pa.setRg_feature(this.getRg_feature());
+		pa.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_pa dis = disease_paBiz.getDisease_paById(this.getId());
+			if (dis != null) { // 修改
+				pa.setId(dis.getId());
+				pa.setFlag(dis.getFlag());
+				
+				disease_paBiz.updateDisease_pa(pa);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_pa&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			pa.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_paBiz.addDisease_pa(pa);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_pa&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changeBed() throws IOException {
+		Disease_bed bed = new Disease_bed();
+		bed.setBg_id(this.getBg_id());
+		bed.setParts_id(this.getParts_id());
+		bed.setItem_name(this.getItem_name());
+		bed.setRg_feature(this.getRg_feature());
+		bed.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_bed dis = disease_bedBiz.getDisease_bedById(this.getId());
+			if (dis != null) { // 修改
+				bed.setId(dis.getId());
+				bed.setFlag(dis.getFlag());
+				
+				disease_bedBiz.updateDisease_bed(bed);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_bed&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			bed.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_bedBiz.addDisease_bed(bed);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_bed&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changeRegstruc() throws IOException {
+		Disease_regstruc regstruc = new Disease_regstruc();
+		regstruc.setBg_id(this.getBg_id());
+		regstruc.setParts_id(this.getParts_id());
+		regstruc.setItem_name(this.getItem_name());
+		regstruc.setRg_feature(this.getRg_feature());
+		regstruc.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_regstruc dis = disease_regstrucBiz.getDisease_regstrucById(this.getId());
+			if (dis != null) { // 修改
+				regstruc.setId(dis.getId());
+				regstruc.setFlag(dis.getFlag());
+				
+				disease_regstrucBiz.updateDisease_regstruc(regstruc);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_regstruc&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			regstruc.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_regstrucBiz.addDisease_regstruc(regstruc);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_regstruc&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changeWingwall() throws IOException {
+		Disease_wingwall wingwall = new Disease_wingwall();
+		wingwall.setBg_id(this.getBg_id());
+		wingwall.setParts_id(this.getParts_id());
+		wingwall.setItem_name(this.getItem_name());
+		wingwall.setRg_feature(this.getRg_feature());
+		wingwall.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_wingwall dis = disease_wingwallBiz.getDisease_wingwallById(this.getId());
+			if (dis != null) { // 修改
+				wingwall.setId(dis.getId());
+				wingwall.setFlag(dis.getFlag());
+				
+				disease_wingwallBiz.updateDisease_wingwall(wingwall);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_wingwall&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			wingwall.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_wingwallBiz.addDisease_wingwall(wingwall);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_wingwall&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changeConslope() throws IOException {
+		Disease_conslope conslope = new Disease_conslope();
+		conslope.setBg_id(this.getBg_id());
+		conslope.setParts_id(this.getParts_id());
+		conslope.setItem_name(this.getItem_name());
+		conslope.setRg_feature(this.getRg_feature());
+		conslope.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_conslope dis = disease_conslopeBiz.getDisease_conslopeById(this.getId());
+			if (dis != null) { // 修改
+				conslope.setId(dis.getId());
+				conslope.setFlag(dis.getFlag());
+				
+				disease_conslopeBiz.updateDisease_conslope(conslope);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_conslope&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			conslope.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_conslopeBiz.addDisease_conslope(conslope);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_conslope&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changeProslope() throws IOException {
+		Disease_proslope proslope = new Disease_proslope();
+		proslope.setBg_id(this.getBg_id());
+		proslope.setParts_id(this.getParts_id());
+		proslope.setItem_name(this.getItem_name());
+		proslope.setRg_feature(this.getRg_feature());
+		proslope.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_proslope dis = disease_proslopeBiz.getDisease_proslopeById(this.getId());
+			if (dis != null) { // 修改
+				proslope.setId(dis.getId());
+				proslope.setFlag(dis.getFlag());
+				
+				disease_proslopeBiz.updateDisease_proslope(proslope);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_proslope&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			proslope.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_proslopeBiz.addDisease_proslope(proslope);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_proslope&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changeDeck() throws IOException {
+		Disease_deck deck = new Disease_deck();
+		deck.setBg_id(this.getBg_id());
+		deck.setParts_id(this.getParts_id());
+		deck.setItem_name(this.getItem_name());
+		deck.setRg_feature(this.getRg_feature());
+		deck.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_deck dis = disease_deckBiz.getDisease_deckById(this.getId());
+			if (dis != null) { // 修改
+				deck.setId(dis.getId());
+				deck.setFlag(dis.getFlag());
+				
+				disease_deckBiz.updateDisease_deck(deck);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_deck&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			deck.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_deckBiz.addDisease_deck(deck);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_deck&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changeJoint() throws IOException {
+		Disease_joint joint = new Disease_joint();
+		joint.setBg_id(this.getBg_id());
+		joint.setParts_id(this.getParts_id());
+		joint.setItem_name(this.getItem_name());
+		joint.setRg_feature(this.getRg_feature());
+		joint.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_joint dis = disease_jointBiz.getDisease_jointById(this.getId());
+			if (dis != null) { // 修改
+				joint.setId(dis.getId());
+				joint.setFlag(dis.getFlag());
+				
+				disease_jointBiz.updateDisease_joint(joint);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_joint&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			joint.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_jointBiz.addDisease_joint(joint);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_joint&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changeSidewalk() throws IOException {
+		Disease_sidewalk sidewalk = new Disease_sidewalk();
+		sidewalk.setBg_id(this.getBg_id());
+		sidewalk.setParts_id(this.getParts_id());
+		sidewalk.setItem_name(this.getItem_name());
+		sidewalk.setRg_feature(this.getRg_feature());
+		sidewalk.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_sidewalk dis = disease_sidewalkBiz.getDisease_sidewalkById(this.getId());
+			if (dis != null) { // 修改
+				sidewalk.setId(dis.getId());
+				sidewalk.setFlag(dis.getFlag());
+				
+				disease_sidewalkBiz.updateDisease_sidewalk(sidewalk);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_sidewalk&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			sidewalk.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_sidewalkBiz.addDisease_sidewalk(sidewalk);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_sidewalk&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changeFence() throws IOException {
+		Disease_fence fence = new Disease_fence();
+		fence.setBg_id(this.getBg_id());
+		fence.setParts_id(this.getParts_id());
+		fence.setItem_name(this.getItem_name());
+		fence.setRg_feature(this.getRg_feature());
+		fence.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_fence dis = disease_fenceBiz.getDisease_fenceById(this.getId());
+			if (dis != null) { // 修改
+				fence.setId(dis.getId());
+				fence.setFlag(dis.getFlag());
+				
+				disease_fenceBiz.updateDisease_fence(fence);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_fence&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			fence.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_fenceBiz.addDisease_fence(fence);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_fence&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changeWatertight() throws IOException {
+		Disease_watertight watertight = new Disease_watertight();
+		watertight.setBg_id(this.getBg_id());
+		watertight.setParts_id(this.getParts_id());
+		watertight.setItem_name(this.getItem_name());
+		watertight.setRg_feature(this.getRg_feature());
+		watertight.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_watertight dis = disease_watertightBiz.getDisease_watertightById(this.getId());
+			if (dis != null) { // 修改
+				watertight.setId(dis.getId());
+				watertight.setFlag(dis.getFlag());
+				
+				disease_watertightBiz.updateDisease_watertight(watertight);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_watertight&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			watertight.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_watertightBiz.addDisease_watertight(watertight);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_watertight&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
+	
+	public String changeLighting() throws IOException {
+		Disease_lighting lighting = new Disease_lighting();
+		lighting.setBg_id(this.getBg_id());
+		lighting.setParts_id(this.getParts_id());
+		lighting.setItem_name(this.getItem_name());
+		lighting.setRg_feature(this.getRg_feature());
+		lighting.setAdd_content(this.getAdd_content());
+
+		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		if (this.getId() != null) {
+			Disease_watertight dis = disease_watertightBiz.getDisease_watertightById(this.getId());
+			if (dis != null) { // 修改
+				lighting.setId(dis.getId());
+				lighting.setFlag(dis.getFlag());
+				
+				disease_lightingBiz.updateDisease_lighting(lighting);				
+				response.sendRedirect("disease!viewDisease?table_name=disease_lighting&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			}
+		}
+		else { // 添加
+			lighting.setFlag("0");
+			
+			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
+				disease_lightingBiz.addDisease_lighting(lighting);				
+			}
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_lighting&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+		}		
+		return null;
+	}
 	
 	public void validate(){
 		if(session.get("userName")==null){
 			session.clear();
 			this.addActionError("error");
 		}
-	}	
+	}
 }

@@ -106,7 +106,7 @@
 												</table>
 
 												<div>
-													<button class="btn blue" onclick="loadPage('/BridgeServer/bridge!showBed?id=<s:property value="%{#request.disease_bed.id}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改</button>
+													<button class="btn blue" onclick="loadPage('/BridgeServer/disease!showBed?id=<s:property value="%{#request.disease_bed.id}"/>&table_name=<s:property value="table_name"/>&bg_id=<s:property value="bg_id"/>&bg_name=<s:property value="bg_name"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改</button>
 													<a href="#" class="btn" onclick="loadPage('/BridgeServer/disease!getBaseDiseaseList?table_name=<s:property value="table_name"/>&bg_id=<s:property value="bg_id"/>&bg_name=<s:property value="bg_name"/>');">返回</a>
 												</div>
 

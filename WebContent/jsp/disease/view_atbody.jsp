@@ -98,30 +98,14 @@
 												      <tr>
 												         <th>病害类型</th>
 												         <td class="alert alert-info"><s:property value="%{#request.disease_atbody.rg_feature}"/></td>
-												         <s:if test="#request.disease_atbody.rg_feature=='其他病害'">
-													         <th>其他病害</th>
-													         <td class="alert alert-info"><s:property value="%{#request.disease_atbody.sp_otherDisease}"/></td>
-												      	 </s:if>
-												      	 <s:else>
-												      	 	 <th>病害描述</th>
-													         <td class="alert alert-info"><s:property value="%{#request.disease_atbody.add_content}"/></td>
-												      	 </s:else>
-												      </tr>
-												      
-												      <s:if test="#request.disease_atbody.rg_feature=='其他病害'">
-													      <tr>
-													         <th>病害描述</th>
-													         <td class="alert alert-info"><s:property value="%{#request.disease_atbody.add_content}"/></td>
-													      	 <th></th>
-													         <td class="alert alert-info"></td>													         
-													      </tr>
-												      </s:if>
-												      
+												         <th>病害描述</th>
+													     <td class="alert alert-info"><s:property value="%{#request.disease_atbody.add_content}"/></td>
+													  </tr>												      
 													</tbody>
 												</table>
 
 												<div>
-													<button class="btn blue" onclick="loadPage('/BridgeServer/bridge!showAtbody?id=<s:property value="%{#request.disease_atbody.id}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改</button>
+													<button class="btn blue" onclick="loadPage('/BridgeServer/disease!showAtbody?id=<s:property value="%{#request.disease_atbody.id}"/>&table_name=<s:property value="table_name"/>&bg_id=<s:property value="bg_id"/>&bg_name=<s:property value="bg_name"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改</button>
 													<a href="#" class="btn" onclick="loadPage('/BridgeServer/disease!getBaseDiseaseList?table_name=<s:property value="table_name"/>&bg_id=<s:property value="bg_id"/>&bg_name=<s:property value="bg_name"/>');">返回</a>
 												</div>
 

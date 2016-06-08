@@ -222,6 +222,7 @@
 			</div>
 <script>
 $("#navigationLevelId").val("<s:property value="#request.navigation_level"/>");
+
 if(<s:property value="#request.wing_wall1"/>=="1") {
 	$("#wingWall1").prop("checked",true);
 }

@@ -146,6 +146,7 @@
 												         <td class="alert alert-info"><s:property value="%{#request.disease_girder.add_content}"/></td>
 												      </tr>
 												      
+												      <s:if test="#request.disease_girder.rg_feature=='裂缝'">
 												      <s:if test="#request.disease_girder.rg_location=='左翼板'||#request.disease_girder.rg_location=='右翼板'">
 												      	 <tr>
 												         	<th>侧向距本跨梁端起始距离</th>
@@ -161,12 +162,13 @@
 												         	<td class="alert alert-info"><s:property value="%{#request.disease_girder.side_width}"/></td>
 												      	 </tr>
 												      </s:if>
+												      </s:if>
 												      
 													</tbody>
 												</table>
 
 												<div>
-													<button class="btn blue" onclick="loadPage('/BridgeServer/bridge!showGirder?id=<s:property value="%{#request.disease_girder.id}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改</button>
+													<button class="btn blue" onclick="loadPage('/BridgeServer/disease!showGirder?id=<s:property value="%{#request.disease_girder.id}"/>&table_name=<s:property value="table_name"/>&bg_id=<s:property value="bg_id"/>&bg_name=<s:property value="bg_name"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改</button>
 													<a href="#" class="btn" onclick="loadPage('/BridgeServer/disease!getBaseDiseaseList?table_name=<s:property value="table_name"/>&bg_id=<s:property value="bg_id"/>&bg_name=<s:property value="bg_name"/>');">返回</a>
 												</div>
 

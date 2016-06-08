@@ -112,6 +112,27 @@
             <result name="fence_view">/jsp/disease/view_fence.jsp</result>
             <result name="watertight_view">/jsp/disease/view_watertight.jsp</result>
             <result name="lighting_view">/jsp/disease/view_lighting.jsp</result>
+            
+            <result name="disease_girder">/jsp/disease/disease_girder.jsp</result>
+            <result name="disease_wetjoint">/jsp/disease/disease_wetjoint.jsp</result>
+            <result name="disease_support">/jsp/disease/disease_support.jsp</result>
+            <result name="disease_pier">/jsp/disease/disease_pier.jsp</result>
+            <result name="disease_bentcap">/jsp/disease/disease_bentcap.jsp</result>
+            <result name="disease_tiebeam">/jsp/disease/disease_tiebeam.jsp</result>
+            <result name="disease_atbody">/jsp/disease/disease_atbody.jsp</result>
+            <result name="disease_atcapping">/jsp/disease/disease_atcapping.jsp</result>
+            <result name="disease_pa">/jsp/disease/disease_pa.jsp</result>
+            <result name="disease_bed">/jsp/disease/disease_bed.jsp</result>
+            <result name="disease_regstruc">/jsp/disease/disease_regstruc.jsp</result>
+            <result name="disease_wingwall">/jsp/disease/disease_wingwall.jsp</result>
+            <result name="disease_conslope">/jsp/disease/disease_conslope.jsp</result>
+            <result name="disease_proslope">/jsp/disease/disease_proslope.jsp</result>
+            <result name="disease_deck">/jsp/disease/disease_deck.jsp</result>
+            <result name="disease_joint">/jsp/disease/disease_joint.jsp</result>
+            <result name="disease_sidewalk">/jsp/disease/disease_sidewalk.jsp</result>
+            <result name="disease_fence">/jsp/disease/disease_fence.jsp</result>
+            <result name="disease_watertight">/jsp/disease/disease_watertight.jsp</result>
+            <result name="disease_lighting">/jsp/disease/disease_lighting.jsp</result>
         </action>
         
     </package>
