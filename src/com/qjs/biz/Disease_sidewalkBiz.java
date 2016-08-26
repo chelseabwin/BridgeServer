@@ -24,4 +24,6 @@ public interface Disease_sidewalkBiz {
 	public Disease_sidewalk getDisease_sidewalkByBridgeCode(String bridgeCode);
 	
 	public int getDisease_sidewalkCodeByBridgeCode(String bridgeCode);
+	
+	public List<Map<String, Object>> getAllDisease_sidewalkByBridgeCode(String bridgeCode);
 }

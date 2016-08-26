@@ -103,6 +103,7 @@ public class Base2BizImpl implements Base2Biz {
 	public Base2 getBase2ByBridgeCode(String bridgeCode) {
 		@SuppressWarnings("unchecked")
 		List<Base2> Bridgelist = (List<Base2>) base2DAO.findEntityListByProperty("bg_id", bridgeCode, StringType.INSTANCE);
+		
 		if (Bridgelist != null && Bridgelist.size() == 1) {
 			return Bridgelist.get(0);
 		}

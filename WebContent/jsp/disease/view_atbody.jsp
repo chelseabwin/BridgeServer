@@ -98,9 +98,29 @@
 												      <tr>
 												         <th>病害类型</th>
 												         <td class="alert alert-info"><s:property value="%{#request.disease_atbody.rg_feature}"/></td>
-												         <th>病害描述</th>
-													     <td class="alert alert-info"><s:property value="%{#request.disease_atbody.add_content}"/></td>
-													  </tr>												      
+												         <s:if test="#request.disease_atbody.rg_feature=='其他病害'">
+												         	 <th>其他病害</th>
+														     <td class="alert alert-info"><s:property value="%{#request.disease_atbody.sp_otherDisease}"/></td>
+												         </s:if>
+												         <s:else>
+													         <th>病害描述</th>
+														     <td class="alert alert-info"><s:property value="%{#request.disease_atbody.add_content}"/></td>
+													     </s:else>
+													  </tr>
+													  
+													  <s:if test="#request.disease_atbody.rg_feature=='其他病害'">
+													  	 <th>病害描述</th>
+														 <td class="alert alert-info"><s:property value="%{#request.disease_atbody.add_content}"/></td>
+														 <th></th>
+														 <td class="alert alert-info"></td>
+													  </s:if>
+													  
+													  <tr>
+											         	 <th>病害图片</th>
+											         	 <!-- <td colspan="3"><s:if test="#request.disease_deck.disease_image!=null"><img src="data:<s:property value="%{#request.disease_deck.image_type}"/>;base64,<s:property value="%{#request.disease_deck.disease_image}"/>" width="400" height="300" /></s:if></td> -->
+											         	 <td colspan="3"><s:if test="#request.img_name!=null"><img src="/BridgeServer/disease_image/<s:property value="%{#request.img_name}"/>" width="400" height="300" /></s:if></td>
+											          </tr>
+											          
 													</tbody>
 												</table>
 

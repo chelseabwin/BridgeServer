@@ -24,4 +24,6 @@ public interface Disease_wetjointBiz {
 	public Disease_wetjoint getDisease_wetjointByBridgeCode(String bridgeCode);
 	
 	public int getDisease_wetjointCodeByBridgeCode(String bridgeCode);
+	
+	public List<Map<String, Object>> getAllDisease_wetjointByBridgeCode(String bridgeCode);
 }

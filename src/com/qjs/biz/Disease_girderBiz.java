@@ -24,4 +24,6 @@ public interface Disease_girderBiz {
 	public Disease_girder getDisease_girderByBridgeCode(String bridgeCode);
 	
 	public int getDisease_girderCodeByBridgeCode(String bridgeCode);
+	
+	public List<Map<String, Object>> getAllDisease_girderByBridgeCode(String bridgeCode);
 }

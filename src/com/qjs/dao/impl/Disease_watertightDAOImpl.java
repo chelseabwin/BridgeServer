@@ -155,4 +155,13 @@ public class Disease_watertightDAOImpl extends HibernateDaoSupport implements Di
 		result.put("result", res);
 		return result;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<?> findEntityListByPropertySort(String propertyName, String sortStr, Object value, Type type) {
+		String hql = "from Disease_watertight as u where u."+propertyName+"=? order by "+sortStr;
+		Query qobj = this.getNewSession().createQuery(hql);
+		qobj.setParameter(0, value, type);
+		return (List<Disease_watertight>)qobj.list();
+	}
 }

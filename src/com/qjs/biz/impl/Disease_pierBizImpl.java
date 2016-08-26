@@ -86,6 +86,8 @@ public class Disease_pierBizImpl implements Disease_pierBiz {
 			obj.put("l2_width", dil.getL2_width());
 			obj.put("add_content", dil.getAdd_content());
 			obj.put("disease_image", dil.getDisease_image());
+			obj.put("image_type", dil.getImage_type());
+			obj.put("evaluation", dil.getEvaluation());
 			disinfo.add(obj);
 		}
 		Map<String,Object> result = new HashMap<String,Object>();
@@ -121,5 +123,36 @@ public class Disease_pierBizImpl implements Disease_pierBiz {
 		if (diseaselist != null)
 			return diseaselist.size();
 		return 0;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Map<String, Object>> getAllDisease_pierByBridgeCode(String bridgeCode) {
+		List<Disease_pier> diseaselist = (List<Disease_pier>) disease_pierDAO.findEntityListByPropertySort("bg_id", "u.parts_id, u.item_name, u.rg_feature", bridgeCode, StringType.INSTANCE);
+		
+		List<Map<String, Object>> disinfo = new ArrayList<Map<String, Object>>();
+		for (Disease_pier dil:diseaselist) {
+			Map<String, Object> obj = new HashMap<String, Object>();
+			
+			obj.put("id", dil.getId());
+			obj.put("bg_id", dil.getBg_id());
+			obj.put("parts_id", dil.getParts_id());
+			obj.put("item_name", dil.getItem_name());
+			obj.put("rg_feature", dil.getRg_feature());
+			obj.put("rg_fissure", dil.getRg_fissure());
+			obj.put("sp_otherDisease", dil.getSp_otherDisease());			
+			obj.put("l1_start", dil.getL1_start());
+			obj.put("l1_end", dil.getL1_end());
+			obj.put("l1_area", dil.getL1_area());
+			obj.put("l2_start", dil.getL2_start());
+			obj.put("l2_length", dil.getL2_length());
+			obj.put("l2_width", dil.getL2_width());
+			obj.put("add_content", dil.getAdd_content());
+			obj.put("disease_image", dil.getDisease_image());
+			obj.put("image_type", dil.getImage_type());
+			obj.put("evaluation", dil.getEvaluation());
+			disinfo.add(obj);
+		}
+		return disinfo;
 	}
 }

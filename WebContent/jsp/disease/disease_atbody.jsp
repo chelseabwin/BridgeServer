@@ -87,6 +87,9 @@
 								<form id="update_form" action="" class="form-horizontal" method="post">
 								<input type="hidden" name="id" value="<s:property value="#request.id"/>">
 								<input type="hidden" name="bg_id" value="<s:property value="#request.bg_id"/>">
+								<input type="hidden" id="disease_image_id" name="disease_image" value="<s:property value="#request.disease_image"/>">
+								<input type="hidden" id="image_type_id" name="image_type" value="<s:property value="#request.image_type"/>">
+								<input type="hidden" id="img_name_id" name="img_name" value="<s:property value="#request.img_name"/>">
 
 												<div class="control-group">
 
@@ -150,6 +153,18 @@
 													
 												</div>
 												
+												<div class="control-group" id="od_div">
+
+													<label class="control-label">其他病害</label>
+
+													<div class="controls">
+													
+														<s:select class="medium m-wrap" name="sp_otherDisease" id="spOtherDiseaseId" list="{'混凝土碳化、腐蚀','位移','其他'}" />
+
+													</div>
+
+												</div>
+												
 												<div class="control-group">
 
 													<label class="control-label">病害描述</label>
@@ -161,18 +176,54 @@
 													</div>
 
 												</div>
+												
+								</form>	
+								
+								<form id="image_form" action="" class="form-horizontal" method="post" enctype="multipart/form-data">
+								<input type="hidden" name="bg_id" value="<s:property value="#request.bg_id"/>">
+								<input type="hidden" name="id" value="<s:property value="#request.id"/>">
+								<input type="hidden" name="table_name" value="disease_atbody">
+								
+										<div class="control-group">
 
-												<div class="form-actions">
-													<a href="#" class="btn blue" onclick="submitData('/BridgeServer/disease!changeAtbody');"><i class="icon-ok"></i> 保存</a>
-													<s:if test="#request.id!=null">
-														<a href="#" class="btn" onclick="loadPage('/BridgeServer/disease!viewDisease?table_name=disease_atbody&id=<s:property value="id"/>&bg_name=<s:property value="bg_name"/>&bg_id=<s:property value="bg_id"/>');">取消</a>
-													</s:if>
-													<s:else>
-														<a href="#" class="btn" onclick="loadPage('/BridgeServer/disease!getBaseDiseaseList?table_name=disease_atbody&bg_name=<s:property value="bg_name"/>&bg_id=<s:property value="bg_id"/>');">取消</a>
-													</s:else>
-												</div>
+											<label class="control-label">病害图片</label>
+											
+											<div class="controls">
+											    
+											    <input id="img_id" type="file" size="40" name="img" class="file" accept="image/*">
+											    
+											    <input type="button" class="btn green" value="上传" onclick="doUpload()" />
+											    
+											    (注：图片文件名请勿带有中文字符，以免无法识别！)
+										
+											</div>
+										
+										</div>
+										
+										<div id="img_div" class="control-group">
 
-											</form>
+											<label class="control-label"></label>
+											
+											<div class="controls">
+											    
+											    <!-- <img id="dis_img_id" src="data:<s:property value="#request.image_type"/>;base64,<s:property value="#request.disease_image"/>" width="400" height="300" /> -->
+												<img id="dis_img_id" src="/BridgeServer/disease_image/<s:property value="#request.img_name"/>" width="400" height="300" />
+											
+											</div>
+										
+										</div>
+										
+								</form>
+
+								<div class="form-actions">
+									<a href="#" class="btn blue" onclick="submitData('/BridgeServer/disease!changeAtbody');"><i class="icon-ok"></i> 保存</a>
+									<s:if test="#request.id!=null">
+										<a href="#" class="btn" onclick="loadPage('/BridgeServer/disease!viewDisease?table_name=disease_atbody&id=<s:property value="id"/>&bg_name=<s:property value="bg_name"/>&bg_id=<s:property value="bg_id"/>');">取消</a>
+									</s:if>
+									<s:else>
+										<a href="#" class="btn" onclick="loadPage('/BridgeServer/disease!getBaseDiseaseList?table_name=disease_atbody&bg_name=<s:property value="bg_name"/>&bg_id=<s:property value="bg_id"/>');">取消</a>
+									</s:else>
+								</div>
 
 								<!-- END FORM-->       
 
@@ -189,10 +240,59 @@
 <script>
 $("input[name=rg_feature][value='<s:property value="#request.rg_feature"/>']").attr("checked",true);
 
+if ($("#disease_image_id").val() == "") {
+	$("#img_div").hide();
+}
+
+if ($("input[name=rg_feature]:checked").val()=="其他病害") {
+	$("#od_div").show();
+	$("#spOtherDiseaseId").val("<s:property value="#request.sp_otherDisease"/>");
+}
+else {
+	$("#od_div").hide();
+}
+
+$("input[name=rg_feature]").change(function() { 
+	if ($("input[name=rg_feature]:checked").val()=="其他病害") {
+		$("#od_div").show();
+		$("#spOtherDiseaseId").val("<s:property value="#request.sp_otherDisease"/>");
+	}
+	else {
+		$("#od_div").hide();
+	}
+});
+
 function submitData(url){
 	$.axs(url, $("#update_form").serializeArray(), function(data){
 		$("#page_content").html(data);
     });
 };
+
+function doUpload() {
+    var formData = new FormData($("#image_form")[0]);
+    $.ajax({
+         url: '/BridgeServer/disease!upload' ,
+         type: 'POST',
+         data: formData,
+         async: false,
+         cache: false,
+         contentType: false,
+         processData: false,
+         success: function (returndata) {
+        	 if (returndata == "faild") {
+        		 alert("上传失败！");
+        	 }
+        	 else {
+				 var obj = JSON.parse(returndata);
+        		 
+        		 $("#disease_image_id").attr("value", obj.img_str);
+        		 $("#img_name_id").attr("value", obj.img_name);
+        		 $("#image_type_id").attr("value", obj.img_type);
+        		 $("#dis_img_id").attr("src", "/BridgeServer/disease_image/" + obj.img_name);
+        		 $("#img_div").show();
+        	 }
+         }
+    });
+}
 
 </script>

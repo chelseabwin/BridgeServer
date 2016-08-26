@@ -24,4 +24,6 @@ public interface Disease_atbodyBiz {
 	public Disease_atbody getDisease_atbodyByBridgeCode(String bridgeCode);
 	
 	public int getDisease_atbodyCodeByBridgeCode(String bridgeCode);
+	
+	public List<Map<String, Object>> getAllDisease_atbodyByBridgeCode(String bridgeCode);
 }

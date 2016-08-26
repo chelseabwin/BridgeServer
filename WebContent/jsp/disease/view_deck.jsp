@@ -102,6 +102,12 @@
 												         <td class="alert alert-info"><s:property value="%{#request.disease_deck.add_content}"/></td>
 												      </tr>
 												      
+												      <tr>
+											         	 <th>病害图片</th>
+											         	 <!-- <td colspan="3"><s:if test="#request.disease_deck.disease_image!=null"><img src="data:<s:property value="%{#request.disease_deck.image_type}"/>;base64,<s:property value="%{#request.disease_deck.disease_image}"/>" width="400" height="300" /></s:if></td> -->
+											         	 <td colspan="3"><s:if test="#request.img_name!=null"><img src="/BridgeServer/disease_image/<s:property value="%{#request.img_name}"/>" width="400" height="300" /></s:if></td>
+											          </tr>
+												      
 													</tbody>
 												</table>
 

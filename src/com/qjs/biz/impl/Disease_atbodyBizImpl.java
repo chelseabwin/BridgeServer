@@ -79,6 +79,8 @@ public class Disease_atbodyBizImpl implements Disease_atbodyBiz {
 			obj.put("sp_otherDisease", dil.getSp_otherDisease());
 			obj.put("add_content", dil.getAdd_content());
 			obj.put("disease_image", dil.getDisease_image());
+			obj.put("image_type", dil.getImage_type());
+			obj.put("evaluation", dil.getEvaluation());
 			disinfo.add(obj);
 		}
 		Map<String,Object> result = new HashMap<String,Object>();
@@ -114,5 +116,29 @@ public class Disease_atbodyBizImpl implements Disease_atbodyBiz {
 		if (diseaselist != null)
 			return diseaselist.size();
 		return 0;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Map<String, Object>> getAllDisease_atbodyByBridgeCode(String bridgeCode) {
+		List<Disease_atbody> diseaselist = (List<Disease_atbody>) disease_atbodyDAO.findEntityListByPropertySort("bg_id", "u.parts_id, u.item_name, u.rg_feature", bridgeCode, StringType.INSTANCE);
+		
+		List<Map<String, Object>> disinfo = new ArrayList<Map<String, Object>>();
+		for (Disease_atbody dil:diseaselist) {
+			Map<String, Object> obj = new HashMap<String, Object>();
+			
+			obj.put("id", dil.getId());
+			obj.put("bg_id", dil.getBg_id());
+			obj.put("parts_id", dil.getParts_id());
+			obj.put("item_name", dil.getItem_name());
+			obj.put("rg_feature", dil.getRg_feature());
+			obj.put("sp_otherDisease", dil.getSp_otherDisease());
+			obj.put("add_content", dil.getAdd_content());
+			obj.put("disease_image", dil.getDisease_image());
+			obj.put("image_type", dil.getImage_type());
+			obj.put("evaluation", dil.getEvaluation());
+			disinfo.add(obj);
+		}
+		return disinfo;
 	}
 }

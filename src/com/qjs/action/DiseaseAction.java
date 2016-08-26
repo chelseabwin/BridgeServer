@@ -3,21 +3,36 @@ package com.qjs.action;
 import global.tool.Constant;
 import global.tool.QueryItems;
 import global.tool.QueryObject;
+import global.tool.WordCreate;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.rowset.serial.SerialException;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
+import org.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qjs.biz.impl.Base1BizImpl;
+import com.qjs.biz.impl.Base2BizImpl;
+import com.qjs.biz.impl.Base3BizImpl;
 import com.qjs.biz.impl.Disease_atbodyBizImpl;
 import com.qjs.biz.impl.Disease_atcappingBizImpl;
 import com.qjs.biz.impl.Disease_bedBizImpl;
@@ -38,6 +53,16 @@ import com.qjs.biz.impl.Disease_tiebeamBizImpl;
 import com.qjs.biz.impl.Disease_watertightBizImpl;
 import com.qjs.biz.impl.Disease_wetjointBizImpl;
 import com.qjs.biz.impl.Disease_wingwallBizImpl;
+import com.qjs.biz.impl.General_detailBizImpl;
+import com.qjs.biz.impl.Load_detailBizImpl;
+import com.qjs.biz.impl.Parts1BizImpl;
+import com.qjs.biz.impl.Parts2BizImpl;
+import com.qjs.biz.impl.Pier_detailBizImpl;
+import com.qjs.biz.impl.StructureBizImpl;
+import com.qjs.biz.impl.Support_detailBizImpl;
+import com.qjs.entity.Base1;
+import com.qjs.entity.Base2;
+import com.qjs.entity.Base3;
 import com.qjs.entity.Disease_atbody;
 import com.qjs.entity.Disease_atcapping;
 import com.qjs.entity.Disease_bed;
@@ -58,6 +83,13 @@ import com.qjs.entity.Disease_tiebeam;
 import com.qjs.entity.Disease_watertight;
 import com.qjs.entity.Disease_wetjoint;
 import com.qjs.entity.Disease_wingwall;
+import com.qjs.entity.General_detail;
+import com.qjs.entity.Load_detail;
+import com.qjs.entity.Parts1;
+import com.qjs.entity.Parts2;
+import com.qjs.entity.Pier_detail;
+import com.qjs.entity.Structure;
+import com.qjs.entity.Support_detail;
 
 public class DiseaseAction extends ActionSupport implements RequestAware,SessionAware{
 
@@ -65,6 +97,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 	
 	private String bg_name;
 	private String table_name;
+	private String image;
 	
 	// Disease_girder
 	private Integer id;	
@@ -86,6 +119,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 	private String rg_location;
 	private String add_content;
 	private String disease_image;
+	private String image_type;
+	private String evaluation;
 	private String flag;
 	
 	// Disease_wetjoint
@@ -100,6 +135,16 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 	private Integer pageSize;
 
 	private Base1BizImpl base1Biz;
+	private Base2BizImpl base2Biz;
+	private Base3BizImpl base3Biz;
+	private StructureBizImpl structureBiz;
+	private Parts1BizImpl parts1Biz;
+	private Parts2BizImpl parts2Biz;
+	private Load_detailBizImpl load_detailBiz;
+	private General_detailBizImpl general_detailBiz;
+	private Support_detailBizImpl support_detailBiz;
+	private Pier_detailBizImpl pier_detailBiz;
+	
 	private Disease_girderBizImpl disease_girderBiz;
 	private Disease_wetjointBizImpl disease_wetjointBiz;
 	private Disease_supportBizImpl disease_supportBiz;
@@ -136,6 +181,14 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 
 	public void setTable_name(String table_name) {
 		this.table_name = table_name;
+	}
+	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 	// base1
@@ -291,6 +344,22 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		this.disease_image = disease_image;
 	}
 	
+	public String getImage_type() {
+		return image_type;
+	}
+
+	public void setImage_type(String image_type) {
+		this.image_type = image_type;
+	}
+	
+	public String getEvaluation() {
+		return evaluation;
+	}
+
+	public void setEvaluation(String evaluation) {
+		this.evaluation = evaluation;
+	}
+	
 	public String getFlag() {
 		return flag;
 	}
@@ -375,6 +444,78 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 
 	public void setBase1Biz(Base1BizImpl base1Biz) {
 		this.base1Biz = base1Biz;
+	}
+	
+	public Base2BizImpl getBase2Biz() {
+		return base2Biz;
+	}
+
+	public void setBase2Biz(Base2BizImpl base2Biz) {
+		this.base2Biz = base2Biz;
+	}
+	
+	public Base3BizImpl getBase3Biz() {
+		return base3Biz;
+	}
+
+	public void setBase3Biz(Base3BizImpl base3Biz) {
+		this.base3Biz = base3Biz;
+	}
+	
+	public StructureBizImpl getStructureBiz() {
+		return structureBiz;
+	}
+
+	public void setStructureBiz(StructureBizImpl structureBiz) {
+		this.structureBiz = structureBiz;
+	}
+	
+	public Parts1BizImpl getParts1Biz() {
+		return parts1Biz;
+	}
+
+	public void setParts1Biz(Parts1BizImpl parts1Biz) {
+		this.parts1Biz = parts1Biz;
+	}
+	
+	public Parts2BizImpl getParts2Biz() {
+		return parts2Biz;
+	}
+
+	public void setParts2Biz(Parts2BizImpl parts2Biz) {
+		this.parts2Biz = parts2Biz;
+	}
+	
+	public Pier_detailBizImpl getPier_detailBiz() {
+		return pier_detailBiz;
+	}
+
+	public void setPier_detailBiz(Pier_detailBizImpl pier_detailBiz) {
+		this.pier_detailBiz = pier_detailBiz;
+	}
+	
+	public Load_detailBizImpl getLoad_detailBiz() {
+		return load_detailBiz;
+	}
+
+	public void setLoad_detailBiz(Load_detailBizImpl load_detailBiz) {
+		this.load_detailBiz = load_detailBiz;
+	}
+	
+	public General_detailBizImpl getGeneral_detailBiz() {
+		return general_detailBiz;
+	}
+
+	public void setGeneral_detailBiz(General_detailBizImpl general_detailBiz) {
+		this.general_detailBiz = general_detailBiz;
+	}
+	
+	public Support_detailBizImpl getSupport_detailBiz() {
+		return support_detailBiz;
+	}
+
+	public void setSupport_detailBiz(Support_detailBizImpl support_detailBiz) {
+		this.support_detailBiz = support_detailBiz;
 	}
 	
 	public Disease_girderBizImpl getDisease_girderBiz() {
@@ -550,6 +691,155 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 	public void setRequest(Map<String, Object> request) {
 		this.request = request;
 	}
+	
+	
+	/**图片上传路径*/
+	private String savePath = "/disease_image";
+	/**这里的名字和html的名字必须对称*/
+	private File img;
+	/**要上传的文件类型*/
+	private String imgContentType;
+	/**文件的名称*/
+	private String imgFileName;
+	/**
+	 * 指定的上传类型为图片格式的文件
+	 */
+	private static final String[] types = {"image/jpeg", "image/jpg", "image/png", "image/gif", "image/bmp"};
+	
+	@SuppressWarnings("deprecation")
+	public String getSavePath() {
+		return ServletActionContext.getRequest().getRealPath(savePath);
+	}
+
+	public void setSavePath(String value) {
+		this.savePath = value;
+	}
+	
+	public File getImg() {
+		return img;
+	}
+	
+	public void setImg(File img) {
+		this.img = img;
+	}
+	
+	public String getImgContentType() {
+		return imgContentType;
+	}
+
+	public void setImgContentType(String imgContentType) {
+		this.imgContentType = imgContentType;
+	}
+
+	public String getImgFileName() {
+		return imgFileName;
+	}
+
+	public void setImgFileName(String imgFileName) {
+		this.imgFileName = imgFileName;
+	}
+	
+	/***
+	 * 判断文件的类型是否为指定的文件类型
+	 * @return
+	 */
+	public boolean filterType() {
+		boolean isFileType = false;
+		String fileType = getImgContentType();
+		System.out.println(fileType);
+		for (String type : types) {
+			if (type.equals(fileType)) {
+				isFileType = true;
+				break;
+			}
+		}
+		return isFileType;
+	}
+	
+	/**
+	 * 取得文件夹大小
+	 * 
+	 * @param f
+	 * @return
+	 * @throws Exception
+	 */
+	public long getFileSize(File f) throws Exception {
+		return f.length();
+	}
+
+	public String FormetFileSize(long fileS) {// 转换文件大小
+		DecimalFormat df = new DecimalFormat("#.00");
+		String fileSizeString = "";
+		if (fileS < 1024) {
+			fileSizeString = df.format((double) fileS) + "B";
+		} else if (fileS < 1048576) {
+			fileSizeString = df.format((double) fileS / 1024) + "K";
+		} else if (fileS < 1073741824) {
+			fileSizeString = df.format((double) fileS / 1048576) + "M";
+		} else {
+			fileSizeString = df.format((double) fileS / 1073741824) + "G";
+		}
+		return fileSizeString;
+	}
+	
+	/**
+	 * 上传文件操作
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public void upload() throws Exception {
+		String result = "未知错误";
+		PrintWriter out = ServletActionContext.getResponse().getWriter();
+		String imgFilePath = null;
+		if (!filterType()) {
+			System.out.println("文件类型不正确");
+			ServletActionContext.getRequest().setAttribute("typeError", "您要上传的文件类型不正确");
+
+			result = "上传错误:" + getImgContentType() + " 文件类型不正确！";
+		} else {
+			System.out.println("当前文件大小为：" + FormetFileSize(getFileSize(getImg())));
+			FileOutputStream fos = null;
+			FileInputStream fis = null;
+			try {
+				
+				// 保存文件那一个路径
+				imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + getImgContentType().split("/")[1];
+				fos = new FileOutputStream(imgFilePath);
+				fis = new FileInputStream(getImg());
+				byte[] buffer = new byte[1024];
+				int len = 0;
+				while ((len = fis.read(buffer)) > 0) {
+					fos.write(buffer, 0, len);
+				}
+				result = "success";
+			} catch (Exception e) {
+				result = "faild";
+				e.printStackTrace();
+			} finally {
+				fos.close();
+				fis.close();
+			}
+		}
+		if (result.equals("success")) {
+			String imgStr = getImageStr(imgFilePath);
+			
+			//创建JSONObject对象
+			JSONObject json = new JSONObject();
+			
+			//向json中添加数据
+			json.put("img_name", new File(imgFilePath).getName());
+			json.put("img_str", imgStr);
+			json.put("img_type", getImgContentType());
+
+			out.write(json.toString());
+		}
+		else {
+			out.write("faild");
+		}
+	}
+	
+//===================================================================================//	
 	
 	public String getBaseList() {
 		return "list";
@@ -796,142 +1086,242 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		switch (this.getTable_name()) {
 		case "disease_girder":
 			Disease_girder disease_girder = disease_girderBiz.getDisease_girderById(this.getId());
-			if (disease_girder != null)	{		
-				request.put("disease_girder", disease_girder);
+			String imgStr_girder = disease_girder.getDisease_image();
+			if (imgStr_girder != "") {
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_girder.getImage_type().split("/")[1];
+				if (generateImage(imgStr_girder, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_girder", disease_girder);
 			return "girder_view";
 			
 		case "disease_wetjoint":
 			Disease_wetjoint disease_wetjoint = disease_wetjointBiz.getDisease_wetjointById(this.getId());
-			if (disease_wetjoint != null) {
-				request.put("disease_wetjoint", disease_wetjoint);
+			String imgStr_wetjoint = disease_wetjoint.getDisease_image();
+			if (imgStr_wetjoint != "") {
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_wetjoint.getImage_type().split("/")[1];
+				if (generateImage(imgStr_wetjoint, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_wetjoint", disease_wetjoint);
 			return "wetjoint_view";
 			
 		case "disease_support":
 			Disease_support disease_support = disease_supportBiz.getDisease_supportById(this.getId());
-			if (disease_support != null) {
-				request.put("disease_support", disease_support);
+			String imgStr_support = disease_support.getDisease_image();
+			if (imgStr_support != "") {
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_support.getImage_type().split("/")[1];
+				if (generateImage(imgStr_support, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_support", disease_support);
 			return "support_view";
 			
 		case "disease_pier":
 			Disease_pier disease_pier = disease_pierBiz.getDisease_pierById(this.getId());
-			if (disease_pier != null) {
-				request.put("disease_pier", disease_pier);
+			String imgStr_pier = disease_pier.getDisease_image();
+			if (imgStr_pier != "") {
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_pier.getImage_type().split("/")[1];
+				if (generateImage(imgStr_pier, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_pier", disease_pier);
 			return "pier_view";
 			
 		case "disease_bentcap":
 			Disease_bentcap disease_bentcap = disease_bentcapBiz.getDisease_bentcapById(this.getId());
-			if (disease_bentcap != null) {
-				request.put("disease_bentcap", disease_bentcap);
+			String imgStr_bentcap = disease_bentcap.getDisease_image();
+			if (imgStr_bentcap != "") {
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_bentcap.getImage_type().split("/")[1];
+				if (generateImage(imgStr_bentcap, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_bentcap", disease_bentcap);
 			return "bentcap_view";
 			
 		case "disease_tiebeam":
 			Disease_tiebeam disease_tiebeam = disease_tiebeamBiz.getDisease_tiebeamById(this.getId());
-			if (disease_tiebeam != null) {
-				request.put("disease_tiebeam", disease_tiebeam);
+			String imgStr_tiebeam = disease_tiebeam.getDisease_image();
+			if (imgStr_tiebeam != "") {
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_tiebeam.getImage_type().split("/")[1];
+				if (generateImage(imgStr_tiebeam, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_tiebeam", disease_tiebeam);
 			return "tiebeam_view";
 			
 		case "disease_atbody":
 			Disease_atbody disease_atbody = disease_atbodyBiz.getDisease_atbodyById(this.getId());
-			if (disease_atbody != null) {
-				request.put("disease_atbody", disease_atbody);
+			String imgStr_atbody = disease_atbody.getDisease_image();
+			if (imgStr_atbody != "") {
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_atbody.getImage_type().split("/")[1];
+				if (generateImage(imgStr_atbody, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_atbody", disease_atbody);
 			return "atbody_view";
 			
 		case "disease_atcapping":
 			Disease_atcapping disease_atcapping = disease_atcappingBiz.getDisease_atcappingById(this.getId());
-			if (disease_atcapping != null) {
-				request.put("disease_atcapping", disease_atcapping);
+			String imgStr_atcapping = disease_atcapping.getDisease_image();
+			if (imgStr_atcapping != "") {
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_atcapping.getImage_type().split("/")[1];
+				if (generateImage(imgStr_atcapping, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_atcapping", disease_atcapping);
 			return "atcapping_view";
 			
 		case "disease_pa":
 			Disease_pa disease_pa = disease_paBiz.getDisease_paById(this.getId());
-			if (disease_pa != null) {
-				request.put("disease_pa", disease_pa);
+			String imgStr_pa = disease_pa.getDisease_image();
+			if (imgStr_pa != "") {
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_pa.getImage_type().split("/")[1];
+				if (generateImage(imgStr_pa, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_pa", disease_pa);
 			return "pa_view";
 			
 		case "disease_bed":
 			Disease_bed disease_bed = disease_bedBiz.getDisease_bedById(this.getId());
-			if (disease_bed != null) {
-				request.put("disease_bed", disease_bed);
+			String imgStr_bed = disease_bed.getDisease_image();
+			if (imgStr_bed != "") {
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_bed.getImage_type().split("/")[1];
+				if (generateImage(imgStr_bed, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_bed", disease_bed);
 			return "bed_view";
 			
 		case "disease_regstruc":
 			Disease_regstruc disease_regstruc = disease_regstrucBiz.getDisease_regstrucById(this.getId());
-			if (disease_regstruc != null) {
-				request.put("disease_regstruc", disease_regstruc);
+			String imgStr_regstruc = disease_regstruc.getDisease_image();
+			if (imgStr_regstruc != "") {
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_regstruc.getImage_type().split("/")[1];
+				if (generateImage(imgStr_regstruc, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_regstruc", disease_regstruc);
 			return "regstruc_view";
 			
 		case "disease_wingwall":
 			Disease_wingwall disease_wingwall = disease_wingwallBiz.getDisease_wingwallById(this.getId());
-			if (disease_wingwall != null) {
-				request.put("disease_wingwall", disease_wingwall);
+			String imgStr_wingwall = disease_wingwall.getDisease_image();
+			if (imgStr_wingwall != "") {
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_wingwall.getImage_type().split("/")[1];
+				if (generateImage(imgStr_wingwall, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_wingwall", disease_wingwall);
 			return "wingwall_view";
 			
 		case "disease_conslope":
 			Disease_conslope disease_conslope = disease_conslopeBiz.getDisease_conslopeById(this.getId());
-			if (disease_conslope != null) {
-				request.put("disease_conslope", disease_conslope);
+			String imgStr_conslope = disease_conslope.getDisease_image();
+			if (imgStr_conslope != "") {
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_conslope.getImage_type().split("/")[1];
+				if (generateImage(imgStr_conslope, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_conslope", disease_conslope);
 			return "conslope_view";
 			
 		case "disease_proslope":
 			Disease_proslope disease_proslope = disease_proslopeBiz.getDisease_proslopeById(this.getId());
-			if (disease_proslope != null) {
-				request.put("disease_proslope", disease_proslope);
+			String imgStr_proslope = disease_proslope.getDisease_image();
+			if (imgStr_proslope != "") {
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_proslope.getImage_type().split("/")[1];
+				if (generateImage(imgStr_proslope, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_proslope", disease_proslope);
 			return "proslope_view";
 			
 		case "disease_deck":
 			Disease_deck disease_deck = disease_deckBiz.getDisease_deckById(this.getId());
-			if (disease_deck != null) {
-				request.put("disease_deck", disease_deck);
+			String imgStr_deck = disease_deck.getDisease_image();
+			if (imgStr_deck != "") {
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_deck.getImage_type().split("/")[1];
+				if (generateImage(imgStr_deck, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_deck", disease_deck);
 			return "deck_view";
 			
 		case "disease_joint":
 			Disease_joint disease_joint = disease_jointBiz.getDisease_jointById(this.getId());
-			if (disease_joint != null) {
-				request.put("disease_joint", disease_joint);
+			String imgStr_joint = disease_joint.getDisease_image();
+			if (imgStr_joint != "") {
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_joint.getImage_type().split("/")[1];
+				if (generateImage(imgStr_joint, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_joint", disease_joint);
 			return "joint_view";
 			
 		case "disease_sidewalk":
 			Disease_sidewalk disease_sidewalk = disease_sidewalkBiz.getDisease_sidewalkById(this.getId());
-			if (disease_sidewalk != null) {
-				request.put("disease_sidewalk", disease_sidewalk);
+			String imgStr_sidewalk = disease_sidewalk.getDisease_image();
+			if (imgStr_sidewalk != "") {				
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_sidewalk.getImage_type().split("/")[1];
+				if (generateImage(imgStr_sidewalk, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_sidewalk", disease_sidewalk);
 			return "sidewalk_view";
 			
 		case "disease_fence":
 			Disease_fence disease_fence = disease_fenceBiz.getDisease_fenceById(this.getId());
-			if (disease_fence != null) {
-				request.put("disease_fence", disease_fence);
+			String imgStr_fence = disease_fence.getDisease_image();
+			if (imgStr_fence != "") {				
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_fence.getImage_type().split("/")[1];
+				if (generateImage(imgStr_fence, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_fence", disease_fence);
 			return "fence_view";
 			
 		case "disease_watertight":
 			Disease_watertight disease_watertight = disease_watertightBiz.getDisease_watertightById(this.getId());
-			if (disease_watertight != null) {
-				request.put("disease_watertight", disease_watertight);
+			String imgStr_watertight = disease_watertight.getDisease_image();
+			if (imgStr_watertight != "") {				
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_watertight.getImage_type().split("/")[1];
+				if (generateImage(imgStr_watertight, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_watertight", disease_watertight);
 			return "watertight_view";
 			
 		case "disease_lighting":
 			Disease_lighting disease_lighting = disease_lightingBiz.getDisease_lightingById(this.getId());
-			if (disease_lighting != null) {
-				request.put("disease_lighting", disease_lighting);
+			String imgStr_lighting = disease_lighting.getDisease_image();
+			if (imgStr_lighting != "") {				
+				String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_lighting.getImage_type().split("/")[1];
+				if (generateImage(imgStr_lighting, imgFilePath)) {
+					request.put("img_name", new File(imgFilePath).getName());
+				}
 			}
+			request.put("disease_lighting", disease_lighting);
 			return "lighting_view";
 
 		default:
@@ -1036,6 +1426,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("rg_location", disease_girder.getRg_location());
 				request.put("add_content", disease_girder.getAdd_content());
 				request.put("disease_image", disease_girder.getDisease_image());
+				request.put("image_type", disease_girder.getImage_type());
+				
+				String imgStr = disease_girder.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_girder.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1063,6 +1462,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("l2_width", disease_wetjoint.getL2_width());
 				request.put("add_content", disease_wetjoint.getAdd_content());
 				request.put("disease_image", disease_wetjoint.getDisease_image());
+				request.put("image_type", disease_wetjoint.getImage_type());
+				
+				String imgStr = disease_wetjoint.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_wetjoint.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1082,6 +1490,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("rg_feature", disease_support.getRg_feature());
 				request.put("add_content", disease_support.getAdd_content());
 				request.put("disease_image", disease_support.getDisease_image());
+				request.put("image_type", disease_support.getImage_type());
+				
+				String imgStr = disease_support.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_support.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1109,6 +1526,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("l2_width", disease_pier.getL2_width());
 				request.put("add_content", disease_pier.getAdd_content());
 				request.put("disease_image", disease_pier.getDisease_image());
+				request.put("image_type", disease_pier.getImage_type());
+				
+				String imgStr = disease_pier.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_pier.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1128,6 +1554,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("rg_feature", disease_bentcap.getRg_feature());
 				request.put("add_content", disease_bentcap.getAdd_content());
 				request.put("disease_image", disease_bentcap.getDisease_image());
+				request.put("image_type", disease_bentcap.getImage_type());
+				
+				String imgStr = disease_bentcap.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_bentcap.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1147,6 +1582,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("rg_feature", disease_tiebeam.getRg_feature());
 				request.put("add_content", disease_tiebeam.getAdd_content());
 				request.put("disease_image", disease_tiebeam.getDisease_image());
+				request.put("image_type", disease_tiebeam.getImage_type());
+				
+				String imgStr = disease_tiebeam.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_tiebeam.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1164,8 +1608,18 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("item_name", disease_atbody.getItem_name());
 				request.put("parts_id", disease_atbody.getParts_id());
 				request.put("rg_feature", disease_atbody.getRg_feature());
+				request.put("sp_otherDisease", disease_atbody.getSp_otherDisease());
 				request.put("add_content", disease_atbody.getAdd_content());
 				request.put("disease_image", disease_atbody.getDisease_image());
+				request.put("image_type", disease_atbody.getImage_type());
+				
+				String imgStr = disease_atbody.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_atbody.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1185,6 +1639,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("rg_feature", disease_atcapping.getRg_feature());
 				request.put("add_content", disease_atcapping.getAdd_content());
 				request.put("disease_image", disease_atcapping.getDisease_image());
+				request.put("image_type", disease_atcapping.getImage_type());
+				
+				String imgStr = disease_atcapping.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_atcapping.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1204,6 +1667,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("rg_feature", disease_pa.getRg_feature());
 				request.put("add_content", disease_pa.getAdd_content());
 				request.put("disease_image", disease_pa.getDisease_image());
+				request.put("image_type", disease_pa.getImage_type());
+				
+				String imgStr = disease_pa.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_pa.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1223,6 +1695,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("rg_feature", disease_bed.getRg_feature());
 				request.put("add_content", disease_bed.getAdd_content());
 				request.put("disease_image", disease_bed.getDisease_image());
+				request.put("image_type", disease_bed.getImage_type());
+				
+				String imgStr = disease_bed.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_bed.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1242,6 +1723,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("rg_feature", disease_regstruc.getRg_feature());
 				request.put("add_content", disease_regstruc.getAdd_content());
 				request.put("disease_image", disease_regstruc.getDisease_image());
+				request.put("image_type", disease_regstruc.getImage_type());
+				
+				String imgStr = disease_regstruc.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_regstruc.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1261,6 +1751,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("rg_feature", disease_wingwall.getRg_feature());
 				request.put("add_content", disease_wingwall.getAdd_content());
 				request.put("disease_image", disease_wingwall.getDisease_image());
+				request.put("image_type", disease_wingwall.getImage_type());
+				
+				String imgStr = disease_wingwall.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_wingwall.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1280,6 +1779,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("rg_feature", disease_conslope.getRg_feature());
 				request.put("add_content", disease_conslope.getAdd_content());
 				request.put("disease_image", disease_conslope.getDisease_image());
+				request.put("image_type", disease_conslope.getImage_type());
+				
+				String imgStr = disease_conslope.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_conslope.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1299,6 +1807,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("rg_feature", disease_proslope.getRg_feature());
 				request.put("add_content", disease_proslope.getAdd_content());
 				request.put("disease_image", disease_proslope.getDisease_image());
+				request.put("image_type", disease_proslope.getImage_type());
+				
+				String imgStr = disease_proslope.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_proslope.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1318,6 +1835,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("rg_feature", disease_deck.getRg_feature());
 				request.put("add_content", disease_deck.getAdd_content());
 				request.put("disease_image", disease_deck.getDisease_image());
+				request.put("image_type", disease_deck.getImage_type());
+				
+				String imgStr = disease_deck.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_deck.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}				
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1337,6 +1863,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("rg_feature", disease_joint.getRg_feature());
 				request.put("add_content", disease_joint.getAdd_content());
 				request.put("disease_image", disease_joint.getDisease_image());
+				request.put("image_type", disease_joint.getImage_type());
+				
+				String imgStr = disease_joint.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_joint.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1356,6 +1891,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("rg_feature", disease_sidewalk.getRg_feature());
 				request.put("add_content", disease_sidewalk.getAdd_content());
 				request.put("disease_image", disease_sidewalk.getDisease_image());
+				request.put("image_type", disease_sidewalk.getImage_type());
+				
+				String imgStr = disease_sidewalk.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_sidewalk.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1375,6 +1919,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("rg_feature", disease_fence.getRg_feature());
 				request.put("add_content", disease_fence.getAdd_content());
 				request.put("disease_image", disease_fence.getDisease_image());
+				request.put("image_type", disease_fence.getImage_type());
+				
+				String imgStr = disease_fence.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_fence.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1394,6 +1947,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("rg_feature", disease_watertight.getRg_feature());
 				request.put("add_content", disease_watertight.getAdd_content());
 				request.put("disease_image", disease_watertight.getDisease_image());
+				request.put("image_type", disease_watertight.getImage_type());
+				
+				String imgStr = disease_watertight.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_watertight.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1413,6 +1975,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("rg_feature", disease_lighting.getRg_feature());
 				request.put("add_content", disease_lighting.getAdd_content());
 				request.put("disease_image", disease_lighting.getDisease_image());
+				request.put("image_type", disease_lighting.getImage_type());
+				
+				String imgStr = disease_lighting.getDisease_image();
+				if (imgStr != "") {
+					String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + disease_lighting.getImage_type().split("/")[1];
+					if (generateImage(imgStr, imgFilePath)) {
+						request.put("img_name", new File(imgFilePath).getName());
+					}
+				}
 			}
 		}		
 		request.put("bg_id", this.getBg_id());
@@ -1421,7 +1992,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		return "disease_lighting";
 	}
 	
-	public String changeGirder() throws IOException {
+	public String changeGirder() throws Exception {
 		Disease_girder girder = new Disease_girder();
 		girder.setBg_id(this.getBg_id());
 		girder.setParts_id(this.getParts_id());
@@ -1440,6 +2011,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		girder.setSide_width(this.getSide_width());
 		girder.setRg_location(this.getRg_location());
 		girder.setAdd_content(this.getAdd_content());
+		girder.setDisease_image(this.getDisease_image());
+		girder.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -1449,6 +2022,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				girder.setId(dis.getId());
 				girder.setFlag(dis.getFlag());
+				girder.setEvaluation(dis.getEvaluation());
 				
 				disease_girderBiz.updateDisease_girder(girder);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_girder&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -1480,6 +2054,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		wetjoint.setL2_length(this.getL2_length());
 		wetjoint.setL2_width(this.getL2_width());
 		wetjoint.setAdd_content(this.getAdd_content());
+		wetjoint.setDisease_image(this.getDisease_image());
+		wetjoint.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -1489,6 +2065,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				wetjoint.setId(dis.getId());
 				wetjoint.setFlag(dis.getFlag());
+				wetjoint.setEvaluation(dis.getEvaluation());
 				
 				disease_wetjointBiz.updateDisease_wetjoint(wetjoint);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_wetjoint&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -1512,6 +2089,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		support.setItem_name(this.getItem_name());
 		support.setRg_feature(this.getRg_feature());
 		support.setAdd_content(this.getAdd_content());
+		support.setDisease_image(this.getDisease_image());
+		support.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -1521,6 +2100,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				support.setId(dis.getId());
 				support.setFlag(dis.getFlag());
+				support.setEvaluation(dis.getEvaluation());
 				
 				disease_supportBiz.updateDisease_support(support);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_support&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -1552,6 +2132,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		pier.setL2_length(this.getL2_length());
 		pier.setL2_width(this.getL2_width());
 		pier.setAdd_content(this.getAdd_content());
+		pier.setDisease_image(this.getDisease_image());
+		pier.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -1561,6 +2143,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				pier.setId(dis.getId());
 				pier.setFlag(dis.getFlag());
+				pier.setEvaluation(dis.getEvaluation());
 				
 				disease_pierBiz.updateDisease_pier(pier);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_pier&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -1584,6 +2167,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		bentcap.setItem_name(this.getItem_name());
 		bentcap.setRg_feature(this.getRg_feature());
 		bentcap.setAdd_content(this.getAdd_content());
+		bentcap.setDisease_image(this.getDisease_image());
+		bentcap.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -1593,6 +2178,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				bentcap.setId(dis.getId());
 				bentcap.setFlag(dis.getFlag());
+				bentcap.setEvaluation(dis.getEvaluation());
 				
 				disease_bentcapBiz.updateDisease_bentcap(bentcap);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_bentcap&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -1616,6 +2202,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		tiebeam.setItem_name(this.getItem_name());
 		tiebeam.setRg_feature(this.getRg_feature());
 		tiebeam.setAdd_content(this.getAdd_content());
+		tiebeam.setDisease_image(this.getDisease_image());
+		tiebeam.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -1625,6 +2213,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				tiebeam.setId(dis.getId());
 				tiebeam.setFlag(dis.getFlag());
+				tiebeam.setEvaluation(dis.getEvaluation());
 				
 				disease_tiebeamBiz.updateDisease_tiebeam(tiebeam);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_tiebeam&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -1647,7 +2236,10 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		atbody.setParts_id(this.getParts_id());
 		atbody.setItem_name(this.getItem_name());
 		atbody.setRg_feature(this.getRg_feature());
+		atbody.setSp_otherDisease(this.getSp_otherDisease());
 		atbody.setAdd_content(this.getAdd_content());
+		atbody.setDisease_image(this.getDisease_image());
+		atbody.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -1657,6 +2249,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				atbody.setId(dis.getId());
 				atbody.setFlag(dis.getFlag());
+				atbody.setEvaluation(dis.getEvaluation());
 				
 				disease_atbodyBiz.updateDisease_atbody(atbody);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_atbody&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -1680,6 +2273,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		atcapping.setItem_name(this.getItem_name());
 		atcapping.setRg_feature(this.getRg_feature());
 		atcapping.setAdd_content(this.getAdd_content());
+		atcapping.setDisease_image(this.getDisease_image());
+		atcapping.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -1689,6 +2284,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				atcapping.setId(dis.getId());
 				atcapping.setFlag(dis.getFlag());
+				atcapping.setEvaluation(dis.getEvaluation());
 				
 				disease_atcappingBiz.updateDisease_atcapping(atcapping);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_atcapping&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -1712,6 +2308,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		pa.setItem_name(this.getItem_name());
 		pa.setRg_feature(this.getRg_feature());
 		pa.setAdd_content(this.getAdd_content());
+		pa.setDisease_image(this.getDisease_image());
+		pa.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -1721,6 +2319,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				pa.setId(dis.getId());
 				pa.setFlag(dis.getFlag());
+				pa.setEvaluation(dis.getEvaluation());
 				
 				disease_paBiz.updateDisease_pa(pa);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_pa&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -1744,6 +2343,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		bed.setItem_name(this.getItem_name());
 		bed.setRg_feature(this.getRg_feature());
 		bed.setAdd_content(this.getAdd_content());
+		bed.setDisease_image(this.getDisease_image());
+		bed.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -1753,6 +2354,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				bed.setId(dis.getId());
 				bed.setFlag(dis.getFlag());
+				bed.setEvaluation(dis.getEvaluation());
 				
 				disease_bedBiz.updateDisease_bed(bed);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_bed&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -1776,6 +2378,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		regstruc.setItem_name(this.getItem_name());
 		regstruc.setRg_feature(this.getRg_feature());
 		regstruc.setAdd_content(this.getAdd_content());
+		regstruc.setDisease_image(this.getDisease_image());
+		regstruc.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -1785,6 +2389,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				regstruc.setId(dis.getId());
 				regstruc.setFlag(dis.getFlag());
+				regstruc.setEvaluation(dis.getEvaluation());
 				
 				disease_regstrucBiz.updateDisease_regstruc(regstruc);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_regstruc&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -1808,6 +2413,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		wingwall.setItem_name(this.getItem_name());
 		wingwall.setRg_feature(this.getRg_feature());
 		wingwall.setAdd_content(this.getAdd_content());
+		wingwall.setDisease_image(this.getDisease_image());
+		wingwall.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -1817,6 +2424,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				wingwall.setId(dis.getId());
 				wingwall.setFlag(dis.getFlag());
+				wingwall.setEvaluation(dis.getEvaluation());
 				
 				disease_wingwallBiz.updateDisease_wingwall(wingwall);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_wingwall&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -1840,6 +2448,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		conslope.setItem_name(this.getItem_name());
 		conslope.setRg_feature(this.getRg_feature());
 		conslope.setAdd_content(this.getAdd_content());
+		conslope.setDisease_image(this.getDisease_image());
+		conslope.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -1849,6 +2459,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				conslope.setId(dis.getId());
 				conslope.setFlag(dis.getFlag());
+				conslope.setEvaluation(dis.getEvaluation());
 				
 				disease_conslopeBiz.updateDisease_conslope(conslope);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_conslope&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -1872,6 +2483,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		proslope.setItem_name(this.getItem_name());
 		proslope.setRg_feature(this.getRg_feature());
 		proslope.setAdd_content(this.getAdd_content());
+		proslope.setDisease_image(this.getDisease_image());
+		proslope.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -1881,6 +2494,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				proslope.setId(dis.getId());
 				proslope.setFlag(dis.getFlag());
+				proslope.setEvaluation(dis.getEvaluation());
 				
 				disease_proslopeBiz.updateDisease_proslope(proslope);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_proslope&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -1897,14 +2511,16 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		return null;
 	}
 	
-	public String changeDeck() throws IOException {
+	public String changeDeck() throws IOException, SerialException, SQLException {
 		Disease_deck deck = new Disease_deck();
 		deck.setBg_id(this.getBg_id());
 		deck.setParts_id(this.getParts_id());
 		deck.setItem_name(this.getItem_name());
 		deck.setRg_feature(this.getRg_feature());
 		deck.setAdd_content(this.getAdd_content());
-
+		deck.setDisease_image(this.getDisease_image());
+		deck.setImage_type(this.getImage_type());
+		
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
 		
@@ -1913,6 +2529,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				deck.setId(dis.getId());
 				deck.setFlag(dis.getFlag());
+				deck.setEvaluation(dis.getEvaluation());
 				
 				disease_deckBiz.updateDisease_deck(deck);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_deck&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -1936,6 +2553,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		joint.setItem_name(this.getItem_name());
 		joint.setRg_feature(this.getRg_feature());
 		joint.setAdd_content(this.getAdd_content());
+		joint.setDisease_image(this.getDisease_image());
+		joint.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -1945,6 +2564,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				joint.setId(dis.getId());
 				joint.setFlag(dis.getFlag());
+				joint.setEvaluation(dis.getEvaluation());
 				
 				disease_jointBiz.updateDisease_joint(joint);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_joint&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -1968,6 +2588,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		sidewalk.setItem_name(this.getItem_name());
 		sidewalk.setRg_feature(this.getRg_feature());
 		sidewalk.setAdd_content(this.getAdd_content());
+		sidewalk.setDisease_image(this.getDisease_image());
+		sidewalk.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -1977,6 +2599,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				sidewalk.setId(dis.getId());
 				sidewalk.setFlag(dis.getFlag());
+				sidewalk.setEvaluation(dis.getEvaluation());
 				
 				disease_sidewalkBiz.updateDisease_sidewalk(sidewalk);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_sidewalk&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2000,6 +2623,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		fence.setItem_name(this.getItem_name());
 		fence.setRg_feature(this.getRg_feature());
 		fence.setAdd_content(this.getAdd_content());
+		fence.setDisease_image(this.getDisease_image());
+		fence.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -2009,6 +2634,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				fence.setId(dis.getId());
 				fence.setFlag(dis.getFlag());
+				fence.setEvaluation(dis.getEvaluation());
 				
 				disease_fenceBiz.updateDisease_fence(fence);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_fence&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2032,6 +2658,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		watertight.setItem_name(this.getItem_name());
 		watertight.setRg_feature(this.getRg_feature());
 		watertight.setAdd_content(this.getAdd_content());
+		watertight.setDisease_image(this.getDisease_image());
+		watertight.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -2041,6 +2669,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				watertight.setId(dis.getId());
 				watertight.setFlag(dis.getFlag());
+				watertight.setEvaluation(dis.getEvaluation());
 				
 				disease_watertightBiz.updateDisease_watertight(watertight);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_watertight&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2064,6 +2693,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		lighting.setItem_name(this.getItem_name());
 		lighting.setRg_feature(this.getRg_feature());
 		lighting.setAdd_content(this.getAdd_content());
+		lighting.setDisease_image(this.getDisease_image());
+		lighting.setImage_type(this.getImage_type());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -2073,6 +2704,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				lighting.setId(dis.getId());
 				lighting.setFlag(dis.getFlag());
+				lighting.setEvaluation(dis.getEvaluation());
 				
 				disease_lightingBiz.updateDisease_lighting(lighting);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_lighting&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2089,10 +2721,382 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		return null;
 	}
 	
+	// 生成病害报告
+	public void createReport() throws IOException {
+		Map<String,Object> dataMap = new HashMap<String,Object>();
+		
+		Base1 base1 = base1Biz.getBase1ByBridgeCode(this.getBg_id());
+		Base2 base2 = base2Biz.getBase2ByBridgeCode(this.getBg_id());
+		Base3 base3 = base3Biz.getBase3ByBridgeCode(this.getBg_id());
+		Structure structure = structureBiz.getStructureByBridgeCode(this.getBg_id());
+		Parts1 parts1 = parts1Biz.getParts1ByBridgeCode(this.getBg_id());
+		Parts2 parts2 = parts2Biz.getParts2ByBridgeCode(this.getBg_id());
+		Pier_detail pier_detail = pier_detailBiz.getPier_detailByBridgeCode(this.getBg_id());
+		Load_detail load_detail = load_detailBiz.getLoad_detailByBridgeCode(this.getBg_id());
+		General_detail general_detail = general_detailBiz.getGeneral_detailByBridgeCode(this.getBg_id());
+		Support_detail support_detail = support_detailBiz.getSupport_detailByBridgeCode(this.getBg_id());
+		
+		// A.行政识别数据
+		dataMap.put("bridge_name", base1.getBridge_name());
+		dataMap.put("path_num", base1.getPath_num());
+		dataMap.put("path_name", base1.getPath_name());
+		dataMap.put("rode_grade", base1.getRode_grade());
+		dataMap.put("center_stake", base1.getCenter_stake());
+		dataMap.put("bridge_classify", base2.getBridge_classify().split("]")[1]);
+		dataMap.put("deck_type", base3.getDeck_type().split("]")[1]);
+		dataMap.put("custody_unit", base1.getCustody_unit());
+		dataMap.put("building_time", structure.getBuilding_time());
+		
+		// B.结构技术数据
+		dataMap.put("total_len", structure.getTotal_len());
+		dataMap.put("full_wide", structure.getFull_wide());
+		dataMap.put("bridge_high", structure.getBridge_high());
+		dataMap.put("high_limit", structure.getHigh_limit());
+		
+		dataMap.put("bridge_type", base2.getBridge_type().split("]")[1]);
+		dataMap.put("abutment_type", base3.getAbutment_type().split("]")[1]);
+		dataMap.put("pier_type", base3.getPier_type().split("]")[1]);
+		dataMap.put("abutment_material", base3.getAbutment_material().split("]")[1]);
+		dataMap.put("pier_material", base3.getPier_material().split("]")[1]);
+		dataMap.put("material_code", base2.getMaterial_code().split("]")[1]);
+		dataMap.put("pier_abutment_base", base3.getPier_abutment_base().split("]")[1]);
+		dataMap.put("pier_abutment_material", base3.getPier_abutment_material().split("]")[1]); //?
+		
+		dataMap.put("joint_type", base3.getJoint_type().split("]")[1]);
+		dataMap.put("support_type", base2.getSupport_type().split("]")[1]);
+		
+		// 桥梁构件信息表
+		dataMap.put("load_num", load_detail.getLoad_nums().split(";").length-1);
+		dataMap.put("general_num", general_detail.getGeneral_nums().split(";").length-1);
+		dataMap.put("support_num", support_detail.getSupport_nums().split(";").length-1);
+		dataMap.put("wing_wall", nativeOnenum(parts1.getWing_wall()));
+		dataMap.put("conical_slope", nativeOnenum(parts1.getConical_slope()));
+		dataMap.put("protection_slope", parts1.getProtection_slope());
+		dataMap.put("pier_num", pier_detail.getPier_nums().split(";").length-1);
+		dataMap.put("abutment_num", parts1.getAbutment_num());
+		dataMap.put("pa_num", parts1.getPa_num());
+		dataMap.put("bed_num", parts1.getBed_num());
+		dataMap.put("reg_structure", parts1.getReg_structure());		
+		dataMap.put("deck_num", parts2.getDeck_num());
+		dataMap.put("joint_num", parts2.getJoint_num());
+		dataMap.put("sidewalk", nativeOnenum(parts2.getSidewalk()));
+		dataMap.put("guardrail", nativeOnenum(parts2.getGuardrail()));
+		dataMap.put("drainage_system", parts2.getDrainage_system());
+		dataMap.put("illuminated_sign", parts2.getIlluminated_sign());
+		
+		// 病害部分
+		// 桥面系
+		List<Map<String, Object>> result_deck = disease_deckBiz.getAllDisease_deckByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_joint = disease_jointBiz.getAllDisease_jointByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_sidewalk = disease_sidewalkBiz.getAllDisease_sidewalkByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_fence = disease_fenceBiz.getAllDisease_fenceByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_watertight = disease_watertightBiz.getAllDisease_watertightByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_lighting = disease_lightingBiz.getAllDisease_lightingByBridgeCode(this.getBg_id());
+		
+		// 下部结构
+		List<Map<String, Object>> result_pier = disease_pierBiz.getAllDisease_pierByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_bentcap = disease_bentcapBiz.getAllDisease_bentcapByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_tiebeam = disease_tiebeamBiz.getAllDisease_tiebeamByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_atbody = disease_atbodyBiz.getAllDisease_atbodyByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_atcapping = disease_atcappingBiz.getAllDisease_atcappingByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_pa = disease_paBiz.getAllDisease_paByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_bed = disease_bedBiz.getAllDisease_bedByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_regstruc = disease_regstrucBiz.getAllDisease_regstrucByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_wingwall = disease_wingwallBiz.getAllDisease_wingwallByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_conslope = disease_conslopeBiz.getAllDisease_conslopeByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_proslope = disease_proslopeBiz.getAllDisease_proslopeByBridgeCode(this.getBg_id());
+		
+		// 上部结构
+		List<Map<String, Object>> result_girder = disease_girderBiz.getAllDisease_girderByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_wetjoint = disease_wetjointBiz.getAllDisease_wetjointByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_support = disease_supportBiz.getAllDisease_supportByBridgeCode(this.getBg_id());
+		
+		List<List<Map<String, Object>>> list_up = new ArrayList<>(); // 病害列表
+		List<List<Map<String, Object>>> img_up = new ArrayList<>(); // 病害图片
+		
+
+		String load_nums = load_detail.getLoad_nums();
+		String general_nums = general_detail.getGeneral_nums();
+		String support_nums = support_detail.getSupport_nums();
+		
+		// 确定跨号
+		int stride = Integer.parseInt(load_nums.split("; ")[load_nums.split("; ").length-2].split("-")[0]);
+		int stride_general = Integer.parseInt(general_nums.split("; ")[general_nums.split("; ").length-2].split("-")[0]);
+		int stride_support = Integer.parseInt(support_nums.split("; ")[support_nums.split("; ").length-2].split("-")[0]);
+		
+		if (stride < stride_general) {
+			stride = stride_general;
+		}
+		if (stride < stride_support) {
+			stride = stride_support;
+		}
+		
+		result_girder.addAll(result_wetjoint);
+		result_girder.addAll(result_support);
+		
+		for (int i = 0; i < stride; i++) {
+			List<Map<String, Object>> up = new ArrayList<Map<String, Object>>();
+			List<Map<String, Object>> img = new ArrayList<Map<String, Object>>();
+			for (int j = 0; j < result_girder.size(); j++) {
+				
+		        if (Integer.parseInt(result_girder.get(j).get("parts_id").toString().split("-")[0]) == i + 1) {
+		        	
+		        	String girder_str = result_girder.get(j).get("item_name").toString();
+					if ("主梁".equals(girder_str) || "空心板".equals(girder_str) || "主拱圈".equals(girder_str) 
+							|| "钢、桁架拱片".equals(girder_str) || "上部承重构件".equals(girder_str)) {
+						
+						if ("裂缝".equals(result_girder.get(j).get("rg_feature").toString())) {
+							String girder_content = result_girder.get(j).get("rg_location") + "纵向距本跨梁端" 
+									+ result_girder.get(j).get("start") + "米到" 
+									+ result_girder.get(j).get("end") + "米" 
+									+ result_girder.get(j).get("rg_fissure");
+							
+							if ("网裂缝".equals(result_girder.get(j).get("rg_fissure").toString())) {
+								girder_content += ",面积" 
+										+ result_girder.get(j).get("area") + ",";
+							}
+							else {
+								girder_content += ",长度" 
+										+ result_girder.get(j).get("length") + "米,宽度" 
+										+ result_girder.get(j).get("width") + "米,";
+							}
+							
+							if ("左翼板".equals(result_girder.get(j).get("rg_location").toString()) 
+									|| "右翼板".equals(result_girder.get(j).get("rg_location").toString())) {
+								girder_content += "距下缘" 
+										+ result_girder.get(j).get("side_start") + "米到" 
+										+ result_girder.get(j).get("side_end") + "米开裂,长度"
+										+ result_girder.get(j).get("side_length") + "米,宽度" 
+										+ result_girder.get(j).get("side_width") + "米,";
+							}
+							
+							girder_content += result_girder.get(j).get("add_content");
+							result_girder.get(j).put("add_content", girder_content);
+						}
+						else if ("其他病害".equals(result_girder.get(j).get("rg_feature").toString())) {
+							String girder_content = result_girder.get(j).get("rg_location") + "纵向距本跨梁端" 
+									+ result_girder.get(j).get("start") + "米到" 
+									+ result_girder.get(j).get("end") + "米"
+									+ result_girder.get(j).get("sp_otherDisease") + ",面积" 
+									+ result_girder.get(j).get("area") + "," 
+									+ result_girder.get(j).get("add_content");
+							result_girder.get(j).put("add_content", girder_content);
+							result_girder.get(j).put("rg_feature", result_girder.get(j).get("sp_otherDisease"));
+						}
+						else {
+							String girder_content = result_girder.get(j).get("rg_location") + "纵向距本跨梁端" 
+									+ result_girder.get(j).get("start") + "米到" 
+									+ result_girder.get(j).get("end") + "米"
+									+ result_girder.get(j).get("rg_feature") + ",面积" 
+									+ result_girder.get(j).get("area") + "," 
+									+ result_girder.get(j).get("add_content");
+							result_girder.get(j).put("add_content", girder_content);
+						}
+					}
+					else if ("湿接缝".equals(girder_str) || "横隔板".equals(girder_str) || "铰缝".equals(girder_str) 
+							|| "拱上结构".equals(girder_str) || "横向联结系".equals(girder_str) || "上部一般构件".equals(girder_str)) {
+						
+						if ("裂缝".equals(result_girder.get(j).get("rg_feature").toString())) {
+							String girder_content = "纵向距本跨梁端";
+							
+							if ("网裂缝".equals(result_girder.get(j).get("rg_fissure").toString())) {
+								girder_content += result_girder.get(j).get("l1_start") + "米到" 
+										+ result_girder.get(j).get("l1_end") + "米"
+										+ result_girder.get(j).get("rg_fissure") + ",面积"
+										+ result_girder.get(j).get("l1_area") + ",";
+							}
+							else {
+								girder_content += result_girder.get(j).get("l2_start") + "米"
+										+ result_girder.get(j).get("rg_fissure") +",长度" 
+										+ result_girder.get(j).get("l2_length") + "米,宽度" 
+										+ result_girder.get(j).get("l2_width") + "米,";
+							}
+							
+							girder_content += result_girder.get(j).get("add_content");
+							result_girder.get(j).put("add_content", girder_content);
+						}
+						else if ("其他病害".equals(result_girder.get(j).get("rg_feature").toString())) {
+							String girder_content = result_girder.get(j).get("sp_otherDisease") + ","
+									+ result_girder.get(j).get("add_content");
+							result_girder.get(j).put("add_content", girder_content);
+							result_girder.get(j).put("rg_feature", result_girder.get(j).get("sp_otherDisease"));
+						}
+						else {
+							String girder_content = "纵向距本跨梁端" 
+									+ result_girder.get(j).get("l1_start") + "米到" 
+									+ result_girder.get(j).get("l1_end") + "米"
+									+ result_girder.get(j).get("rg_feature") + ",面积" 
+									+ result_girder.get(j).get("l1_area") + "," 
+									+ result_girder.get(j).get("add_content");
+							result_girder.get(j).put("add_content", girder_content);
+						}						
+					}
+		        	
+		        	up.add(result_girder.get(j));
+		        	
+		        	if (result_girder.get(j).get("disease_image") != "") {
+		        		img.add(result_girder.get(j));
+			        }
+		        }		        
+		    }
+			list_up.add(up);
+			img_up.add(img);
+		}
+		
+		List<Map<String, Object>> list_deck = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> list_down = new ArrayList<Map<String, Object>>();
+		
+		// 桥面系列表
+		list_deck = result_deck;
+		list_deck.addAll(result_joint);
+		list_deck.addAll(result_sidewalk);
+		list_deck.addAll(result_fence);
+		list_deck.addAll(result_watertight);
+		list_deck.addAll(result_lighting);
+		
+		// 下部列表
+		list_down = result_pier;
+		list_down.addAll(result_bentcap);
+		list_down.addAll(result_tiebeam);
+		list_down.addAll(result_atbody);
+		list_down.addAll(result_atcapping);
+		list_down.addAll(result_pa);
+		list_down.addAll(result_bed);
+		list_down.addAll(result_regstruc);
+		list_down.addAll(result_wingwall);
+		list_down.addAll(result_conslope);
+		list_down.addAll(result_proslope);
+		
+		for (int i = 0; i < list_down.size(); i++) {
+			String down_str = list_down.get(i).get("item_name").toString();
+			if ("桥墩".equals(down_str)) {
+				if ("裂缝".equals(list_down.get(i).get("rg_feature").toString())) {
+					String down_content = "纵向距本跨梁端";
+					
+					if ("网裂缝".equals(list_down.get(i).get("rg_fissure").toString())) {
+						down_content += list_down.get(i).get("l1_start") + "米到" 
+								+ list_down.get(i).get("l1_end") + "米"
+								+ list_down.get(i).get("rg_fissure") + ",面积"
+								+ list_down.get(i).get("l1_area") + ",";
+					}
+					else {
+						down_content += list_down.get(i).get("l2_start") + "米"
+								+ list_down.get(i).get("rg_fissure") +",长度" 
+								+ list_down.get(i).get("l2_length") + "米,宽度" 
+								+ list_down.get(i).get("l2_width") + "米,";
+					}
+					
+					down_content += list_down.get(i).get("add_content");
+					list_down.get(i).put("add_content", down_content);					
+				}
+				else if ("其他病害".equals(list_down.get(i).get("rg_feature").toString())) {
+					String down_content = list_down.get(i).get("sp_otherDisease") + ","
+							+ list_down.get(i).get("add_content");
+					list_down.get(i).put("add_content", down_content);
+					list_down.get(i).put("rg_feature", list_down.get(i).get("sp_otherDisease"));
+				}
+				else {
+					String down_content = "纵向距本跨梁端" 
+							+ list_down.get(i).get("l1_start") + "米到" 
+							+ list_down.get(i).get("l1_end") + "米"
+							+ list_down.get(i).get("rg_feature") + ",面积" 
+							+ list_down.get(i).get("l1_area") + "," 
+							+ list_down.get(i).get("add_content");
+					list_down.get(i).put("add_content", down_content);
+				}
+			}
+			else if ("桥台身".equals(down_str) && "其他病害".equals(list_down.get(i).get("rg_feature").toString())) {
+				String down_content = list_down.get(i).get("sp_otherDisease") + ","
+						+ list_down.get(i).get("add_content");
+				list_down.get(i).put("add_content", down_content);
+				list_down.get(i).put("rg_feature", list_down.get(i).get("sp_otherDisease"));
+			}
+		}
+		
+		List<Map<String, Object>> img_deck = new ArrayList<Map<String, Object>>();		
+		List<Map<String, Object>> img_down = new ArrayList<Map<String, Object>>();
+		
+		// 桥面系图片
+		for (int i = 0; i < list_deck.size(); i++) {
+	        if (list_deck.get(i).get("disease_image") != "") {
+	        	img_deck.add(list_deck.get(i));
+	        }
+	    }
+		
+		// 下部图片
+		for (int i = 0; i < list_down.size(); i++) {
+	        if (list_down.get(i).get("disease_image") != "") {
+	        	img_down.add(list_down.get(i));
+	        }
+	    }
+		
+		dataMap.put("list_deck", list_deck);
+		dataMap.put("list_down", list_down);
+		dataMap.put("list_up", list_up);
+		
+		dataMap.put("img_deck", img_deck);
+		dataMap.put("img_down", img_down);
+		dataMap.put("img_up", img_up);
+		
+		WordCreate test = new WordCreate();
+		test.createWord(dataMap);
+	}
+	
 	public void validate(){
 		if(session.get("userName")==null){
 			session.clear();
 			this.addActionError("error");
 		}
 	}
+	
+	int nativeOnenum(String str) {   
+	    int count = 0;
+	    for (int i = 0; i < str.length(); i++) {
+            char item = str.charAt(i);
+            if (item == '1') {
+				count++;
+			}
+        }
+	    return count;   
+	}
+	
+	// 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
+	public String getImageStr(String imgFilePath) {
+		 InputStream in = null;
+		 byte[] data = null;
+		 try {
+			 in = new FileInputStream(imgFilePath);
+			 data = new byte[in.available()];
+			 in.read(data);
+			 in.close();
+		 } catch (IOException e) {
+			 e.printStackTrace();
+		 }
+		 BASE64Encoder encoder = new BASE64Encoder();
+		 return encoder.encode(data);
+	 }
+	
+	// 对字节数组字符串进行Base64解码并生成图片
+	public static boolean generateImage(String imgStr, String imgFilePath) {
+        if (imgStr == null) // 图像数据为空
+            return false;
+        BASE64Decoder decoder = new BASE64Decoder();
+        try {
+            // Base64解码
+            byte[] bytes = decoder.decodeBuffer(imgStr);
+            for (int i = 0; i < bytes.length; ++i) {
+                if (bytes[i] < 0) {// 调整异常数据
+                    bytes[i] += 256;
+                }
+            }
+            // 生成jpeg图片
+            OutputStream out = new FileOutputStream(imgFilePath);
+            out.write(bytes);
+            out.flush();
+            out.close();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

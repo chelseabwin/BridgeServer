@@ -105,4 +105,10 @@ public class Navigation_barDAOImpl extends HibernateDaoSupport implements Naviga
 		return result;
 	}
 
+	@Override
+	public List<?> findEntityListByPropertySort(String propertyName, String sortStr, Object value, Type type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

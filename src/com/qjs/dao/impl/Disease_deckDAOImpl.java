@@ -61,12 +61,12 @@ public class Disease_deckDAOImpl extends HibernateDaoSupport implements Disease_
 		Query qobj = this.getNewSession().createQuery(hql);
 		qobj.setParameter(0, value, type);
 		return (List<Disease_deck>)qobj.list();
-	}
+	}	
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<?> findEntityListByPropertyWithSql(String propertyName) {
-		String sql = "select * from Disease_deck where bridge_code=?";
+		String sql = "select * from Disease_deck where bg_id=?";
 		SQLQuery qobj = this.getNewSession().createSQLQuery(sql);
 		qobj.setParameter(0, propertyName);
 		return (List<Disease_deck>)qobj.list();
@@ -154,5 +154,14 @@ public class Disease_deckDAOImpl extends HibernateDaoSupport implements Disease_
 		result.put("count", total);
 		result.put("result", res);
 		return result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<?> findEntityListByPropertySort(String propertyName, String sortStr, Object value, Type type) {
+		String hql = "from Disease_deck as u where u."+propertyName+"=? order by "+sortStr;
+		Query qobj = this.getNewSession().createQuery(hql);
+		qobj.setParameter(0, value, type);
+		return (List<Disease_deck>)qobj.list();
 	}
 }

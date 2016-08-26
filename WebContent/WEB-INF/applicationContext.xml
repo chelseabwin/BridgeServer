@@ -411,6 +411,15 @@
 	
 	<bean name="disease" class="com.qjs.action.DiseaseAction" scope="prototype">
 		<property name="base1Biz" ref="base1Biz" />
+	    <property name="base2Biz" ref="base2Biz" />
+	    <property name="base3Biz" ref="base3Biz" />
+	    <property name="structureBiz" ref="structureBiz" />
+	    <property name="parts1Biz" ref="parts1Biz" />
+	    <property name="parts2Biz" ref="parts2Biz" />
+	    <property name="pier_detailBiz" ref="pier_detailBiz" />
+	    <property name="load_detailBiz" ref="load_detailBiz" />
+	    <property name="general_detailBiz" ref="general_detailBiz" />
+	    <property name="support_detailBiz" ref="support_detailBiz" />
 	    <property name="disease_girderBiz" ref="disease_girderBiz" />
 	    <property name="disease_wetjointBiz" ref="disease_wetjointBiz" />
 	    <property name="disease_supportBiz" ref="disease_supportBiz" />

@@ -24,4 +24,6 @@ public interface Disease_proslopeBiz {
 	public Disease_proslope getDisease_proslopeByBridgeCode(String bridgeCode);
 	
 	public int getDisease_proslopeCodeByBridgeCode(String bridgeCode);
+	
+	public List<Map<String, Object>> getAllDisease_proslopeByBridgeCode(String bridgeCode);
 }

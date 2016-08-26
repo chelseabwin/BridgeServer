@@ -24,4 +24,6 @@ public interface Disease_deckBiz {
 	public Disease_deck getDisease_deckByBridgeCode(String bridgeCode);
 	
 	public int getDisease_deckCodeByBridgeCode(String bridgeCode);
+	
+	public List<Map<String, Object>> getAllDisease_deckByBridgeCode(String bridgeCode);
 }

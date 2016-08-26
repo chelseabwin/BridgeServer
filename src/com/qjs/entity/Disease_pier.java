@@ -18,6 +18,8 @@ public class Disease_pier implements java.io.Serializable {
 	private String l2_width;
 	private String add_content;
 	private String disease_image;
+	private String image_type;
+	private String evaluation;
 	private String flag;
 	
 	public Disease_pier() {
@@ -26,7 +28,8 @@ public class Disease_pier implements java.io.Serializable {
 	
 	public Disease_pier(Integer id, String bg_id, String parts_id, String item_name, String rg_feature, 
 			String rg_fissure, String sp_otherDisease, String l1_start, String l1_end, String l1_area, 
-			String l2_start, String l2_length, String l2_width, String add_content, String disease_image, String flag) {
+			String l2_start, String l2_length, String l2_width, String add_content, String disease_image, 
+			String image_type, String evaluation, String flag) {
 		super();
 		this.id = id;
 		this.bg_id = bg_id;
@@ -43,6 +46,8 @@ public class Disease_pier implements java.io.Serializable {
 		this.l2_width = l2_width;
 		this.add_content = add_content;
 		this.disease_image = disease_image;
+		this.image_type = image_type;
+		this.evaluation = evaluation;
 		this.flag = flag;
 	}	
 	
@@ -164,6 +169,22 @@ public class Disease_pier implements java.io.Serializable {
 
 	public void setDisease_image(String disease_image) {
 		this.disease_image = disease_image;
+	}
+	
+	public String getImage_type() {
+		return image_type;
+	}
+
+	public void setImage_type(String image_type) {
+		this.image_type = image_type;
+	}
+	
+	public String getEvaluation() {
+		return evaluation;
+	}
+
+	public void setEvaluation(String evaluation) {
+		this.evaluation = evaluation;
 	}
 	
 	public String getFlag() {

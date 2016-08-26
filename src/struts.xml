@@ -8,8 +8,11 @@
 	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
     <constant name="struts.devMode" value="false" />
     <constant name="struts.objectFactory" value="spring"/>
-    <constant name="struts.i18n.encoding" value="UTF-8" />
-    <constant name="struts.multipart.maxSize" value="10701096"/>
+    <constant name="struts.i18n.encoding" value="UTF-8" />    
+    <constant name="struts.custom.i18n.resources" value="globalMessages"/>
+	<!-- 服务器指定一个临时的路径  否则会上传失败 -->
+	<constant name="struts.multipart.saveDir" value="/uploadtmp"/>
+	<constant name="struts.multipart.maxSize" value="30000000"></constant>
     
     <package name="default" namespace="/" extends="struts-default,json-default">
         <default-action-ref name="index" />
@@ -60,7 +63,7 @@
             <result name="table_data">/jsp/permission/table.jsp</result>
             <result name="addpage">/jsp/permission/add.jsp</result>
             <result name="input">/jsp/error.jsp</result>
-        </action>        
+        </action>
         
         <!-- 桥梁数据管理 -->
         <action name="bridge" class="bridge">

@@ -73,4 +73,10 @@ public class Role_permissionDAOImpl extends HibernateDaoSupport implements Role_
 		return criteria.list();
 	}
 
+	@Override
+	public List<?> findEntityListByPropertySort(String propertyName, String sortStr, Object value, Type type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

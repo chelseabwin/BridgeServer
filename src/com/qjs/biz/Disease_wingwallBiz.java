@@ -24,4 +24,6 @@ public interface Disease_wingwallBiz {
 	public Disease_wingwall getDisease_wingwallByBridgeCode(String bridgeCode);
 	
 	public int getDisease_wingwallCodeByBridgeCode(String bridgeCode);
+	
+	public List<Map<String, Object>> getAllDisease_wingwallByBridgeCode(String bridgeCode);
 }

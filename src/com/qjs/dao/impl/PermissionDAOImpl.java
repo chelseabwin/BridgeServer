@@ -89,4 +89,10 @@ public class PermissionDAOImpl extends HibernateDaoSupport implements Permission
 		return result;
 	}
 
+	@Override
+	public List<?> findEntityListByPropertySort(String propertyName, String sortStr, Object value, Type type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

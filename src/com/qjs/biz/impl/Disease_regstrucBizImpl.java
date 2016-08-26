@@ -78,6 +78,8 @@ public class Disease_regstrucBizImpl implements Disease_regstrucBiz {
 			obj.put("rg_feature", dil.getRg_feature());
 			obj.put("add_content", dil.getAdd_content());
 			obj.put("disease_image", dil.getDisease_image());
+			obj.put("image_type", dil.getImage_type());
+			obj.put("evaluation", dil.getEvaluation());
 			disinfo.add(obj);
 		}
 		Map<String,Object> result = new HashMap<String,Object>();
@@ -113,5 +115,28 @@ public class Disease_regstrucBizImpl implements Disease_regstrucBiz {
 		if (diseaselist != null)
 			return diseaselist.size();
 		return 0;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Map<String, Object>> getAllDisease_regstrucByBridgeCode(String bridgeCode) {
+		List<Disease_regstruc> diseaselist = (List<Disease_regstruc>) disease_regstrucDAO.findEntityListByPropertySort("bg_id", "u.parts_id, u.item_name, u.rg_feature", bridgeCode, StringType.INSTANCE);
+		
+		List<Map<String, Object>> disinfo = new ArrayList<Map<String, Object>>();
+		for (Disease_regstruc dil:diseaselist) {
+			Map<String, Object> obj = new HashMap<String, Object>();
+			
+			obj.put("id", dil.getId() + "");
+			obj.put("bg_id", dil.getBg_id());
+			obj.put("parts_id", dil.getParts_id());
+			obj.put("item_name", dil.getItem_name());
+			obj.put("rg_feature", dil.getRg_feature());
+			obj.put("add_content", dil.getAdd_content());
+			obj.put("disease_image", dil.getDisease_image());
+			obj.put("image_type", dil.getImage_type());
+			obj.put("evaluation", dil.getEvaluation());
+			disinfo.add(obj);
+		}
+		return disinfo;
 	}
 }

@@ -1046,7 +1046,7 @@ public class BridgeAction extends ActionSupport implements RequestAware,SessionA
 		Pier_detail pier_detail = pier_detailBiz.getPier_detailByBridgeCode(this.getBridgeCode());
 		Load_detail load_detail = load_detailBiz.getLoad_detailByBridgeCode(this.getBridgeCode());
 		General_detail general_detail = general_detailBiz.getGeneral_detailByBridgeCode(this.getBridgeCode());
-		Support_detail support_detail = support_detailBiz.getSupport_detailByBridgeCode(this.getBridgeCode());		
+		Support_detail support_detail = support_detailBiz.getSupport_detailByBridgeCode(this.getBridgeCode());
 		
 		if (base1 != null)
 			request.put("base1", base1);
@@ -1139,7 +1139,8 @@ public class BridgeAction extends ActionSupport implements RequestAware,SessionA
 		Date date = new Date();
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 		String[] bgCode = format.format(date).split(" ");
-		String bridge_code = bgCode[0] + "-" + bgCode[1]; // 用系统当前时间作为桥梁代码
+		String[] time = bgCode[1].split(":");
+		String bridge_code = bgCode[0] + "-" + time[0] + time[1] + time[2]; // 用系统当前时间作为桥梁代码
 		
 		b1.setBridge_code(bridge_code);
 		b1.setBridge_name(this.getBridgeName());

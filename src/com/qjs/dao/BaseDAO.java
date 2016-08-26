@@ -14,5 +14,7 @@ public interface BaseDAO {
 	public void updateEntity(Object obj);
 	
 	public List<?> findEntityListByProperty(String propertyName, Object value, Type type);
+	
+	public List<?> findEntityListByPropertySort(String propertyName, String sortStr, Object value, Type type);
 
 }

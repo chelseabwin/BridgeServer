@@ -30,9 +30,7 @@
 			
 			<td>
 			<button class="btn green" onclick="loadPage('/BridgeServer/disease!showDisease?bg_id=<s:property value="bridge_code"/>');"><i class="m-icon-swapright m-icon-white"></i> 查看详情</button>
-			<!--<a href="#" onclick="loadPage('/BridgeServer/bridge!update?id=<s:property value="id"/>');" class="btn blue"><i class="m-icon-swapright m-icon-white"></i> 修改</a>
-			<a href="#" onclick="loadPage('/BridgeServer/bridge!delete?id=<s:property value="id"/>');" class="btn red"><i class="m-icon-swapright m-icon-white"></i> 删除</a>
-			  -->
+			<a href="#" onclick="doCreateReport('/BridgeServer/disease!createReport?bg_id=<s:property value="bridge_code"/>');" class="btn blue"><i class="m-icon-swapright m-icon-white"></i> 生成病害报告</a>
 			</td>
 		</tr>
 		
@@ -52,7 +50,27 @@
 		<p id="page_info" class="pagination pull-right"></p>
 	</div>
 	</div>
+
 <script>
+function doCreateReport(url) {
+	$.ajax({
+         url: url,
+         type: 'GET',
+         data: null,
+         async: false,
+         cache: false,
+         contentType: false,
+         processData: false,
+         success: function (data) {
+        	 if (data == "faild") {
+        		 alert("生成报告失败！");
+        	 }
+        	 else {
+        		 location.href = "/BridgeServer/wordDownload/" + data;
+        	 }
+         }
+    });
+}
 
 var test = $("input[type=checkbox]:not(.toggle), input[type=radio]:not(.toggle, .star)");
 if (test.size() > 0) {
@@ -79,13 +97,13 @@ var totalNumber = parseInt("<s:property value="#request.count"/>");
 var pageNumber = parseInt("<s:property value="#request.totalPageNumber"/>");
 var pageCur = parseInt("<s:property value="#request.pageCur"/>");
 jQuery("#table_current").html("记录总数:"+totalNumber);
-	$('#page_info').bootpag({
-	    total: pageNumber,
-	    page: pageCur,
-	    maxVisible: 6 
-	}).on('page', function(event, num){
-		$("#pageNo").val(num);
-		getInformation('/BridgeServer/disease!getlist');
-	});
+$('#page_info').bootpag({
+    total: pageNumber,
+    page: pageCur,
+    maxVisible: 6 
+}).on('page', function(event, num){
+	$("#pageNo").val(num);
+	getInformation('/BridgeServer/disease!getlist');
+});
 
 </script>

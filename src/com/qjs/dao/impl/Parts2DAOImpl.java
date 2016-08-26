@@ -134,4 +134,10 @@ public class Parts2DAOImpl extends HibernateDaoSupport implements Parts2DAO {
 		result.put("result", res);
 		return result;
 	}
+
+	@Override
+	public List<?> findEntityListByPropertySort(String propertyName, String sortStr, Object value, Type type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

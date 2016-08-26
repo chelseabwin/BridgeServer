@@ -24,4 +24,6 @@ public interface Disease_tiebeamBiz {
 	public Disease_tiebeam getDisease_tiebeamByBridgeCode(String bridgeCode);
 	
 	public int getDisease_tiebeamCodeByBridgeCode(String bridgeCode);
+	
+	public List<Map<String, Object>> getAllDisease_tiebeamByBridgeCode(String bridgeCode);
 }

@@ -25,7 +25,13 @@
              <column name="add_content" length="200" />
         </property>
         <property name="disease_image" type="java.lang.String">
-             <column name="disease_image" length="200" />
+             <column name="disease_image" />
+        </property>
+        <property name="image_type" type="java.lang.String">
+             <column name="image_type" />
+        </property>
+        <property name="evaluation" type="java.lang.String">
+             <column name="evaluation" length="200" />
         </property>
         <property name="flag" type="java.lang.String">
              <column name="flag" length="10" />

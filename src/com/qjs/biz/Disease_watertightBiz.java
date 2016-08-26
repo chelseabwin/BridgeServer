@@ -24,4 +24,6 @@ public interface Disease_watertightBiz {
 	public Disease_watertight getDisease_watertightByBridgeCode(String bridgeCode);
 	
 	public int getDisease_watertightCodeByBridgeCode(String bridgeCode);
+	
+	public List<Map<String, Object>> getAllDisease_watertightByBridgeCode(String bridgeCode);
 }

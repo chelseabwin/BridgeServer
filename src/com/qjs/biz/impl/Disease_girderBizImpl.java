@@ -90,6 +90,8 @@ public class Disease_girderBizImpl implements Disease_girderBiz {
 			obj.put("rg_location", dil.getRg_location());
 			obj.put("add_content", dil.getAdd_content());
 			obj.put("disease_image", dil.getDisease_image());
+			obj.put("image_type", dil.getImage_type());
+			obj.put("evaluation", dil.getEvaluation());
 			disinfo.add(obj);
 		}
 		Map<String,Object> result = new HashMap<String,Object>();
@@ -125,5 +127,40 @@ public class Disease_girderBizImpl implements Disease_girderBiz {
 		if (diseaselist != null)
 			return diseaselist.size();
 		return 0;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Map<String, Object>> getAllDisease_girderByBridgeCode(String bridgeCode) {
+		List<Disease_girder> diseaselist = (List<Disease_girder>) disease_girderDAO.findEntityListByPropertySort("bg_id", "u.parts_id, u.item_name, u.rg_feature", bridgeCode, StringType.INSTANCE);
+		
+		List<Map<String, Object>> disinfo = new ArrayList<Map<String, Object>>();
+		for (Disease_girder dil:diseaselist) {
+			Map<String, Object> obj = new HashMap<String, Object>();
+			
+			obj.put("id", dil.getId());
+			obj.put("bg_id", dil.getBg_id());
+			obj.put("parts_id", dil.getParts_id());
+			obj.put("item_name", dil.getItem_name());
+			obj.put("rg_feature", dil.getRg_feature());
+			obj.put("rg_fissure", dil.getRg_fissure());
+			obj.put("sp_otherDisease", dil.getSp_otherDisease());
+			obj.put("start", dil.getStart());
+			obj.put("end", dil.getEnd());
+			obj.put("area", dil.getArea());
+			obj.put("length", dil.getLength());
+			obj.put("width", dil.getWidth());
+			obj.put("side_start", dil.getSide_start());
+			obj.put("side_end", dil.getSide_end());
+			obj.put("side_length", dil.getSide_length());
+			obj.put("side_width", dil.getSide_width());
+			obj.put("rg_location", dil.getRg_location());
+			obj.put("add_content", dil.getAdd_content());
+			obj.put("disease_image", dil.getDisease_image());
+			obj.put("image_type", dil.getImage_type());
+			obj.put("evaluation", dil.getEvaluation());
+			disinfo.add(obj);
+		}
+		return disinfo;
 	}
 }

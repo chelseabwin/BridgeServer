@@ -73,4 +73,10 @@ public class Permission_navigation_barDAOImpl extends HibernateDaoSupport implem
 		return criteria.list();
 	}
 
+	@Override
+	public List<?> findEntityListByPropertySort(String propertyName, String sortStr, Object value, Type type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

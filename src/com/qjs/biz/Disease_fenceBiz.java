@@ -24,4 +24,6 @@ public interface Disease_fenceBiz {
 	public Disease_fence getDisease_fenceByBridgeCode(String bridgeCode);
 	
 	public int getDisease_fenceCodeByBridgeCode(String bridgeCode);
+	
+	public List<Map<String, Object>> getAllDisease_fenceByBridgeCode(String bridgeCode);
 }

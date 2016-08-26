@@ -60,4 +60,10 @@ public class User_roleDAOImpl  extends HibernateDaoSupport implements User_roleD
 		return (List<Integer>)qobj.list();
 	}
 
+	@Override
+	public List<?> findEntityListByPropertySort(String propertyName, String sortStr, Object value, Type type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

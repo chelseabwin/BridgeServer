@@ -134,4 +134,10 @@ public class Base3DAOImpl extends HibernateDaoSupport implements Base3DAO {
 		result.put("result", res);
 		return result;
 	}
+
+	@Override
+	public List<?> findEntityListByPropertySort(String propertyName, String sortStr, Object value, Type type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
