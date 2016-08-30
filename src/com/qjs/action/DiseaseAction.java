@@ -2740,7 +2740,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		dataMap.put("bridge_name", base1.getBridge_name());
 		dataMap.put("path_num", base1.getPath_num());
 		dataMap.put("path_name", base1.getPath_name());
-		dataMap.put("rode_grade", base1.getRode_grade());
+		dataMap.put("rode_grade", base1.getRode_grade().split("]")[1]);
 		dataMap.put("center_stake", base1.getCenter_stake());
 		dataMap.put("bridge_classify", base2.getBridge_classify().split("]")[1]);
 		dataMap.put("deck_type", base3.getDeck_type().split("]")[1]);
