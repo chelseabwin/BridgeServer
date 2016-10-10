@@ -1180,7 +1180,7 @@ public class BridgeAction extends ActionSupport implements RequestAware,SessionA
 			request.put("across_name", base1.getAcross_name());
 			request.put("across_type", base1.getAcross_type());
 			request.put("bridge_nature", base1.getBridge_nature());
-		}		
+		}
 		return "base1";
 	}
 	

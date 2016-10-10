@@ -134,7 +134,7 @@
 												      	 <td></td>
 												      	 <td></td>
 												      	 <td></td>
-												      	 <td><button class="btn blue" onclick="loadPage('/BridgeServer/bridge!showBase1?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改</button></td>
+												      	 <td><a href="#" class="btn blue" onclick="loadPage('/BridgeServer/bridge!showBase1?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改</a></td>
 												      </tr>
 												      
 												      <tr>
@@ -176,7 +176,7 @@
 												      	 <td></td>
 												      	 <td></td>
 												      	 <td></td>
-												      	 <td><button class="btn blue" onclick="loadPage('/BridgeServer/bridge!showBase2?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改</button></td>
+												      	 <td><a href="#" class="btn blue" onclick="loadPage('/BridgeServer/bridge!showBase2?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改</a></td>
 												      </tr>
 												      
 												      <tr>
@@ -218,7 +218,7 @@
 												      	 <td></td>
 												      	 <td></td>
 												      	 <td></td>
-												      	 <td><button class="btn blue" onclick="loadPage('/BridgeServer/bridge!showBase3?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改</button></td>
+												      	 <td><a href="#" class="btn blue" onclick="loadPage('/BridgeServer/bridge!showBase3?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改</a></td>
 												      </tr>
 												      
 												      <tr>
@@ -267,7 +267,7 @@
 												      	 <td></td>
 												      	 <td></td>
 												      	 <td></td>
-												      	 <td><button class="btn blue" onclick="loadPage('/BridgeServer/bridge!showStructure?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改</button></td>
+												      	 <td><a href="#" class="btn blue" onclick="loadPage('/BridgeServer/bridge!showStructure?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改</a></td>
 												      </tr>
 												      
 												      <tr>
@@ -315,8 +315,8 @@
 												      <tr>
 												      	 <td></td>
 												      	 <td></td>
-												      	 <td><button class="btn blue" onclick="loadPage('/BridgeServer/bridge!showPierDetail?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改桥墩信息</button></td>
-												      	 <td><button class="btn blue" onclick="loadPage('/BridgeServer/bridge!showParts1?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改</button></td>
+												      	 <td><a href="#" class="btn blue" onclick="loadPage('/BridgeServer/bridge!showPierDetail?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改桥墩信息</a></td>
+												      	 <td><a href="#" class="btn blue" onclick="loadPage('/BridgeServer/bridge!showParts1?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改</a></td>
 												      </tr>
 												      
 												      <tr>
@@ -362,10 +362,10 @@
 												      </tr>
 												      
 												      <tr>
-												      	 <td><button class="btn blue" onclick="loadPage('/BridgeServer/bridge!showLoadDetail?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改上部承重构件信息</button></td>
-												      	 <td><button class="btn blue" onclick="loadPage('/BridgeServer/bridge!showGeneralDetail?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改上部一般构件信息</button></td>
-												      	 <td><button class="btn blue" onclick="loadPage('/BridgeServer/bridge!showSupportDetail?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改支座信息</button></td>
-												      	 <td><button class="btn blue" onclick="loadPage('/BridgeServer/bridge!showParts2?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改</button></td>
+												      	 <td><a href="#" class="btn blue" onclick="loadPage('/BridgeServer/bridge!showLoadDetail?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改上部承重构件信息</a></td>
+												      	 <td><a href="#" class="btn blue" onclick="loadPage('/BridgeServer/bridge!showGeneralDetail?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改上部一般构件信息</a></td>
+												      	 <td><a href="#" class="btn blue" onclick="loadPage('/BridgeServer/bridge!showSupportDetail?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改支座信息</a></td>
+												      	 <td><a href="#" class="btn blue" onclick="loadPage('/BridgeServer/bridge!showParts2?bridgeCode=<s:property value="%{#request.base1.bridge_code}"/>');"><i class="m-icon-swapright m-icon-white"></i> 修改</a></td>
 												      </tr>
 												      
 													</tbody>

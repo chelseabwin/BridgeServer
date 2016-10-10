@@ -147,7 +147,6 @@ public class UserAction extends ActionSupport implements RequestAware,SessionAwa
 	}
 	
 	public String login(){
-		
 		String status = userBiz.loginVerify(loginName, password);
 		User u = userBiz.getUserByLoginName(loginName);
 		if (!status.equals("false")) {			
