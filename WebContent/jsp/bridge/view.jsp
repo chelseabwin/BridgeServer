@@ -89,10 +89,10 @@
 												<table class="table table-bordered">
 													<tbody>
 												      <tr>
-												         <th width='100'>桥梁名称</th>
-												         <td class="alert alert-info" width='100'><s:property value="%{#request.base1.bridge_name}"/></td>
-												         <th width='100'>路线号</th>
-												         <td class="alert alert-info" width='100'><s:property value="%{#request.base1.path_num}"/></td>
+												         <th width='200px'>桥梁名称</th>
+												         <td class="alert alert-info" width='200px'><s:property value="%{#request.base1.bridge_name}"/></td>
+												         <th width='200px'>路线号</th>
+												         <td class="alert alert-info" width='200px'><s:property value="%{#request.base1.path_num}"/></td>
 												      </tr>
 												      
 												      <tr>
