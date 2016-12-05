@@ -84,6 +84,11 @@ public class Base1BizImpl implements Base1Biz {
 			obj.put("across_name", bil.getAcross_name());
 			obj.put("across_Type", bil.getAcross_type());
 			obj.put("bridge_nature", bil.getBridge_nature());
+			obj.put("detect_time", bil.getDetect_time());
+			obj.put("bridge_image1", bil.getBridge_image1());
+			obj.put("bridge_image2", bil.getBridge_image2());
+			obj.put("image1_type", bil.getImage1_type());
+			obj.put("image2_type", bil.getImage2_type());
 			bginfo.add(obj);
 		}
 		Map<String,Object> result = new HashMap<String,Object>();

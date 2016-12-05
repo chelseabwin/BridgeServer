@@ -8701,40 +8701,23 @@
                         <w:tcW w:w="3980" w:type="dxa"/>
                         <w:vAlign w:val="center"/>
                       </w:tcPr>
-                      <w:p wsp:rsidR="005645E5" wsp:rsidRDefault="00062867" wsp:rsidP="009C78FB">
-                        <w:pPr>
-                          <w:jc w:val="center"/>
-                        </w:pPr>
-                        <w:r wsp:rsidRPr="00CB40A8">
-                          <w:rPr>
-                            <w:noProof/>
-                          </w:rPr>
-                          <w:pict>
-                            <v:shapetype id="_x0000_t75" coordsize="21600,21600" o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe" filled="f" stroked="f">
-                              <v:stroke joinstyle="miter"/>
-                              <v:formulas>
-                                <v:f eqn="if lineDrawn pixelLineWidth 0"/>
-                                <v:f eqn="sum @0 1 0"/>
-                                <v:f eqn="sum 0 0 @1"/>
-                                <v:f eqn="prod @2 1 2"/>
-                                <v:f eqn="prod @3 21600 pixelWidth"/>
-                                <v:f eqn="prod @3 21600 pixelHeight"/>
-                                <v:f eqn="sum @0 0 1"/>
-                                <v:f eqn="prod @6 1 2"/>
-                                <v:f eqn="prod @7 21600 pixelWidth"/>
-                                <v:f eqn="sum @8 21600 0"/>
-                                <v:f eqn="prod @7 21600 pixelHeight"/>
-                                <v:f eqn="sum @10 21600 0"/>
-                              </v:formulas>
-                              <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
-                              <o:lock v:ext="edit" aspectratio="t"/>
-                            </v:shapetype>
-                            <w:binData w:name="wordml://03000001.png" xml:space="preserve"></w:binData>
-                            <v:shape id="图片 7" o:spid="_x0000_i1032" type="#_x0000_t75" style="width:201.75pt;height:151.5pt;visibility:visible;mso-wrap-style:square">
-                              <v:imagedata src="wordml://03000001.png" o:title=""/>
-                            </v:shape>
-                          </w:pict>
-                        </w:r>
+                      <w:p wsp:rsidR="005B1BEA" wsp:rsidRPr="00283BEE" wsp:rsidRDefault="00062867" wsp:rsidP="00460BF5">
+                       <w:pPr>
+                         <w:jc w:val="center"/>
+                       </w:pPr>
+					   <#if bridge_img1 != "">
+                       <w:r wsp:rsidRPr="00CB40A8">
+                         <w:rPr>
+                           <w:noProof/>
+                         </w:rPr>
+                         <w:pict>
+                           <w:binData w:name="${"wordml://0200000"+1+".jpg"}" xml:space="preserve">${bridge_img1}</w:binData>
+                           <v:shape id="图片 2" o:spid="_x0000_i1030" type="#_x0000_t75" style="width:201.75pt;height:151.5pt;visibility:visible;mso-wrap-style:square">
+                             <v:imagedata src="${"wordml://0200000"+1+".jpg"}" o:title=""/>
+                           </v:shape>
+                         </w:pict>
+                       </w:r>					   
+					   </#if>
                       </w:p>
                     </w:tc>
                     <w:tc>
@@ -8742,21 +8725,23 @@
                         <w:tcW w:w="3980" w:type="dxa"/>
                         <w:vAlign w:val="center"/>
                       </w:tcPr>
-                      <w:p wsp:rsidR="005645E5" wsp:rsidRDefault="00062867" wsp:rsidP="009C78FB">
-                        <w:pPr>
-                          <w:jc w:val="center"/>
-                        </w:pPr>
-                        <w:r wsp:rsidRPr="00CB40A8">
-                          <w:rPr>
-                            <w:noProof/>
-                          </w:rPr>
-                          <w:pict>
-                            <w:binData w:name="wordml://03000002.png" xml:space="preserve"></w:binData>
-                            <v:shape id="图片 8" o:spid="_x0000_i1031" type="#_x0000_t75" style="width:201.75pt;height:151.5pt;visibility:visible;mso-wrap-style:square">
-                              <v:imagedata src="wordml://03000002.png" o:title=""/>
-                            </v:shape>
-                          </w:pict>
-                        </w:r>
+                      <w:p wsp:rsidR="005B1BEA" wsp:rsidRPr="00283BEE" wsp:rsidRDefault="00062867" wsp:rsidP="00460BF5">
+                       <w:pPr>
+                         <w:jc w:val="center"/>
+                       </w:pPr>
+					   <#if bridge_img2 != "">
+                       <w:r wsp:rsidRPr="00CB40A8">
+                         <w:rPr>
+                           <w:noProof/>
+                         </w:rPr>
+                         <w:pict>
+                           <w:binData w:name="${"wordml://0300000"+1+".jpg"}" xml:space="preserve">${bridge_img2}</w:binData>
+                           <v:shape id="图片 3" o:spid="_x0000_i1030" type="#_x0000_t75" style="width:201.75pt;height:151.5pt;visibility:visible;mso-wrap-style:square">
+                             <v:imagedata src="${"wordml://0300000"+1+".jpg"}" o:title=""/>
+                           </v:shape>
+                         </w:pict>
+                       </w:r>					   
+					   </#if>
                       </w:p>
                     </w:tc>
                   </w:tr>

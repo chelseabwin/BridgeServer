@@ -131,6 +131,20 @@
 												      </tr>
 												      
 												      <tr>
+												         <th>检测时间</th>
+												         <td class="alert alert-info"><s:property value="%{#request.base1.detect_time}"/></td>
+												         <th></th>
+												         <td class="alert alert-info"></td>
+												      </tr>
+												      
+												      <tr>
+												         <th>正面照</th>
+												         <td class="alert alert-info"><s:if test="#request.img1_name!=null"><img src="/BridgeServer/bridge_image/<s:property value="%{#request.img1_name}"/>" width="280" height="210" /></s:if></td>
+												         <th>立面照</th>
+												         <td class="alert alert-info"><s:if test="#request.img2_name!=null"><img src="/BridgeServer/bridge_image/<s:property value="%{#request.img2_name}"/>" width="280" height="210" /></s:if></td>
+												      </tr>
+												      
+												      <tr>
 												      	 <td></td>
 												      	 <td></td>
 												      	 <td></td>
@@ -231,36 +245,36 @@
 												      <tr>
 												         <th>桥梁全长</th>
 												         <td class="alert alert-info"><s:property value="%{#request.structure.total_len}"/></td>
-												         <th>桥宽组合</th>
-												         <td class="alert alert-info"><s:property value="%{#request.structure.bridge_wide}"/></td>
-												      </tr>
-												      
-												      <tr>
 												         <th>桥面全宽</th>
 												         <td class="alert alert-info"><s:property value="%{#request.structure.full_wide}"/></td>
-												         <th>桥面净宽</th>
-												         <td class="alert alert-info"><s:property value="%{#request.structure.clear_wide}"/></td>
 												      </tr>
 												      
 												      <tr>
-												         <th>桥高</th>
+												         <th>桥下净高</th>
 												         <td class="alert alert-info"><s:property value="%{#request.structure.bridge_high}"/></td>
 												         <th>桥梁限高</th>
 												         <td class="alert alert-info"><s:property value="%{#request.structure.high_limit}"/></td>
 												      </tr>
 												      
 												      <tr>
+												         <th>桥梁限高</th>
+												         <td class="alert alert-info"><s:property value="%{#request.structure.high_limit}"/></td>
 												         <th>建桥时间</th>
 												         <td class="alert alert-info"><s:property value="%{#request.structure.building_time}"/></td>
-												         <th>通航等级</th>
-												         <td class="alert alert-info"><s:property value="%{#request.structure.navigation_level}"/></td>
 												      </tr>
 												      
 												      <tr>
+												         <th>通航等级</th>
+												         <td class="alert alert-info"><s:property value="%{#request.structure.navigation_level}"/></td>
 												         <th>跨中截面高</th>
 												         <td class="alert alert-info"><s:property value="%{#request.structure.section_high}"/></td>
+												      </tr>
+												      
+												      <tr>
 												         <th>桥面纵坡</th>
 												         <td class="alert alert-info"><s:property value="%{#request.structure.deck_profile_grade}"/></td>
+												         <th></th>
+												         <td class="alert alert-info"></td>
 												      </tr>
 												      
 												      <tr>

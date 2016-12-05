@@ -49,7 +49,6 @@ public class WordCreate {
     public void createWord(Map<String,Object> dataMap) throws IOException {
     	String result = "faild";
     	PrintWriter outWriter = ServletActionContext.getResponse().getWriter();
-        //getData(dataMap);
         configuration.setDirectoryForTemplateLoading(new File(getTempPath()));
         Template t = null;
         try {

@@ -125,18 +125,6 @@
 												
 												<div class="control-group">
 
-													<label class="control-label">桥宽组合</label>
-
-													<div class="controls">   
-
-														<input class="m-wrap medium" type="text" name="bridgeWide" value="<s:property value="#request.bridge_wide"/>"/>
-
-													</div>
-
-												</div>
-												
-												<div class="control-group">
-
 													<label class="control-label">桥面全宽</label>
 
 													<div class="controls">   
@@ -161,7 +149,7 @@
 												
 												<div class="control-group">
 
-													<label class="control-label">桥高</label>
+													<label class="control-label">桥下净高</label>
 
 													<div class="controls">   
 

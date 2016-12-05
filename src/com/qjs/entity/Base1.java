@@ -17,6 +17,11 @@ public class Base1 implements java.io.Serializable {
 	private String across_name;
 	private String across_type;
 	private String bridge_nature;
+	private String detect_time;
+	private String bridge_image1;
+	private String bridge_image2;
+	private String image1_type;
+	private String image2_type;
 	private String flag;
 	
 	public Base1() {
@@ -26,7 +31,8 @@ public class Base1 implements java.io.Serializable {
 	public Base1(Integer id, String bridge_code, String bridge_name, String path_num, 
 			String path_name, String path_type, String rode_grade, String order_num, String location, 
 			String center_stake, String custody_unit, String across_name, String across_type, 
-			String bridge_nature, String flag) {
+			String bridge_nature, String detect_time, String bridge_image1, String bridge_image2,
+			String image1_type, String image2_type,String flag) {
 		super();
 		this.id = id;
 		this.bridge_code = bridge_code;
@@ -42,6 +48,11 @@ public class Base1 implements java.io.Serializable {
 		this.across_name = across_name;		
 		this.across_type = across_type;
 		this.bridge_nature = bridge_nature;
+		this.detect_time = detect_time;
+		this.bridge_image1 = bridge_image1;
+		this.bridge_image2 = bridge_image2;
+		this.image1_type = image1_type;
+		this.image2_type = image2_type;
 		this.flag = flag;
 	}	
 	
@@ -155,6 +166,46 @@ public class Base1 implements java.io.Serializable {
 
 	public void setBridge_nature(String bridge_nature) {
 		this.bridge_nature = bridge_nature;
+	}
+	
+	public String getDetect_time() {
+		return detect_time;
+	}
+
+	public void setDetect_time(String detect_time) {
+		this.detect_time = detect_time;
+	}
+	
+	public String getBridge_image1() {
+		return bridge_image1;
+	}
+
+	public void setBridge_image1(String bridge_image1) {
+		this.bridge_image1 = bridge_image1;
+	}
+	
+	public String getBridge_image2() {
+		return bridge_image2;
+	}
+
+	public void setBridge_image2(String bridge_image2) {
+		this.bridge_image2 = bridge_image2;
+	}
+	
+	public String getImage1_type() {
+		return image1_type;
+	}
+
+	public void setImage1_type(String image1_type) {
+		this.image1_type = image1_type;
+	}
+	
+	public String getImage2_type() {
+		return image2_type;
+	}
+
+	public void setImage2_type(String image2_type) {
+		this.image2_type = image2_type;
 	}
 	
 	public String getFlag() {

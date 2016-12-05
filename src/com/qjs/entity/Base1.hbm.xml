@@ -48,6 +48,21 @@
         <property name="bridge_nature" type="java.lang.String">
              <column name="bridge_nature" length="200" />
         </property>
+        <property name="detect_time" type="java.lang.String">
+             <column name="detect_time" length="200" />
+        </property>
+        <property name="bridge_image1" type="java.lang.String">
+             <column name="bridge_image1" length="200" />
+        </property>
+        <property name="bridge_image2" type="java.lang.String">
+             <column name="bridge_image2" length="200" />
+        </property>
+        <property name="image1_type" type="java.lang.String">
+             <column name="image1_type" length="200" />
+        </property>
+        <property name="image2_type" type="java.lang.String">
+             <column name="image2_type" length="200" />
+        </property>
         <property name="flag" type="java.lang.String">
              <column name="flag" length="10" />
         </property>

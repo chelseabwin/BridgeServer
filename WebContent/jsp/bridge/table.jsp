@@ -45,6 +45,7 @@
 			<td><s:property value="custody_unit"/></td>
 			<td>
 			<button class="btn green" onclick="loadPage('/BridgeServer/bridge!viewBridge?bridgeCode=<s:property value="bridge_code"/>');"><i class="m-icon-swapright m-icon-white"></i> 查看详情</button>
+			<a href="#" onclick="doCreateQRCode('/BridgeServer/bridge!createQRCode?bridgeCode=<s:property value="bridge_code"/>');" class="btn blue"><i class="m-icon-swapright m-icon-white"></i> 生成二维码</a>
 			<!--<a href="#" onclick="loadPage('/BridgeServer/bridge!update?id=<s:property value="id"/>');" class="btn blue"><i class="m-icon-swapright m-icon-white"></i> 修改</a>
 			<a href="#" onclick="loadPage('/BridgeServer/bridge!delete?id=<s:property value="id"/>');" class="btn red"><i class="m-icon-swapright m-icon-white"></i> 删除</a>
 			  -->
@@ -67,7 +68,35 @@
 		<p id="page_info" class="pagination pull-right"></p>
 	</div>
 	</div>
+	
+<!-- Modal -->
+<div class="modal hide fade" id="myModal" tabindex="-1" role="dialog">
+	<div class="modal-header"><button class="close" type="button" data-dismiss="modal">×</button>
+	<h3 id="myModalLabel">Modal header</h3>
+</div>
+<div class="modal-body"></div>
+</div>
 <script>
+
+function doCreateQRCode(url) {
+	$.ajax({
+         url: url,
+         type: 'GET',
+         data: null,
+         async: false,
+         cache: false,
+         contentType: false,
+         processData: false,
+         success: function (data) {
+        	 if (data == "faild") {
+        		 alert("生成二维码失败！");
+        	 }
+        	 else {
+        		 window.open("/BridgeServer/QRCodeDownload/" + data);
+        	 }
+         }
+    });
+}
 
 var test = $("input[type=checkbox]:not(.toggle), input[type=radio]:not(.toggle, .star)");
 if (test.size() > 0) {

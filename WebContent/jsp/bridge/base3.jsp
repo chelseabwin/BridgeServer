@@ -113,7 +113,7 @@
 												
 												<div class="control-group">
 
-													<label class="control-label">桥墩材料</label>
+													<label class="control-label">桥墩类型</label>
 
 													<div class="controls">
 													
@@ -201,7 +201,7 @@
 
 													<div class="controls">
 													
-														<s:select class="medium m-wrap" name="jointType" id="jointTypeId" list="{'[1]毛勒缝','[2]橡胶伸缩缝','[3]梳形钢板伸缩缝','[4]锌铁皮U形伸缩缝','[5]其他'}" />
+														<s:select class="medium m-wrap" name="jointType" id="jointTypeId" list="{'[1]毛勒缝','[2]橡胶伸缩缝','[3]梳形钢板伸缩缝','[4]锌铁皮U形伸缩缝','[5]型钢伸缩缝','[6]模数式伸缩缝','[7]其他'}" />
 
 													</div>
 

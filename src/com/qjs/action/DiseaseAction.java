@@ -692,6 +692,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		this.request = request;
 	}
 	
+//===================================================================================//	
 	
 	/**图片上传路径*/
 	private String savePath = "/disease_image";
@@ -2735,6 +2736,10 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		Load_detail load_detail = load_detailBiz.getLoad_detailByBridgeCode(this.getBg_id());
 		General_detail general_detail = general_detailBiz.getGeneral_detailByBridgeCode(this.getBg_id());
 		Support_detail support_detail = support_detailBiz.getSupport_detailByBridgeCode(this.getBg_id());
+		
+		// 桥梁照片
+		dataMap.put("bridge_img1", base1.getBridge_image1());
+		dataMap.put("bridge_img2", base1.getBridge_image2());
 		
 		// A.行政识别数据
 		dataMap.put("bridge_name", base1.getBridge_name());

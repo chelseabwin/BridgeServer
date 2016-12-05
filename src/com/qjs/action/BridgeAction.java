@@ -1,24 +1,40 @@
 package com.qjs.action;
 
 import global.tool.Constant;
+import global.tool.QRCodeUtil;
 import global.tool.QueryItems;
 import global.tool.QueryObject;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
+import org.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.qjs.biz.impl.Base1BizImpl;
@@ -61,6 +77,11 @@ public class BridgeAction extends ActionSupport implements RequestAware,SessionA
 	private String acrossName;
 	private String acrossType;
 	private String bridgeNature;
+	private String detectTime;
+	private String bridgeImage1;
+	private String bridgeImage2;
+	private String image1Type;
+	private String image2Type;
 	private String flag;
 	
 	// base2
@@ -286,6 +307,46 @@ public class BridgeAction extends ActionSupport implements RequestAware,SessionA
 
 	public void setBridgeNature(String bridgeNature) {
 		this.bridgeNature = bridgeNature;
+	}
+	
+	public String getDetectTime() {
+		return detectTime;
+	}
+
+	public void setDetectTime(String detectTime) {
+		this.detectTime = detectTime;
+	}
+	
+	public String getBridgeImage1() {
+		return bridgeImage1;
+	}
+
+	public void setBridgeImage1(String bridgeImage1) {
+		this.bridgeImage1 = bridgeImage1;
+	}
+	
+	public String getBridgeImage2() {
+		return bridgeImage2;
+	}
+
+	public void setBridgeImage2(String bridgeImage2) {
+		this.bridgeImage2 = bridgeImage2;
+	}
+	
+	public String getImage1Type() {
+		return image1Type;
+	}
+
+	public void setImage1Type(String image1Type) {
+		this.image1Type = image1Type;
+	}
+	
+	public String getImage2Type() {
+		return image2Type;
+	}
+
+	public void setImage2Type(String image2Type) {
+		this.image2Type = image2Type;
 	}
 	
 	public String getFlag() {
@@ -1001,6 +1062,220 @@ public class BridgeAction extends ActionSupport implements RequestAware,SessionA
 	public void setRequest(Map<String, Object> request) {
 		this.request = request;
 	}
+
+//===================================================================================//	
+	
+	/**图片上传路径*/
+	private String savePath = "/bridge_image";
+	/**这里的名字和html的名字必须对称*/
+	private File img1, img2;
+	/**要上传的文件类型*/
+	private String img1ContentType, img2ContentType;
+	/**文件的名称*/
+	private String img1FileName, img2FileName;
+	/**
+	 * 指定的上传类型为图片格式的文件
+	 */
+	private static final String[] types = {"image/jpeg", "image/jpg", "image/png", "image/gif", "image/bmp"};
+	
+	@SuppressWarnings("deprecation")
+	public String getSavePath() {
+		return ServletActionContext.getRequest().getRealPath(savePath);
+	}
+
+	public void setSavePath(String value) {
+		this.savePath = value;
+	}
+	
+	public File getImg1() {
+		return img1;
+	}
+	
+	public void setImg1(File img1) {
+		this.img1 = img1;
+	}
+	
+	public File getImg2() {
+		return img2;
+	}
+	
+	public void setImg2(File img2) {
+		this.img2 = img2;
+	}
+	
+	public String getImg1ContentType() {
+		return img1ContentType;
+	}
+
+	public void setImg1ContentType(String img1ContentType) {
+		this.img1ContentType = img1ContentType;
+	}
+	
+	public String getImg2ContentType() {
+		return img2ContentType;
+	}
+
+	public void setImg2ContentType(String img2ContentType) {
+		this.img2ContentType = img2ContentType;
+	}
+
+	public String getImg1FileName() {
+		return img1FileName;
+	}
+
+	public void setImg1FileName(String img1FileName) {
+		this.img1FileName = img1FileName;
+	}
+	
+	public String getImg2FileName() {
+		return img2FileName;
+	}
+
+	public void setImg2FileName(String img2FileName) {
+		this.img2FileName = img2FileName;
+	}
+	
+	/***
+	 * 判断文件的类型是否为指定的文件类型
+	 * @return
+	 */
+	public boolean filterType(String imgContentType) {
+		boolean isFileType = false;
+		String fileType = imgContentType;
+		System.out.println(fileType);
+		for (String type : types) {
+			if (type.equals(fileType)) {
+				isFileType = true;
+				break;
+			}
+		}
+		return isFileType;
+	}
+	
+	/**
+	 * 取得文件夹大小
+	 * 
+	 * @param f
+	 * @return
+	 * @throws Exception
+	 */
+	public long getFileSize(File f) throws Exception {
+		return f.length();
+	}
+
+	public String FormetFileSize(long fileS) {// 转换文件大小
+		DecimalFormat df = new DecimalFormat("#.00");
+		String fileSizeString = "";
+		if (fileS < 1024) {
+			fileSizeString = df.format((double) fileS) + "B";
+		} else if (fileS < 1048576) {
+			fileSizeString = df.format((double) fileS / 1024) + "K";
+		} else if (fileS < 1073741824) {
+			fileSizeString = df.format((double) fileS / 1048576) + "M";
+		} else {
+			fileSizeString = df.format((double) fileS / 1073741824) + "G";
+		}
+		return fileSizeString;
+	}
+	
+	/**
+	 * 上传照片操作
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public void upload() throws Exception {
+		String result1 = "未知错误";
+		String result2 = "未知错误";
+		PrintWriter out = ServletActionContext.getResponse().getWriter();
+		String img1FilePath = null;
+		String img2FilePath = null;
+		if (!filterType(getImg1ContentType())) {
+			System.out.println("文件类型不正确");
+			ServletActionContext.getRequest().setAttribute("typeError", "您要上传的文件类型不正确");
+
+			result1 = "上传错误:" + getImg1ContentType() + " 文件类型不正确！";
+		} else {
+			System.out.println("当前文件1大小为：" + FormetFileSize(getFileSize(getImg1())));
+			FileOutputStream fos1 = null;
+			FileInputStream fis1 = null;
+			try {
+				
+				// 保存文件那一个路径
+				img1FilePath = getSavePath() + "\\" + Math.random()*1000 + "." + getImg1ContentType().split("/")[1];
+				
+				fos1 = new FileOutputStream(img1FilePath);
+				fis1 = new FileInputStream(getImg1());
+				byte[] buffer = new byte[1024];
+				int len = 0;
+				while ((len = fis1.read(buffer)) > 0) {
+					fos1.write(buffer, 0, len);
+				}
+				result1 = "success";
+			} catch (Exception e) {
+				result1 = "faild";
+				e.printStackTrace();
+			} finally {
+				fos1.close();
+				fis1.close();
+			}
+		}
+		
+		if (!filterType(getImg2ContentType())) {
+			System.out.println("文件类型不正确");
+			ServletActionContext.getRequest().setAttribute("typeError", "您要上传的文件类型不正确");
+
+			result2 = "上传错误:" + getImg1ContentType() + " 文件类型不正确！";
+		} else {
+			System.out.println("当前文件2大小为：" + FormetFileSize(getFileSize(getImg2())));
+			FileOutputStream fos2 = null;
+			FileInputStream fis2 = null;
+			try {
+				
+				// 保存文件那一个路径
+				img2FilePath = getSavePath() + "\\" + Math.random()*1000 + "." + getImg2ContentType().split("/")[1];
+				
+				fos2 = new FileOutputStream(img2FilePath);
+				fis2 = new FileInputStream(getImg2());
+				byte[] buffer = new byte[1024];
+				int len = 0;
+				while ((len = fis2.read(buffer)) > 0) {
+					fos2.write(buffer, 0, len);
+				}
+				result2 = "success";
+			} catch (Exception e) {
+				result2 = "faild";
+				e.printStackTrace();
+			} finally {
+				fos2.close();
+				fis2.close();
+			}
+		}
+		
+		if (result1.equals("success") || result2.equals("success")) {
+			String img1Str = getImageStr(img1FilePath);
+			String img2Str = getImageStr(img2FilePath);
+			
+			//创建JSONObject对象
+			JSONObject json = new JSONObject();
+			
+			//向json中添加数据
+			json.put("img1_name", new File(img1FilePath).getName());
+			json.put("img1_str", img1Str);
+			json.put("img1_type", getImg1ContentType());
+			
+			json.put("img2_name", new File(img2FilePath).getName());
+			json.put("img2_str", img2Str);
+			json.put("img2_type", getImg2ContentType());
+
+			out.write(json.toString());
+		}
+		else {
+			out.write("faild");
+		}
+	}
+	
+//===================================================================================//	
 	
 	public String getBaseList() {
 		return "list";
@@ -1048,8 +1323,27 @@ public class BridgeAction extends ActionSupport implements RequestAware,SessionA
 		General_detail general_detail = general_detailBiz.getGeneral_detailByBridgeCode(this.getBridgeCode());
 		Support_detail support_detail = support_detailBiz.getSupport_detailByBridgeCode(this.getBridgeCode());
 		
-		if (base1 != null)
+		if (base1 != null) {
 			request.put("base1", base1);
+			
+			String img1Str = base1.getBridge_image1();
+			String img2Str = base1.getBridge_image2();
+			
+			if (img1Str != "") {
+				String img1FilePath = getSavePath() + "\\" + Math.random()*1000 + "." + base1.getImage1_type().split("/")[1];
+				if (generateImage(img1Str, img1FilePath)) {
+					request.put("img1_name", new File(img1FilePath).getName());
+				}
+			}
+			
+			if (img2Str != "") {
+				String img2FilePath = getSavePath() + "\\" + Math.random()*1000 + "." + base1.getImage2_type().split("/")[1];
+				if (generateImage(img2Str, img2FilePath)) {
+					request.put("img2_name", new File(img2FilePath).getName());
+				}
+			}
+			
+		}
 		if (base2 != null)
 			request.put("base2", base2);
 		if (base3 != null)
@@ -1141,7 +1435,6 @@ public class BridgeAction extends ActionSupport implements RequestAware,SessionA
 		String[] bgCode = format.format(date).split(" ");
 		String[] time = bgCode[1].split(":");
 		String bridge_code = bgCode[0] + "-" + time[0] + time[1] + time[2]; // 用系统当前时间作为桥梁代码
-		
 		b1.setBridge_code(bridge_code);
 		b1.setBridge_name(this.getBridgeName());
 		b1.setPath_num(this.getPathNum());
@@ -1155,6 +1448,11 @@ public class BridgeAction extends ActionSupport implements RequestAware,SessionA
 		b1.setAcross_name(this.getAcrossName());
 		b1.setAcross_type(this.getAcrossType());
 		b1.setBridge_nature(this.getBridgeNature());
+		b1.setDetect_time(this.getDetectTime());
+		b1.setBridge_image1(this.getBridgeImage1());
+		b1.setBridge_image2(this.getBridgeImage2());
+		b1.setImage1_type(this.getImage1Type());
+		b1.setImage2_type(this.getImage2Type());
 		b1.setFlag("0");
 		base1Biz.addBase1(b1);
 		
@@ -1180,6 +1478,28 @@ public class BridgeAction extends ActionSupport implements RequestAware,SessionA
 			request.put("across_name", base1.getAcross_name());
 			request.put("across_type", base1.getAcross_type());
 			request.put("bridge_nature", base1.getBridge_nature());
+			request.put("detect_time", base1.getDetect_time());
+			request.put("bridge_image1", base1.getBridge_image1());
+			request.put("bridge_image2", base1.getBridge_image2());
+			request.put("image1_type", base1.getImage1_type());
+			request.put("image2_type", base1.getImage2_type());
+			
+			String img1Str = base1.getBridge_image1();
+			String img2Str = base1.getBridge_image2();
+			
+			if (img1Str != "") {
+				String img1FilePath = getSavePath() + "\\" + Math.random()*1000 + "." + base1.getImage1_type().split("/")[1];
+				if (generateImage(img1Str, img1FilePath)) {
+					request.put("img1_name", new File(img1FilePath).getName());
+				}
+			}
+			
+			if (img2Str != "") {
+				String img2FilePath = getSavePath() + "\\" + Math.random()*1000 + "." + base1.getImage2_type().split("/")[1];
+				if (generateImage(img2Str, img2FilePath)) {
+					request.put("img2_name", new File(img2FilePath).getName());
+				}
+			}
 		}
 		return "base1";
 	}
@@ -1199,6 +1519,11 @@ public class BridgeAction extends ActionSupport implements RequestAware,SessionA
 		base1.setAcross_name(this.getAcrossName());
 		base1.setAcross_type(this.getAcrossType());
 		base1.setBridge_nature(this.getBridgeNature());
+		base1.setDetect_time(this.getDetectTime());
+		base1.setBridge_image1(this.getBridgeImage1());
+		base1.setBridge_image2(this.getBridgeImage2());
+		base1.setImage1_type(this.getImage1Type());
+		base1.setImage2_type(this.getImage2Type());
 
 		Base1 b1 = base1Biz.getBase1ByBridgeCode(this.getBridgeCode());
 		
@@ -1693,5 +2018,143 @@ public class BridgeAction extends ActionSupport implements RequestAware,SessionA
 			session.clear();
 			this.addActionError("error");
 		}
-	}	
+	}
+	
+	// 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
+	public String getImageStr(String imgFilePath) {
+		 InputStream in = null;
+		 byte[] data = null;
+		 try {
+			 in = new FileInputStream(imgFilePath);
+			 data = new byte[in.available()];
+			 in.read(data);
+			 in.close();
+		 } catch (IOException e) {
+			 e.printStackTrace();
+		 }
+		 BASE64Encoder encoder = new BASE64Encoder();
+		 return encoder.encode(data);	 
+	}
+	
+	// 对字节数组字符串进行Base64解码并生成图片
+	public static boolean generateImage(String imgStr, String imgFilePath) {
+        if (imgStr == null) // 图像数据为空
+            return false;
+        BASE64Decoder decoder = new BASE64Decoder();
+        try {
+            // Base64解码
+            byte[] bytes = decoder.decodeBuffer(imgStr);
+            for (int i = 0; i < bytes.length; ++i) {
+                if (bytes[i] < 0) {// 调整异常数据
+                    bytes[i] += 256;
+                }
+            }
+            // 生成jpeg图片
+            OutputStream out = new FileOutputStream(imgFilePath);
+            out.write(bytes);
+            out.flush();
+            out.close();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+	
+	public void createQRCode() throws IOException {
+		String result = "faild";
+		PrintWriter outWriter = ServletActionContext.getResponse().getWriter();
+		Base1 base1 = base1Biz.getBase1ByBridgeCode(this.getBridgeCode());
+		//创建JSONObject对象
+		JSONObject json = new JSONObject();
+		if (base1 != null) {			
+			//向json中添加数据
+			json.put("bridge_code", base1.getBridge_code());
+			json.put("bridge_name", base1.getBridge_name());
+			json.put("path_num", base1.getPath_num());
+			json.put("path_name", base1.getPath_name());
+			json.put("location", base1.getLocation());
+			json.put("custody_unit", base1.getCustody_unit());
+		}
+		@SuppressWarnings("deprecation")
+		String real_path = ServletActionContext.getRequest().getRealPath("/QRCodeDownload/");
+
+        String file_name = new Random().nextInt(99999999)+".jpg";
+		try {
+			QRCodeUtil.encode(json.toString(), "", real_path, file_name, true);
+			result = "success";
+		} catch (Exception e) {
+			result = "faild";
+			e.printStackTrace();
+		}
+		
+//		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		//得到文件名字和路径    
+//	    String filename = request.getParameter("filename");  
+//	    String filepath = request.getParameter("filepath");  
+//	    String displayfilename = URLEncoder.encode(file,"UTF-8");
+//		
+//		try {
+//	        response.setContentType("application/x-download");
+//	        response.setHeader("Content-Disposition","attachment;filename=\"" + displayfilename + "\"");
+//	        //HttpServletContext httpServletContext = (HttpServletContext)application;  
+//	        RequestDispatcher dis = application.getRequestDispatcher(real_path + file);
+//	        //application.getRequestDispatcher(url)这里的url只能是相对路径,如/upload/1.jpg  
+//	        if (dis != null) {
+//	            dis.forward(request,response);  
+//	        }
+//	        response.flushBuffer();
+//	    } catch (Exception e) {
+//	        e.printStackTrace();
+//	        System.out.println("下载取消：" + filepath + filename);
+//	    }   
+//	    out.clear();  
+//	    out = pageContext.pushBody();
+		
+//		System.out.println(real_path + file_name);
+//		
+//		response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(file_name, "utf-8"));
+//        FileInputStream file_input = new FileInputStream(real_path + file_name);
+//        OutputStream os = response.getOutputStream();
+//        
+//        byte[] b=new byte[1024];
+//        int len=0;
+//        while((len = file_input.read(b)) != -1){
+//            os.write(b,0,len);
+//        }
+//        file_input.close();
+		
+		
+//		// 构造URL
+//	    URL url = new URL(real_path + file_name);
+//	    // 打开连接
+//	    URLConnection con = url.openConnection();
+//	    // 输入流
+//	    InputStream is = con.getInputStream();
+//	    // 1K的数据缓冲
+//	    byte[] bs = new byte[1024];
+//	    // 读取到的数据长度
+//	    int len;
+//	    // 输出的文件流
+//	    OutputStream os = new FileOutputStream(file_name);
+//	    // 开始读取
+//	    while ((len = is.read(bs)) != -1) {
+//	      os.write(bs, 0, len);
+//	    }
+//	    // 完毕，关闭所有链接
+//	    os.close();
+//	    is.close();
+		
+		
+		
+		
+		
+		// 返回ajax处理文件下载
+        if (result.equals("success")) {
+        	outWriter.write(file_name);
+		}
+		else {
+			outWriter.write("faild");
+		}
+	}
 }
