@@ -126,27 +126,31 @@
 													    </label>
 													    
 													    <label class="radio">
-													        <input type="radio" id="rgFeature2" name="rg_feature" value="磨损">&nbsp;磨损
+													        <input type="radio" id="rgFeature2" name="rg_feature" value="空洞、孔洞">&nbsp;空洞、孔洞
+													    </label>
+													    
+													    <label class="radio">
+													        <input type="radio" id="rgFeature3" name="rg_feature" value="磨损">&nbsp;磨损
 													    </label>
 													  	
 													  	<label class="radio">
-													        <input type="radio" id="rgFeature3" name="rg_feature" value="裂缝">&nbsp;裂缝
+													        <input type="radio" id="rgFeature4" name="rg_feature" value="裂缝">&nbsp;裂缝
 													    </label>
 													    
 													    <label class="radio">
-													        <input type="radio" id="rgFeature4" name="rg_feature" value="圬工砌体缺陷">&nbsp;圬工砌体缺陷
+													        <input type="radio" id="rgFeature5" name="rg_feature" value="圬工砌体缺陷">&nbsp;圬工砌体缺陷
 													    </label>
 													    
 													    <label class="radio">
-													        <input type="radio" id="rgFeature5" name="rg_feature" value="桥台跳车">&nbsp;桥台跳车
+													        <input type="radio" id="rgFeature6" name="rg_feature" value="桥台跳车">&nbsp;桥台跳车
 													    </label>
 													    
 													    <label class="radio">
-													        <input type="radio" id="rgFeature5" name="rg_feature" value="台背排水">&nbsp;台背排水
+													        <input type="radio" id="rgFeature7" name="rg_feature" value="台背排水">&nbsp;台背排水
 													    </label>
 													    
 													    <label class="radio">
-													        <input type="radio" id="rgFeature7" name="rg_feature" value="其他病害">&nbsp;其他病害
+													        <input type="radio" id="rgFeature8" name="rg_feature" value="其他病害">&nbsp;其他病害
 													    </label>
 													    
 													</div>

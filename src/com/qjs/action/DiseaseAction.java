@@ -1,6 +1,7 @@
 package com.qjs.action;
 
 import global.tool.Constant;
+import global.tool.OtherFunction;
 import global.tool.QueryItems;
 import global.tool.QueryObject;
 import global.tool.WordCreate;
@@ -18,9 +19,12 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.serial.SerialException;
 
@@ -53,6 +57,7 @@ import com.qjs.biz.impl.Disease_tiebeamBizImpl;
 import com.qjs.biz.impl.Disease_watertightBizImpl;
 import com.qjs.biz.impl.Disease_wetjointBizImpl;
 import com.qjs.biz.impl.Disease_wingwallBizImpl;
+import com.qjs.biz.impl.EvaluationBizImpl;
 import com.qjs.biz.impl.General_detailBizImpl;
 import com.qjs.biz.impl.Load_detailBizImpl;
 import com.qjs.biz.impl.Parts1BizImpl;
@@ -83,6 +88,7 @@ import com.qjs.entity.Disease_tiebeam;
 import com.qjs.entity.Disease_watertight;
 import com.qjs.entity.Disease_wetjoint;
 import com.qjs.entity.Disease_wingwall;
+import com.qjs.entity.Evaluation;
 import com.qjs.entity.General_detail;
 import com.qjs.entity.Load_detail;
 import com.qjs.entity.Parts1;
@@ -97,6 +103,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 	
 	private String bg_name;
 	private String table_name;
+	private String dis_id;
 	private String image;
 	
 	// Disease_girder
@@ -121,6 +128,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 	private String disease_image;
 	private String image_type;
 	private String evaluation;
+	private String score;
 	private String flag;
 	
 	// Disease_wetjoint
@@ -165,6 +173,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 	private Disease_fenceBizImpl disease_fenceBiz;
 	private Disease_watertightBizImpl disease_watertightBiz;
 	private Disease_lightingBizImpl disease_lightingBiz;
+	private EvaluationBizImpl evaluationBiz;
 	
 	
 	public String getBg_name() {
@@ -181,6 +190,14 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 
 	public void setTable_name(String table_name) {
 		this.table_name = table_name;
+	}
+	
+	public String getDis_id() {
+		return dis_id;
+	}
+
+	public void setDis_id(String dis_id) {
+		this.dis_id = dis_id;
 	}
 	
 	public String getImage() {
@@ -358,6 +375,14 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 
 	public void setEvaluation(String evaluation) {
 		this.evaluation = evaluation;
+	}
+	
+	public String getScore() {
+		return score;
+	}
+
+	public void setScore(String score) {
+		this.score = score;
 	}
 	
 	public String getFlag() {
@@ -678,6 +703,14 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		this.disease_lightingBiz = disease_lightingBiz;
 	}
 	
+	public EvaluationBizImpl getEvaluationBiz() {
+		return evaluationBiz;
+	}
+	
+	public void setEvaluationBiz(EvaluationBizImpl evaluationBiz) {
+		this.evaluationBiz = evaluationBiz;
+	}
+	
 
 	Map<String, Object> request;
 	Map<String, Object> session;
@@ -955,11 +988,12 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		request.put("table_name", this.getTable_name());
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
+		request.put("item_name", this.getItem_name());
 		return "disease_list";
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String getDiseaseList() {
+	public String getDiseaseList() {		
 		List<QueryObject> qo = new ArrayList<QueryObject>();
 		
 		if (this.getBg_id() != null && !this.getBg_id().trim().equals("")) {
@@ -1060,6 +1094,15 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		
 		List<Map<String, Object>> dataList = (List<Map<String, Object>>) result.get("result");
 		int count = (Integer) result.get("count");
+		
+		for (int i = 0; i < dataList.size(); i++) {
+			// 获取实际evaluation值	
+			Evaluation eval = evaluationBiz.getEvaluationExactly(table_name, bg_id, dataList.get(i).get("id").toString());
+			if (eval != null) {
+				dataList.get(i).put("real_eval", eval.getEvaluation());
+			}
+		}
+		
 		request.put("datalist", dataList);
 		request.put("count", count);
 		
@@ -1083,6 +1126,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		request.put("bg_name", this.getBg_name());
 		request.put("bg_id", this.getBg_id());
 		request.put("table_name", this.getTable_name());
+		request.put("item_name", this.getItem_name());
 		
 		switch (this.getTable_name()) {
 		case "disease_girder":
@@ -1428,6 +1472,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_girder.getAdd_content());
 				request.put("disease_image", disease_girder.getDisease_image());
 				request.put("image_type", disease_girder.getImage_type());
+				request.put("evaluation", disease_girder.getEvaluation());
 				
 				String imgStr = disease_girder.getDisease_image();
 				if (imgStr != "") {
@@ -1464,6 +1509,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_wetjoint.getAdd_content());
 				request.put("disease_image", disease_wetjoint.getDisease_image());
 				request.put("image_type", disease_wetjoint.getImage_type());
+				request.put("evaluation", disease_wetjoint.getEvaluation());
 				
 				String imgStr = disease_wetjoint.getDisease_image();
 				if (imgStr != "") {
@@ -1492,6 +1538,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_support.getAdd_content());
 				request.put("disease_image", disease_support.getDisease_image());
 				request.put("image_type", disease_support.getImage_type());
+				request.put("evaluation", disease_support.getEvaluation());
 				
 				String imgStr = disease_support.getDisease_image();
 				if (imgStr != "") {
@@ -1528,6 +1575,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_pier.getAdd_content());
 				request.put("disease_image", disease_pier.getDisease_image());
 				request.put("image_type", disease_pier.getImage_type());
+				request.put("evaluation", disease_pier.getEvaluation());
 				
 				String imgStr = disease_pier.getDisease_image();
 				if (imgStr != "") {
@@ -1556,6 +1604,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_bentcap.getAdd_content());
 				request.put("disease_image", disease_bentcap.getDisease_image());
 				request.put("image_type", disease_bentcap.getImage_type());
+				request.put("evaluation", disease_bentcap.getEvaluation());
 				
 				String imgStr = disease_bentcap.getDisease_image();
 				if (imgStr != "") {
@@ -1584,6 +1633,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_tiebeam.getAdd_content());
 				request.put("disease_image", disease_tiebeam.getDisease_image());
 				request.put("image_type", disease_tiebeam.getImage_type());
+				request.put("evaluation", disease_tiebeam.getEvaluation());
 				
 				String imgStr = disease_tiebeam.getDisease_image();
 				if (imgStr != "") {
@@ -1613,6 +1663,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_atbody.getAdd_content());
 				request.put("disease_image", disease_atbody.getDisease_image());
 				request.put("image_type", disease_atbody.getImage_type());
+				request.put("evaluation", disease_atbody.getEvaluation());
 				
 				String imgStr = disease_atbody.getDisease_image();
 				if (imgStr != "") {
@@ -1641,6 +1692,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_atcapping.getAdd_content());
 				request.put("disease_image", disease_atcapping.getDisease_image());
 				request.put("image_type", disease_atcapping.getImage_type());
+				request.put("evaluation", disease_atcapping.getEvaluation());
 				
 				String imgStr = disease_atcapping.getDisease_image();
 				if (imgStr != "") {
@@ -1669,6 +1721,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_pa.getAdd_content());
 				request.put("disease_image", disease_pa.getDisease_image());
 				request.put("image_type", disease_pa.getImage_type());
+				request.put("evaluation", disease_pa.getEvaluation());
 				
 				String imgStr = disease_pa.getDisease_image();
 				if (imgStr != "") {
@@ -1697,6 +1750,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_bed.getAdd_content());
 				request.put("disease_image", disease_bed.getDisease_image());
 				request.put("image_type", disease_bed.getImage_type());
+				request.put("evaluation", disease_bed.getEvaluation());
 				
 				String imgStr = disease_bed.getDisease_image();
 				if (imgStr != "") {
@@ -1725,6 +1779,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_regstruc.getAdd_content());
 				request.put("disease_image", disease_regstruc.getDisease_image());
 				request.put("image_type", disease_regstruc.getImage_type());
+				request.put("evaluation", disease_regstruc.getEvaluation());
 				
 				String imgStr = disease_regstruc.getDisease_image();
 				if (imgStr != "") {
@@ -1753,6 +1808,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_wingwall.getAdd_content());
 				request.put("disease_image", disease_wingwall.getDisease_image());
 				request.put("image_type", disease_wingwall.getImage_type());
+				request.put("evaluation", disease_wingwall.getEvaluation());
 				
 				String imgStr = disease_wingwall.getDisease_image();
 				if (imgStr != "") {
@@ -1781,6 +1837,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_conslope.getAdd_content());
 				request.put("disease_image", disease_conslope.getDisease_image());
 				request.put("image_type", disease_conslope.getImage_type());
+				request.put("evaluation", disease_conslope.getEvaluation());
 				
 				String imgStr = disease_conslope.getDisease_image();
 				if (imgStr != "") {
@@ -1809,6 +1866,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_proslope.getAdd_content());
 				request.put("disease_image", disease_proslope.getDisease_image());
 				request.put("image_type", disease_proslope.getImage_type());
+				request.put("evaluation", disease_proslope.getEvaluation());
 				
 				String imgStr = disease_proslope.getDisease_image();
 				if (imgStr != "") {
@@ -1837,6 +1895,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_deck.getAdd_content());
 				request.put("disease_image", disease_deck.getDisease_image());
 				request.put("image_type", disease_deck.getImage_type());
+				request.put("evaluation", disease_deck.getEvaluation());
 				
 				String imgStr = disease_deck.getDisease_image();
 				if (imgStr != "") {
@@ -1865,6 +1924,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_joint.getAdd_content());
 				request.put("disease_image", disease_joint.getDisease_image());
 				request.put("image_type", disease_joint.getImage_type());
+				request.put("evaluation", disease_joint.getEvaluation());
 				
 				String imgStr = disease_joint.getDisease_image();
 				if (imgStr != "") {
@@ -1893,6 +1953,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_sidewalk.getAdd_content());
 				request.put("disease_image", disease_sidewalk.getDisease_image());
 				request.put("image_type", disease_sidewalk.getImage_type());
+				request.put("evaluation", disease_sidewalk.getEvaluation());
 				
 				String imgStr = disease_sidewalk.getDisease_image();
 				if (imgStr != "") {
@@ -1921,6 +1982,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_fence.getAdd_content());
 				request.put("disease_image", disease_fence.getDisease_image());
 				request.put("image_type", disease_fence.getImage_type());
+				request.put("evaluation", disease_fence.getEvaluation());
 				
 				String imgStr = disease_fence.getDisease_image();
 				if (imgStr != "") {
@@ -1949,6 +2011,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_watertight.getAdd_content());
 				request.put("disease_image", disease_watertight.getDisease_image());
 				request.put("image_type", disease_watertight.getImage_type());
+				request.put("evaluation", disease_watertight.getEvaluation());
 				
 				String imgStr = disease_watertight.getDisease_image();
 				if (imgStr != "") {
@@ -1977,6 +2040,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("add_content", disease_lighting.getAdd_content());
 				request.put("disease_image", disease_lighting.getDisease_image());
 				request.put("image_type", disease_lighting.getImage_type());
+				request.put("evaluation", disease_lighting.getEvaluation());
 				
 				String imgStr = disease_lighting.getDisease_image();
 				if (imgStr != "") {
@@ -2023,7 +2087,24 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				girder.setId(dis.getId());
 				girder.setFlag(dis.getFlag());
-				girder.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature()) 
+						|| (dis.getRg_feature().equals("其他病害") && !dis.getSp_otherDisease().equals(this.getSp_otherDisease()))) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_girder", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_girderBiz.updateDisease_girder(girder);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_girder&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2066,7 +2147,24 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				wetjoint.setId(dis.getId());
 				wetjoint.setFlag(dis.getFlag());
-				wetjoint.setEvaluation(dis.getEvaluation());
+
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature()) 
+						|| (dis.getRg_feature().equals("其他病害") && !dis.getSp_otherDisease().equals(this.getSp_otherDisease()))) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_wetjoint", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_wetjointBiz.updateDisease_wetjoint(wetjoint);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_wetjoint&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2101,7 +2199,23 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				support.setId(dis.getId());
 				support.setFlag(dis.getFlag());
-				support.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature())) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_support", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_supportBiz.updateDisease_support(support);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_support&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2144,7 +2258,24 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				pier.setId(dis.getId());
 				pier.setFlag(dis.getFlag());
-				pier.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature()) 
+						|| (dis.getRg_feature().equals("其他病害") && !dis.getSp_otherDisease().equals(this.getSp_otherDisease()))) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_pier", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_pierBiz.updateDisease_pier(pier);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_pier&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2179,7 +2310,23 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				bentcap.setId(dis.getId());
 				bentcap.setFlag(dis.getFlag());
-				bentcap.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature())) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_bentcap", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_bentcapBiz.updateDisease_bentcap(bentcap);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_bentcap&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2214,7 +2361,23 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				tiebeam.setId(dis.getId());
 				tiebeam.setFlag(dis.getFlag());
-				tiebeam.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature())) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_tiebeam", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_tiebeamBiz.updateDisease_tiebeam(tiebeam);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_tiebeam&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2250,7 +2413,24 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				atbody.setId(dis.getId());
 				atbody.setFlag(dis.getFlag());
-				atbody.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature()) 
+						|| (dis.getRg_feature().equals("其他病害") && !dis.getSp_otherDisease().equals(this.getSp_otherDisease()))) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_atbody", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_atbodyBiz.updateDisease_atbody(atbody);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_atbody&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2285,7 +2465,23 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				atcapping.setId(dis.getId());
 				atcapping.setFlag(dis.getFlag());
-				atcapping.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature())) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_atcapping", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_atcappingBiz.updateDisease_atcapping(atcapping);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_atcapping&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2320,7 +2516,23 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				pa.setId(dis.getId());
 				pa.setFlag(dis.getFlag());
-				pa.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature())) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_pa", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_paBiz.updateDisease_pa(pa);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_pa&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2355,7 +2567,23 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				bed.setId(dis.getId());
 				bed.setFlag(dis.getFlag());
-				bed.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature())) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_bed", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_bedBiz.updateDisease_bed(bed);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_bed&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2390,7 +2618,23 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				regstruc.setId(dis.getId());
 				regstruc.setFlag(dis.getFlag());
-				regstruc.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature())) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_regstruc", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_regstrucBiz.updateDisease_regstruc(regstruc);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_regstruc&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2425,7 +2669,23 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				wingwall.setId(dis.getId());
 				wingwall.setFlag(dis.getFlag());
-				wingwall.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature())) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_wingwall", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_wingwallBiz.updateDisease_wingwall(wingwall);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_wingwall&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2460,7 +2720,23 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				conslope.setId(dis.getId());
 				conslope.setFlag(dis.getFlag());
-				conslope.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature())) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_conslope", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_conslopeBiz.updateDisease_conslope(conslope);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_conslope&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2495,7 +2771,23 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				proslope.setId(dis.getId());
 				proslope.setFlag(dis.getFlag());
-				proslope.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature())) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_proslope", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_proslopeBiz.updateDisease_proslope(proslope);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_proslope&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2530,7 +2822,23 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				deck.setId(dis.getId());
 				deck.setFlag(dis.getFlag());
-				deck.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature())) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_deck", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_deckBiz.updateDisease_deck(deck);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_deck&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2565,7 +2873,23 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				joint.setId(dis.getId());
 				joint.setFlag(dis.getFlag());
-				joint.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature())) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_joint", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_jointBiz.updateDisease_joint(joint);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_joint&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2600,7 +2924,23 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				sidewalk.setId(dis.getId());
 				sidewalk.setFlag(dis.getFlag());
-				sidewalk.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature())) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_sidewalk", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_sidewalkBiz.updateDisease_sidewalk(sidewalk);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_sidewalk&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2635,7 +2975,23 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				fence.setId(dis.getId());
 				fence.setFlag(dis.getFlag());
-				fence.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature())) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_fence", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_fenceBiz.updateDisease_fence(fence);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_fence&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2670,7 +3026,23 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				watertight.setId(dis.getId());
 				watertight.setFlag(dis.getFlag());
-				watertight.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature())) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_watertight", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_watertightBiz.updateDisease_watertight(watertight);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_watertight&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2705,7 +3077,23 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (dis != null) { // 修改
 				lighting.setId(dis.getId());
 				lighting.setFlag(dis.getFlag());
-				lighting.setEvaluation(dis.getEvaluation());
+				
+				// 如果修改了病害类型，重新打分
+				if (!dis.getRg_feature().equals(this.getRg_feature())) { // 分病害和其他病害两种情况
+
+					Evaluation eval = evaluationBiz.getEvaluationExactly("disease_lighting", dis.getBg_id(), dis.getId().toString());
+					if (eval != null) {						
+						Evaluation evaluation = new Evaluation();
+						evaluation.setId(eval.getId());
+						evaluation.setTable_name(eval.getTable_name());
+						evaluation.setBg_id(eval.getBg_id());
+						evaluation.setParts_id(eval.getParts_id());
+						evaluation.setDis_id(eval.getDis_id());
+						evaluation.setEvaluation("");
+						evaluation.setScore("");
+						evaluationBiz.updateEvaluation(evaluation);
+					}
+				}
 				
 				disease_lightingBiz.updateDisease_lighting(lighting);				
 				response.sendRedirect("disease!viewDisease?table_name=disease_lighting&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
@@ -2720,6 +3108,385 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_lighting&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
 		}		
 		return null;
+	}
+	
+	// 显示病害打分页面
+	@SuppressWarnings("unchecked")
+	public String showEvaluation() {
+		request.put("table_name", this.getTable_name());
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		request.put("item_name", this.getItem_name());
+		
+		List<Map<String, String>> evallist = evaluationBiz.getEvaluationByTwo(this.getTable_name(), this.getBg_id());
+		
+		String evalstr = new String();
+		if (evallist.size() != 0) {
+			// 将标度从list转化为字符串
+			for (int i = 0; i < evallist.size(); i++) {
+				evalstr += evallist.get(i).get("dis_id") + ":" + evallist.get(i).get("evaluation") + "-" + evallist.get(i).get("score") + ",";
+			}
+			evalstr = evalstr.substring(0, evalstr.length()-1);
+		}		
+
+		List<QueryObject> qo = new ArrayList<QueryObject>();
+		
+		QueryItems qi = new QueryItems(qo, null, null, this.getPageNo(), Constant.PAGE_SIZE);
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		switch (this.getTable_name()) {
+		case "disease_girder":
+			result = (Map<String, Object>) disease_girderBiz.getAllDetailDisease_girder(qi);
+			break;
+			
+		case "disease_wetjoint":
+			result = (Map<String, Object>) disease_wetjointBiz.getAllDetailDisease_wetjoint(qi);
+			break;
+			
+		case "disease_support":
+			result = (Map<String, Object>) disease_supportBiz.getAllDetailDisease_support(qi);
+			break;
+			
+		case "disease_pier":
+			result = (Map<String, Object>) disease_pierBiz.getAllDetailDisease_pier(qi);
+			break;
+			
+		case "disease_bentcap":
+			result = (Map<String, Object>) disease_bentcapBiz.getAllDetailDisease_bentcap(qi);
+			break;
+			
+		case "disease_tiebeam":
+			result = (Map<String, Object>) disease_tiebeamBiz.getAllDetailDisease_tiebeam(qi);
+			break;
+			
+		case "disease_atbody":
+			result = (Map<String, Object>) disease_atbodyBiz.getAllDetailDisease_atbody(qi);
+			break;
+			
+		case "disease_atcapping":
+			result = (Map<String, Object>) disease_atcappingBiz.getAllDetailDisease_atcapping(qi);
+			break;
+			
+		case "disease_pa":
+			result = (Map<String, Object>) disease_paBiz.getAllDetailDisease_pa(qi);
+			break;
+			
+		case "disease_bed":
+			result = (Map<String, Object>) disease_bedBiz.getAllDetailDisease_bed(qi);
+			break;
+			
+		case "disease_regstruc":
+			result = (Map<String, Object>) disease_regstrucBiz.getAllDetailDisease_regstruc(qi);
+			break;
+			
+		case "disease_wingwall":
+			result = (Map<String, Object>) disease_wingwallBiz.getAllDetailDisease_wingwall(qi);
+			break;
+			
+		case "disease_conslope":
+			result = (Map<String, Object>) disease_conslopeBiz.getAllDetailDisease_conslope(qi);
+			break;
+			
+		case "disease_proslope":
+			result = (Map<String, Object>) disease_proslopeBiz.getAllDetailDisease_proslope(qi);
+			break;
+			
+		case "disease_deck":
+			result = (Map<String, Object>) disease_deckBiz.getAllDetailDisease_deck(qi);
+			break;
+			
+		case "disease_joint":
+			result = (Map<String, Object>) disease_jointBiz.getAllDetailDisease_joint(qi);
+			break;
+			
+		case "disease_sidewalk":
+			result = (Map<String, Object>) disease_sidewalkBiz.getAllDetailDisease_sidewalk(qi);
+			break;
+			
+		case "disease_fence":
+			result = (Map<String, Object>) disease_fenceBiz.getAllDetailDisease_fence(qi);
+			break;
+			
+		case "disease_watertight":
+			result = (Map<String, Object>) disease_watertightBiz.getAllDetailDisease_watertight(qi);
+			break;
+			
+		case "disease_lighting":
+			result = (Map<String, Object>) disease_lightingBiz.getAllDetailDisease_lighting(qi);
+			break;
+
+		default:
+			break;
+		}
+		
+		List<Map<String, Object>> dataList = (List<Map<String, Object>>) result.get("result");
+		int count = (Integer) result.get("count");
+		
+		Map<String, String> eval_index = new OtherFunction().EVALUATION.get(this.getTable_name()); // 获取标度索引表
+		for (int i = 0; i < dataList.size(); i++) {
+			// 显示病害图片
+	        if (dataList.get(i).get("disease_image") != "") {
+	        	String imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + dataList.get(i).get("image_type").toString().split("/")[1];
+				if (generateImage(dataList.get(i).get("disease_image").toString(), imgFilePath)) {
+					dataList.get(i).put("img_name", new File(imgFilePath).getName());
+				}
+	        }
+	        
+	        // 配置索引标度
+	        if (eval_index.get(dataList.get(i).get("rg_feature")) != null) { // 如果在病害类型中匹配
+				dataList.get(i).put("eval_peak", eval_index.get(dataList.get(i).get("rg_feature")));
+			}
+			else if (dataList.get(i).get("rg_feature").equals("其他病害")
+					&& eval_index.get(dataList.get(i).get("sp_otherDisease")) != null) { // 如果在其他病害中匹配
+				dataList.get(i).put("eval_peak", eval_index.get(dataList.get(i).get("sp_otherDisease")));
+			}
+			else { // 不匹配
+				dataList.get(i).put("eval_peak", "5");
+			}
+	    }
+		
+		request.put("datalist", dataList);
+		request.put("evalstr", evalstr);
+		request.put("count", count);
+		
+		return "evaluation_table_data";
+	}
+	
+	public String saveEvaluation() throws IOException {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		
+		String table_name = request.getParameter("table_name");
+		String bg_id = request.getParameter("bg_id");
+		String evaluation_val = request.getParameter("evaluation_val");
+		String[] evals = evaluation_val.split(",");
+		
+		for (int i = 0; i < evals.length; i++) {
+			Evaluation evaluation = new Evaluation();
+			evaluation.setTable_name(table_name);
+			evaluation.setBg_id(bg_id);
+			evaluation.setDis_id(evals[i].split(":")[0]);
+			evaluation.setEvaluation(evals[i].split(":")[1].split("-")[0]);
+			evaluation.setScore(evals[i].split(":")[1].split("-")[1]);
+			
+			if (evaluationBiz.getEvaluationExactly(table_name, bg_id, evals[i].split(":")[0]) != null) { // 判断是否有对应的病害id，有就修改
+				Evaluation eval = evaluationBiz.getEvaluationExactly(table_name, bg_id, evals[i].split(":")[0]);
+				evaluation.setId(eval.getId());
+				evaluationBiz.updateEvaluation(evaluation);
+			}
+			else { // 没有就添加
+				evaluationBiz.addEvaluation(evaluation);
+			}
+		}		
+		return null;		
+	}
+	
+	public void getAllMember () {		
+		Parts1 parts1 = parts1Biz.getParts1ByBridgeCode(this.getBg_id());
+		Parts2 parts2 = parts2Biz.getParts2ByBridgeCode(this.getBg_id());
+		Pier_detail pier_detail = pier_detailBiz.getPier_detailByBridgeCode(this.getBg_id());
+		Load_detail load_detail = load_detailBiz.getLoad_detailByBridgeCode(this.getBg_id());
+		General_detail general_detail = general_detailBiz.getGeneral_detailByBridgeCode(this.getBg_id());
+		Support_detail support_detail = support_detailBiz.getSupport_detailByBridgeCode(this.getBg_id());
+		
+		// 上部
+		int load_num = load_detail.getLoad_nums().split(";").length-1; // 上部承重构件个数
+		int general_num = general_detail.getGeneral_nums().split(";").length-1; // 上部一般构件个数
+		int support_num = support_detail.getSupport_nums().split(";").length-1; // 支座个数
+		
+		// 下部
+		int wall_num = nativeOnenum(parts1.getWing_wall()); // 翼墙、耳墙个数
+		int slope_num = nativeOnenum(parts1.getConical_slope()) + Integer.parseInt(parts1.getProtection_slope()); // 锥坡、护坡个数
+		int pier_num = pier_detail.getPier_nums().split(";").length-1 + pier_detail.getBent_cap_nums().length()-1 
+				+ pier_detail.getTie_beam_nums().length()-1; // 桥墩、盖梁、系梁个数
+		int abutment_num = Integer.parseInt(parts1.getAbutment_num()); // 桥台个数		
+		int pa_num = Integer.parseInt(parts1.getPa_num()); // 墩台基础个数
+		int bed_num = Integer.parseInt(parts1.getBed_num()); // 河床个数
+		int regstruc_num = Integer.parseInt(parts1.getReg_structure());	// 调治构造物个数	
+		
+		// 桥面系
+		int deck_num = Integer.parseInt(parts2.getDeck_num()); // 桥面铺装个数
+		int joint_num = Integer.parseInt(parts2.getJoint_num()); // 伸缩缝装置个数
+		int sidewalk_num = nativeOnenum(parts2.getSidewalk()); // 人行横道个数
+		int fence_num = nativeOnenum(parts2.getGuardrail()); // 栏杆、护栏个数
+		int watertight_num = Integer.parseInt(parts2.getDrainage_system()); // 防排水系统个数
+		int lighting_num = Integer.parseInt(parts2.getIlluminated_sign()); // 照明、标志个数
+		
+		// 上部结构
+		List<Map<String, Object>> result_girder = disease_girderBiz.getAllDisease_girderByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_wetjoint = disease_wetjointBiz.getAllDisease_wetjointByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_support = disease_supportBiz.getAllDisease_supportByBridgeCode(this.getBg_id());
+		
+		// 下部结构
+		List<Map<String, Object>> result_pier = disease_pierBiz.getAllDisease_pierByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_bentcap = disease_bentcapBiz.getAllDisease_bentcapByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_tiebeam = disease_tiebeamBiz.getAllDisease_tiebeamByBridgeCode(this.getBg_id());
+		result_pier.addAll(result_bentcap);
+		result_pier.addAll(result_tiebeam);
+		List<Map<String, Object>> result_atbody = disease_atbodyBiz.getAllDisease_atbodyByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_atcapping = disease_atcappingBiz.getAllDisease_atcappingByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_pa = disease_paBiz.getAllDisease_paByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_bed = disease_bedBiz.getAllDisease_bedByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_regstruc = disease_regstrucBiz.getAllDisease_regstrucByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_wingwall = disease_wingwallBiz.getAllDisease_wingwallByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_conslope = disease_conslopeBiz.getAllDisease_conslopeByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_proslope = disease_proslopeBiz.getAllDisease_proslopeByBridgeCode(this.getBg_id());
+		result_conslope.addAll(result_proslope);
+		
+		// 桥面系
+		List<Map<String, Object>> result_deck = disease_deckBiz.getAllDisease_deckByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_joint = disease_jointBiz.getAllDisease_jointByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_sidewalk = disease_sidewalkBiz.getAllDisease_sidewalkByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_fence = disease_fenceBiz.getAllDisease_fenceByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_watertight = disease_watertightBiz.getAllDisease_watertightByBridgeCode(this.getBg_id());
+		List<Map<String, Object>> result_lighting = disease_lightingBiz.getAllDisease_lightingByBridgeCode(this.getBg_id());
+		
+		
+		
+		
+	}
+	
+	// 桥梁构件技术状况评分
+	@SuppressWarnings("unchecked")
+	public void getMCI() {
+		String bg_id = this.getBg_id();
+		List<QueryObject> qo = new ArrayList<QueryObject>();
+		
+		QueryItems qi = new QueryItems(qo, null, null, this.getPageNo(), Constant.PAGE_SIZE);
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		switch (this.getTable_name()) {
+		case "disease_girder":
+			result = (Map<String, Object>) disease_girderBiz.getAllDetailDisease_girder(qi);
+			break;
+			
+		case "disease_wetjoint":
+			result = (Map<String, Object>) disease_wetjointBiz.getAllDetailDisease_wetjoint(qi);
+			break;
+			
+		case "disease_support":
+			result = (Map<String, Object>) disease_supportBiz.getAllDetailDisease_support(qi);
+			break;
+			
+		case "disease_pier":
+			result = (Map<String, Object>) disease_pierBiz.getAllDetailDisease_pier(qi);
+			break;
+			
+		case "disease_bentcap":
+			result = (Map<String, Object>) disease_bentcapBiz.getAllDetailDisease_bentcap(qi);
+			break;
+			
+		case "disease_tiebeam":
+			result = (Map<String, Object>) disease_tiebeamBiz.getAllDetailDisease_tiebeam(qi);
+			break;
+			
+		case "disease_atbody":
+			result = (Map<String, Object>) disease_atbodyBiz.getAllDetailDisease_atbody(qi);
+			break;
+			
+		case "disease_atcapping":
+			result = (Map<String, Object>) disease_atcappingBiz.getAllDetailDisease_atcapping(qi);
+			break;
+			
+		case "disease_pa":
+			result = (Map<String, Object>) disease_paBiz.getAllDetailDisease_pa(qi);
+			break;
+			
+		case "disease_bed":
+			result = (Map<String, Object>) disease_bedBiz.getAllDetailDisease_bed(qi);
+			break;
+			
+		case "disease_regstruc":
+			result = (Map<String, Object>) disease_regstrucBiz.getAllDetailDisease_regstruc(qi);
+			break;
+			
+		case "disease_wingwall":
+			result = (Map<String, Object>) disease_wingwallBiz.getAllDetailDisease_wingwall(qi);
+			break;
+			
+		case "disease_conslope":
+			result = (Map<String, Object>) disease_conslopeBiz.getAllDetailDisease_conslope(qi);
+			break;
+			
+		case "disease_proslope":
+			result = (Map<String, Object>) disease_proslopeBiz.getAllDetailDisease_proslope(qi);
+			break;
+			
+		case "disease_deck":
+			result = (Map<String, Object>) disease_deckBiz.getAllDetailDisease_deck(qi);
+			break;
+			
+		case "disease_joint":
+			result = (Map<String, Object>) disease_jointBiz.getAllDetailDisease_joint(qi);
+			break;
+			
+		case "disease_sidewalk":
+			result = (Map<String, Object>) disease_sidewalkBiz.getAllDetailDisease_sidewalk(qi);
+			break;
+			
+		case "disease_fence":
+			result = (Map<String, Object>) disease_fenceBiz.getAllDetailDisease_fence(qi);
+			break;
+			
+		case "disease_watertight":
+			result = (Map<String, Object>) disease_watertightBiz.getAllDetailDisease_watertight(qi);
+			break;
+			
+		case "disease_lighting":
+			result = (Map<String, Object>) disease_lightingBiz.getAllDetailDisease_lighting(qi);
+			break;
+
+		default:
+			break;
+		}
+		
+		List<Map<String, Object>> datalist = (List<Map<String, Object>>) result.get("result"); // 获取病害列表
+		Map<String, List<String>> evalmap = new HashMap<>();
+		
+		for (int i = 0; i < datalist.size(); i++) {
+//			String evalname = datalist.get(i).get("parts_id") + "#" + datalist.get(i).get("item_name"); // 病害打分构件号
+			String evalname = datalist.get(i).get("parts_id").toString(); // 病害打分构件号
+			Evaluation eval = evaluationBiz.getEvaluationExactly(this.getTable_name(), 
+					datalist.get(i).get("bg_id").toString(), datalist.get(i).get("id").toString());  // 获取精确evaluation
+			
+			if (evalmap.get(evalname) == null) {
+				List<String> scorelist = new ArrayList<>();
+				scorelist.add(eval.getScore());
+				evalmap.put(evalname, scorelist);
+			}
+			else {
+				evalmap.get(evalname).add(eval.getScore());
+			}
+		}
+		Map<String, Double> mci_result = new OtherFunction().calMciMap(evalmap); // 计算MCI
+		
+		Iterator<Entry<String, Double>> entries = mci_result.entrySet().iterator();
+		int i = 0;
+		double[] mci_arr = new double[mci_result.size()];
+		while (entries.hasNext()) {  
+			  
+		    Entry<String, Double> entry = entries.next();
+		  
+		    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+		    mci_arr[i] = entry.getValue();
+		    i++;
+		}
+		
+		
+		// 计算CCI
+		Load_detail load_detail = load_detailBiz.getLoad_detailByBridgeCode("2016-04-26-110327");
+		int load_num = load_detail.getLoad_nums().split(";").length-1; // 上部承重构件个数
+		
+//		int major_flag = 0;
+//		if (condition) { // 如果是 主要部件，置为1
+//			major_flag = 1;
+//		}
+		double cci_result = new OtherFunction().calCCI(mci_arr, load_num, 1);
+		
+		System.out.println("cci:" + cci_result);
+		
+		
 	}
 	
 	// 生成病害报告

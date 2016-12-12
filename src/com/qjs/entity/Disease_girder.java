@@ -24,6 +24,7 @@ public class Disease_girder implements java.io.Serializable {
 	private String disease_image;
 	private String image_type;
 	private String evaluation;
+	private String score;
 	private String flag;
 	
 	public Disease_girder() {
@@ -34,7 +35,7 @@ public class Disease_girder implements java.io.Serializable {
 			String rg_fissure, String sp_otherDisease, String start, String end, String area, 
 			String length, String width, String side_start, String side_end, String side_length, 
 			String side_width, String rg_location, String add_content, String disease_image, String image_type,
-			String evaluation, String flag) {
+			String evaluation, String score, String flag) {
 		super();
 		this.id = id;
 		this.bg_id = bg_id;
@@ -57,6 +58,7 @@ public class Disease_girder implements java.io.Serializable {
 		this.disease_image = disease_image;
 		this.image_type = image_type;
 		this.evaluation = evaluation;
+		this.score = score;
 		this.flag = flag;
 	}	
 	
@@ -226,6 +228,14 @@ public class Disease_girder implements java.io.Serializable {
 
 	public void setEvaluation(String evaluation) {
 		this.evaluation = evaluation;
+	}
+	
+	public String getScore() {
+		return score;
+	}
+
+	public void setScore(String score) {
+		this.score = score;
 	}
 	
 	public String getFlag() {

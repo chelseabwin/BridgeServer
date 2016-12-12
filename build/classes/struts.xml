@@ -91,6 +91,7 @@
             <result name="show_disease">/jsp/disease/show_disease.jsp</result>
             <result name="disease_list">/jsp/disease/disease_list.jsp</result>
             <result name="disease_table_data">/jsp/disease/disease_table.jsp</result>
+            <result name="evaluation_table_data">/jsp/disease/evaluation.jsp</result>
             
             <result name="view">/jsp/disease/view.jsp</result>
             <result name="input">/jsp/error.jsp</result>

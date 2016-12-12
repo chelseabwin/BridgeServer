@@ -16,6 +16,8 @@
 			
 			<th>病害描述</th>
 			
+			<th>指标标度类别</th>
+			
 			<th>操作</th>
 
 		</tr>
@@ -31,10 +33,19 @@
 			<td><s:property value="item_name"/></td>
 
 			<td><s:property value="parts_id"/></td>
-
-			<td><s:property value="rg_feature"/></td>
+			
+			<td>
+			<s:if test="%{#data.rg_feature=='其他病害' && #data.sp_otherDisease!=null}">
+				<s:property value="sp_otherDisease"/>
+			</s:if>
+			<s:else>
+				<s:property value="rg_feature"/>
+			</s:else>
+			</td>
 			
 			<td><s:property value="add_content"/></td>
+			
+			<td><s:if test="#data.real_eval!=null && #data.real_eval!=''"><s:property value="real_eval"/>类</s:if></td>
 			
 			<td>
 			<button class="btn green" onclick="loadPage('/BridgeServer/disease!viewDisease?table_name=<s:property value="table_name"/>&id=<s:property value="id"/>&bg_name=<s:property value="bg_name"/>&bg_id=<s:property value="bg_id"/>');"><i class="m-icon-swapright m-icon-white"></i> 查看详情</button>

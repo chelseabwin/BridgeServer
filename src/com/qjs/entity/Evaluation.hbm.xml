@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="com.qjs.entity.Evaluation" table="evaluation" catalog="bridge_server">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native"></generator>
+        </id>
+        <property name="table_name" type="java.lang.String">
+             <column name="table_name" length="200" />
+        </property>
+        <property name="bg_id" type="java.lang.String">
+             <column name="bg_id" length="200" />
+        </property>
+        <property name="parts_id" type="java.lang.String">
+             <column name="parts_id" length="200" />
+        </property>
+        <property name="dis_id" type="java.lang.String">
+             <column name="dis_id" length="200" />
+        </property>
+        <property name="evaluation" type="java.lang.String">
+             <column name="evaluation" length="200" />
+        </property>
+        <property name="score" type="java.lang.String">
+             <column name="score" length="200" />
+        </property>
+    </class>
+</hibernate-mapping>

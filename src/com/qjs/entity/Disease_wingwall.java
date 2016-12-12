@@ -12,6 +12,7 @@ public class Disease_wingwall implements java.io.Serializable {
 	private String disease_image;
 	private String image_type;
 	private String evaluation;
+	private String score;
 	private String flag;
 	
 	public Disease_wingwall() {
@@ -19,7 +20,8 @@ public class Disease_wingwall implements java.io.Serializable {
 	}
 	
 	public Disease_wingwall(Integer id, String bg_id, String parts_id, String item_name, String rg_feature, 
-			String add_content, String disease_image, String image_type, String evaluation, String flag) {
+			String add_content, String disease_image, String image_type, String evaluation, String score, 
+			String flag) {
 		super();
 		this.id = id;
 		this.bg_id = bg_id;
@@ -30,6 +32,7 @@ public class Disease_wingwall implements java.io.Serializable {
 		this.disease_image = disease_image;
 		this.image_type = image_type;
 		this.evaluation = evaluation;
+		this.score = score;
 		this.flag = flag;
 	}	
 	
@@ -103,6 +106,14 @@ public class Disease_wingwall implements java.io.Serializable {
 
 	public void setEvaluation(String evaluation) {
 		this.evaluation = evaluation;
+	}
+	
+	public String getScore() {
+		return score;
+	}
+
+	public void setScore(String score) {
+		this.score = score;
 	}
 	
 	public String getFlag() {

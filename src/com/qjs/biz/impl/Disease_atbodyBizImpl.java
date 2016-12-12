@@ -1,5 +1,6 @@
 package com.qjs.biz.impl;
 
+import global.tool.OtherFunction;
 import global.tool.QueryItems;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,10 +82,18 @@ public class Disease_atbodyBizImpl implements Disease_atbodyBiz {
 			obj.put("disease_image", dil.getDisease_image());
 			obj.put("image_type", dil.getImage_type());
 			obj.put("evaluation", dil.getEvaluation());
+			obj.put("score", dil.getScore());
 			disinfo.add(obj);
 		}
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put("count", res.get("count"));
+		
+		// ∞¥’’parts_id…˝À≥–Ú≈≈¡–
+		try {
+			new OtherFunction().listSort(disinfo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		result.put("result", disinfo);
 		return result;
 	}
@@ -137,6 +146,7 @@ public class Disease_atbodyBizImpl implements Disease_atbodyBiz {
 			obj.put("disease_image", dil.getDisease_image());
 			obj.put("image_type", dil.getImage_type());
 			obj.put("evaluation", dil.getEvaluation());
+			obj.put("score", dil.getScore());
 			disinfo.add(obj);
 		}
 		return disinfo;

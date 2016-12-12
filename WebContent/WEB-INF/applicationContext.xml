@@ -95,6 +95,8 @@
 				<value>com/qjs/entity/Disease_fence.hbm.xml</value>
 				<value>com/qjs/entity/Disease_watertight.hbm.xml</value>
 				<value>com/qjs/entity/Disease_lighting.hbm.xml</value>
+				
+				<value>com/qjs/entity/Evaluation.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -254,6 +256,9 @@
 	<bean id="disease_lightingDAO" class="com.qjs.dao.impl.Disease_lightingDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	<bean id="evaluationDAO" class="com.qjs.dao.impl.EvaluationDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 	
 	
 	<!-- Biz -->
@@ -374,6 +379,9 @@
 	<bean id="disease_lightingBiz"  class="com.qjs.biz.impl.Disease_lightingBizImpl">
 	  <property name="disease_lightingDAO" ref="disease_lightingDAO" />
 	</bean>
+	<bean id="evaluationBiz"  class="com.qjs.biz.impl.EvaluationBizImpl">
+	  <property name="evaluationDAO" ref="evaluationDAO" />
+	</bean>
 
 	
 	<!-- Action -->
@@ -440,6 +448,7 @@
 	    <property name="disease_fenceBiz" ref="disease_fenceBiz" />
 	    <property name="disease_watertightBiz" ref="disease_watertightBiz" />
 	    <property name="disease_lightingBiz" ref="disease_lightingBiz" />
+	    <property name="evaluationBiz" ref="evaluationBiz" />
 	</bean>
 	
 </beans>

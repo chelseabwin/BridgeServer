@@ -64,7 +64,7 @@
 
 							<div class="portlet-title">
 
-								<div class="caption"><i class="icon-reorder"></i><s:property value="%{#request.bg_name}"/> 病害数据查看</div>
+								<div class="caption"><i class="icon-reorder"></i><s:property value="%{#request.bg_name}"/> <s:property value="item_name"/> 病害数据查看</div>
 
 								<div class="tools">
 
@@ -164,6 +164,13 @@
 												      	 
 												      </s:if>
 												      </s:if>
+												      
+												      <tr>
+												         <th>指标标度类别</th>
+												         <td class="alert alert-info"><s:property value="%{#request.disease_girder.evaluation}"/></td>
+												         <th></th>
+												         <td class="alert alert-info"></td>
+												      </tr>
 												      
 												      <tr>
 											         	 <th>病害图片</th>
