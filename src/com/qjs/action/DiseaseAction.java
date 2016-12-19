@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -3281,15 +3282,22 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		return null;		
 	}
 	
-	public void getAllMember () {		
+	public String getAllMember () {
+		System.out.println("aaaaaaaaaaaaaaaaaa");
 		Parts1 parts1 = parts1Biz.getParts1ByBridgeCode(this.getBg_id());
 		Parts2 parts2 = parts2Biz.getParts2ByBridgeCode(this.getBg_id());
 		Pier_detail pier_detail = pier_detailBiz.getPier_detailByBridgeCode(this.getBg_id());
 		Load_detail load_detail = load_detailBiz.getLoad_detailByBridgeCode(this.getBg_id());
 		General_detail general_detail = general_detailBiz.getGeneral_detailByBridgeCode(this.getBg_id());
 		Support_detail support_detail = support_detailBiz.getSupport_detailByBridgeCode(this.getBg_id());
+		System.out.println("bbbbbbbbbbbbbbbb");
 		
 		// 上部
+//		int load_num = 0;
+//		if (load_detail != null) {
+//			load_num = load_detail.getLoad_nums().split(";").length-1; // 上部承重构件个数
+//		}
+		
 		int load_num = load_detail.getLoad_nums().split(";").length-1; // 上部承重构件个数
 		int general_num = general_detail.getGeneral_nums().split(";").length-1; // 上部一般构件个数
 		int support_num = support_detail.getSupport_nums().split(";").length-1; // 支座个数
@@ -3321,8 +3329,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		List<Map<String, Object>> result_pier = disease_pierBiz.getAllDisease_pierByBridgeCode(this.getBg_id());
 		List<Map<String, Object>> result_bentcap = disease_bentcapBiz.getAllDisease_bentcapByBridgeCode(this.getBg_id());
 		List<Map<String, Object>> result_tiebeam = disease_tiebeamBiz.getAllDisease_tiebeamByBridgeCode(this.getBg_id());
-		result_pier.addAll(result_bentcap);
-		result_pier.addAll(result_tiebeam);
+
 		List<Map<String, Object>> result_atbody = disease_atbodyBiz.getAllDisease_atbodyByBridgeCode(this.getBg_id());
 		List<Map<String, Object>> result_atcapping = disease_atcappingBiz.getAllDisease_atcappingByBridgeCode(this.getBg_id());
 		List<Map<String, Object>> result_pa = disease_paBiz.getAllDisease_paByBridgeCode(this.getBg_id());
@@ -3331,7 +3338,6 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		List<Map<String, Object>> result_wingwall = disease_wingwallBiz.getAllDisease_wingwallByBridgeCode(this.getBg_id());
 		List<Map<String, Object>> result_conslope = disease_conslopeBiz.getAllDisease_conslopeByBridgeCode(this.getBg_id());
 		List<Map<String, Object>> result_proslope = disease_proslopeBiz.getAllDisease_proslopeByBridgeCode(this.getBg_id());
-		result_conslope.addAll(result_proslope);
 		
 		// 桥面系
 		List<Map<String, Object>> result_deck = disease_deckBiz.getAllDisease_deckByBridgeCode(this.getBg_id());
@@ -3341,119 +3347,157 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		List<Map<String, Object>> result_watertight = disease_watertightBiz.getAllDisease_watertightByBridgeCode(this.getBg_id());
 		List<Map<String, Object>> result_lighting = disease_lightingBiz.getAllDisease_lightingByBridgeCode(this.getBg_id());
 		
+		System.out.println("ccccccccccccccc");
+		//计算MCI
+		double[] mci_girder = getMCI(result_girder, "disease_girder");
+		System.out.println("mci_girder:" + Arrays.toString(mci_girder)); // 输出数组
+		double[] mci_wetjoint = getMCI(result_wetjoint, "disease_wetjoint");
+		System.out.println("mci_wetjoint:" + Arrays.toString(mci_wetjoint)); // 输出数组
+		double[] mci_support = getMCI(result_support, "disease_support");
+		System.out.println("mci_support:" + Arrays.toString(mci_support)); // 输出数组
 		
 		
+		double[] mci_pier = getMCI(result_pier, "disease_pier");
+		double[] mci_bentcap = getMCI(result_bentcap, "disease_bentcap");
+		double[] mci_tiebeam = getMCI(result_tiebeam, "disease_tiebeam");
 		
+		double[] mci_new_pier = new double[mci_pier.length + mci_bentcap.length + mci_tiebeam.length];		  
+		System.arraycopy(mci_pier, 0, mci_new_pier, 0, mci_pier.length);		  
+		System.arraycopy(mci_bentcap, 0, mci_new_pier, mci_pier.length, mci_bentcap.length);
+		System.arraycopy(mci_tiebeam, 0, mci_new_pier, mci_pier.length + mci_bentcap.length, mci_tiebeam.length);
+        System.out.println("mci_pier:" + Arrays.toString(mci_new_pier));//输出数组
+		
+		double[] mci_atbody = getMCI(result_atbody, "disease_atbody");
+		double[] mci_atcapping = getMCI(result_atcapping, "disease_atcapping");
+		
+		double[] mci_at = new double[mci_atbody.length + mci_atcapping.length];		  
+		System.arraycopy(mci_atbody, 0, mci_at, 0, mci_atbody.length);		  
+		System.arraycopy(mci_atcapping, 0, mci_at, mci_atbody.length, mci_atcapping.length);
+        System.out.println("mci_at:" + Arrays.toString(mci_at));//输出数组
+		
+		double[] mci_pa = getMCI(result_pa, "disease_pa");
+		System.out.println("mci_pa:" + Arrays.toString(mci_pa));//输出数组
+		double[] mci_bed = getMCI(result_bed, "disease_bed");
+		System.out.println("mci_bed:" + Arrays.toString(mci_bed));//输出数组
+		double[] mci_regstruc = getMCI(result_regstruc, "disease_regstruc");
+		System.out.println("mci_regstruc:" + Arrays.toString(mci_regstruc));//输出数组
+		double[] mci_wingwall = getMCI(result_wingwall, "disease_wingwall");
+		System.out.println("mci_wingwall:" + Arrays.toString(mci_wingwall));//输出数组
+		double[] mci_conslope = getMCI(result_conslope, "disease_conslope");
+		double[] mci_proslope = getMCI(result_proslope, "disease_proslope");
+		
+		double[] mci_slope = new double[mci_conslope.length + mci_proslope.length];		  
+		System.arraycopy(mci_conslope, 0, mci_slope, 0, mci_conslope.length);		  
+		System.arraycopy(mci_conslope, 0, mci_slope, mci_conslope.length, mci_proslope.length);
+        System.out.println("mci_slope:" + Arrays.toString(mci_slope));//输出数组
+		
+		double[] mci_deck = getMCI(result_deck, "disease_deck");
+		System.out.println("mci_deck:" + Arrays.toString(mci_deck));//输出数组
+		double[] mci_joint = getMCI(result_joint, "disease_joint");
+		System.out.println("mci_joint:" + Arrays.toString(mci_joint));//输出数组
+		double[] mci_sidewalk = getMCI(result_sidewalk, "disease_sidewalk");
+		System.out.println("mci_sidewalk:" + Arrays.toString(mci_sidewalk));//输出数组
+		double[] mci_fence = getMCI(result_fence, "disease_fence");
+		System.out.println("mci_fence:" + Arrays.toString(mci_fence));//输出数组
+		double[] mci_watertight = getMCI(result_watertight, "disease_watertight");
+		System.out.println("mci_watertight:" + Arrays.toString(mci_watertight));//输出数组
+		double[] mci_lighting = getMCI(result_lighting, "disease_lighting");
+		System.out.println("mci_lighting:" + Arrays.toString(mci_lighting));//输出数组
+		
+		//计算CCI
+		double cci_girder = getCCI(mci_girder, load_num, 1);
+		double cci_wetjoint = getCCI(mci_wetjoint, general_num, 0);
+		double cci_support = getCCI(mci_support, support_num, 1);
+		
+		double cci_pier = getCCI(mci_new_pier, pier_num, 1);
+		double cci_at = getCCI(mci_at, abutment_num, 1);
+		double cci_pa = getCCI(mci_pa, pa_num, 1);
+		double cci_bed = getCCI(mci_bed, bed_num, 0);		
+		double cci_regstruc = getCCI(mci_regstruc, regstruc_num, 0);
+		double cci_wingwall = getCCI(mci_wingwall, wall_num, 0);
+		double cci_slope = getCCI(mci_slope, slope_num, 0);
+		
+		double cci_deck = getCCI(mci_deck, deck_num, 0);
+		double cci_joint = getCCI(mci_joint, joint_num, 0);
+		double cci_sidewalk = getCCI(mci_sidewalk, sidewalk_num, 0);
+		double cci_fence = getCCI(mci_fence, fence_num, 0);
+		double cci_watertight = getCCI(mci_watertight, watertight_num, 0);
+		double cci_lighting = getCCI(mci_lighting, lighting_num, 0);
+		
+		double[] cci_up_arr = {cci_girder, cci_wetjoint, cci_support};
+		System.out.println("cci_up_arr:" + Arrays.toString(cci_up_arr));//输出数组
+		double[] cci_down_arr = {cci_pier, cci_at, cci_pa, cci_bed, cci_regstruc, cci_wingwall, cci_slope};
+		System.out.println("cci_down_arr:" + Arrays.toString(cci_down_arr));//输出数组
+		double[] cci_deck_arr = {cci_deck, cci_joint, cci_sidewalk, cci_fence, cci_watertight, cci_lighting};
+		System.out.println("cci_deck_arr:" + Arrays.toString(cci_deck_arr));//输出数组
+		
+		int[] num_up_arr = {load_num, general_num, support_num};
+		int[] num_down_arr = {pier_num, abutment_num, pa_num, bed_num, regstruc_num, wall_num, slope_num};
+		int[] num_deck_arr = {deck_num, joint_num, sidewalk_num, fence_num, watertight_num, lighting_num};
+		
+		//计算CI
+		double ci_up = getCI(cci_up_arr, OtherFunction.UP_WEIGHT, num_up_arr);
+		double ci_down = getCI(cci_down_arr, OtherFunction.DOWN_WEIGHT, num_down_arr);
+		double ci_deck = getCI(cci_deck_arr, OtherFunction.DECK_WEIGHT, num_deck_arr);
+		
+		double[] ci_arr = {ci_up, ci_down, ci_deck};
+		System.out.println("ci_arr:" + Arrays.toString(ci_arr));//输出数组
+		
+		//计算DR
+		double dr = new OtherFunction().calDR(ci_arr);
+		
+		System.out.println("dr:" + dr);
+		
+		request.put("mci_girder", Arrays.toString(mci_girder));
+		request.put("mci_wetjoint", Arrays.toString(mci_wetjoint));
+		request.put("mci_support", Arrays.toString(mci_support));
+		
+		request.put("mci_pier", Arrays.toString(mci_new_pier));
+		request.put("mci_at", Arrays.toString(mci_at));
+		request.put("mci_pa", Arrays.toString(mci_pa));
+		request.put("mci_bed", Arrays.toString(mci_bed));
+		request.put("mci_regstruc", Arrays.toString(mci_regstruc));
+		request.put("mci_wingwall", Arrays.toString(mci_wingwall));
+		request.put("mci_slope", Arrays.toString(mci_slope));
+		
+		request.put("mci_deck", Arrays.toString(mci_deck));
+		request.put("mci_joint", Arrays.toString(mci_joint));
+		request.put("mci_sidewalk", Arrays.toString(mci_sidewalk));
+		request.put("mci_fence", Arrays.toString(mci_fence));
+		request.put("mci_watertight", Arrays.toString(mci_watertight));
+		request.put("mci_lighting", Arrays.toString(mci_lighting));
+		
+		request.put("cci_up_arr", Arrays.toString(cci_up_arr));
+		request.put("cci_down_arr", Arrays.toString(cci_down_arr));
+		request.put("cci_deck_arr", Arrays.toString(cci_deck_arr));
+		
+		request.put("ci_arr", Arrays.toString(ci_arr));
+		request.put("dr", dr);
+		
+		return "evaluation_result";
 	}
 	
 	// 桥梁构件技术状况评分
-	@SuppressWarnings("unchecked")
-	public void getMCI() {
-		String bg_id = this.getBg_id();
-		List<QueryObject> qo = new ArrayList<QueryObject>();
-		
-		QueryItems qi = new QueryItems(qo, null, null, this.getPageNo(), Constant.PAGE_SIZE);
-		
-		Map<String, Object> result = new HashMap<>();
-		
-		switch (this.getTable_name()) {
-		case "disease_girder":
-			result = (Map<String, Object>) disease_girderBiz.getAllDetailDisease_girder(qi);
-			break;
-			
-		case "disease_wetjoint":
-			result = (Map<String, Object>) disease_wetjointBiz.getAllDetailDisease_wetjoint(qi);
-			break;
-			
-		case "disease_support":
-			result = (Map<String, Object>) disease_supportBiz.getAllDetailDisease_support(qi);
-			break;
-			
-		case "disease_pier":
-			result = (Map<String, Object>) disease_pierBiz.getAllDetailDisease_pier(qi);
-			break;
-			
-		case "disease_bentcap":
-			result = (Map<String, Object>) disease_bentcapBiz.getAllDetailDisease_bentcap(qi);
-			break;
-			
-		case "disease_tiebeam":
-			result = (Map<String, Object>) disease_tiebeamBiz.getAllDetailDisease_tiebeam(qi);
-			break;
-			
-		case "disease_atbody":
-			result = (Map<String, Object>) disease_atbodyBiz.getAllDetailDisease_atbody(qi);
-			break;
-			
-		case "disease_atcapping":
-			result = (Map<String, Object>) disease_atcappingBiz.getAllDetailDisease_atcapping(qi);
-			break;
-			
-		case "disease_pa":
-			result = (Map<String, Object>) disease_paBiz.getAllDetailDisease_pa(qi);
-			break;
-			
-		case "disease_bed":
-			result = (Map<String, Object>) disease_bedBiz.getAllDetailDisease_bed(qi);
-			break;
-			
-		case "disease_regstruc":
-			result = (Map<String, Object>) disease_regstrucBiz.getAllDetailDisease_regstruc(qi);
-			break;
-			
-		case "disease_wingwall":
-			result = (Map<String, Object>) disease_wingwallBiz.getAllDetailDisease_wingwall(qi);
-			break;
-			
-		case "disease_conslope":
-			result = (Map<String, Object>) disease_conslopeBiz.getAllDetailDisease_conslope(qi);
-			break;
-			
-		case "disease_proslope":
-			result = (Map<String, Object>) disease_proslopeBiz.getAllDetailDisease_proslope(qi);
-			break;
-			
-		case "disease_deck":
-			result = (Map<String, Object>) disease_deckBiz.getAllDetailDisease_deck(qi);
-			break;
-			
-		case "disease_joint":
-			result = (Map<String, Object>) disease_jointBiz.getAllDetailDisease_joint(qi);
-			break;
-			
-		case "disease_sidewalk":
-			result = (Map<String, Object>) disease_sidewalkBiz.getAllDetailDisease_sidewalk(qi);
-			break;
-			
-		case "disease_fence":
-			result = (Map<String, Object>) disease_fenceBiz.getAllDetailDisease_fence(qi);
-			break;
-			
-		case "disease_watertight":
-			result = (Map<String, Object>) disease_watertightBiz.getAllDetailDisease_watertight(qi);
-			break;
-			
-		case "disease_lighting":
-			result = (Map<String, Object>) disease_lightingBiz.getAllDetailDisease_lighting(qi);
-			break;
-
-		default:
-			break;
+	public double[] getMCI(List<Map<String, Object>> datalist, String table_name) {
+		if (datalist == null) {
+			System.out.println("kkkkkkkkkkkkkk");
+			double[] mci_arr = {};
+			return mci_arr;
 		}
-		
-		List<Map<String, Object>> datalist = (List<Map<String, Object>>) result.get("result"); // 获取病害列表
 		Map<String, List<String>> evalmap = new HashMap<>();
 		
 		for (int i = 0; i < datalist.size(); i++) {
 //			String evalname = datalist.get(i).get("parts_id") + "#" + datalist.get(i).get("item_name"); // 病害打分构件号
 			String evalname = datalist.get(i).get("parts_id").toString(); // 病害打分构件号
-			Evaluation eval = evaluationBiz.getEvaluationExactly(this.getTable_name(), 
+			Evaluation eval = evaluationBiz.getEvaluationExactly(table_name, 
 					datalist.get(i).get("bg_id").toString(), datalist.get(i).get("id").toString());  // 获取精确evaluation
 			
 			if (evalmap.get(evalname) == null) {
 				List<String> scorelist = new ArrayList<>();
-				scorelist.add(eval.getScore());
-				evalmap.put(evalname, scorelist);
+				if (eval != null) {
+					scorelist.add(eval.getScore());
+					evalmap.put(evalname, scorelist);
+				}
 			}
 			else {
 				evalmap.get(evalname).add(eval.getScore());
@@ -3467,26 +3511,27 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		while (entries.hasNext()) {  
 			  
 		    Entry<String, Double> entry = entries.next();
-		  
-		    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 		    mci_arr[i] = entry.getValue();
 		    i++;
 		}
 		
+		return mci_arr;		
+	}
+	
+	// 桥梁部件技术状况评分
+	public double getCCI(double[] mci_arr, int num, int major_flag) {
+		double cci_result = new OtherFunction().calCCI(mci_arr, num, major_flag);
 		
-		// 计算CCI
-		Load_detail load_detail = load_detailBiz.getLoad_detailByBridgeCode("2016-04-26-110327");
-		int load_num = load_detail.getLoad_nums().split(";").length-1; // 上部承重构件个数
+		return cci_result;		
+	}
+	
+	// 桥梁结构技术状况评分
+	public double getCI(double[] cci_arr, double[] weight, int[] num) {
+		double[] new_weight = new OtherFunction().calWeight(weight, num);
 		
-//		int major_flag = 0;
-//		if (condition) { // 如果是 主要部件，置为1
-//			major_flag = 1;
-//		}
-		double cci_result = new OtherFunction().calCCI(mci_arr, load_num, 1);
+		double ci_result = new OtherFunction().calCI(cci_arr, new_weight);
 		
-		System.out.println("cci:" + cci_result);
-		
-		
+		return ci_result;		
 	}
 	
 	// 生成病害报告

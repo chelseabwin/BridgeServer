@@ -385,7 +385,7 @@ public class OtherFunction {
 	
 	// double数组从大到小排序
 	public void sort(double[] arr) {
-	    for (int i = 0; i < arr.length - 1; i++) {
+	    for (int i = 0; i < arr.length; i++) {
 	        for (int j = i+1; j < arr.length; j++) {
 	            if (arr[i] < arr[j]) {
 	              double temp = arr[i];
@@ -399,7 +399,7 @@ public class OtherFunction {
 	// 找出数组中的最小值
 	public double min(double[] arr) {
 		double minnum = arr[0];
-	    for (int i = 0; i < arr.length - 1; i++) {
+	    for (int i = 0; i < arr.length; i++) {
 	    	if (arr[i] < minnum) {
 	    		minnum = arr[i];
 	    	}
@@ -410,7 +410,7 @@ public class OtherFunction {
 	// 找出数组中的平均值
 	public double avg(double[] arr) {
 		double avgnum = 0;
-	    for (int i = 0; i < arr.length - 1; i++) {
+	    for (int i = 0; i < arr.length; i++) {
 	    	avgnum += arr[i];
 	    }
 	    return (avgnum / arr.length);
@@ -432,12 +432,11 @@ public class OtherFunction {
 			t = 2.5 + ((num - 100) / 100) * (-0.2);			
 		}
 		else {
-			int ceil = (int) Math.ceil((double) num); // 上限
-			int floor = (int) Math.floor((double) num); // 下限
+			int ceil = (int) ((num + 10) / 10); // 上限1/10
+			int floor = (int) (num / 10); // 下限1/10
 					
-			new OtherFunction();
-			double ceil_t = OtherFunction.CCI_T.get(ceil); // 获取上限t值
-			double floor_t = OtherFunction.CCI_T.get(floor); // 获取下限t值
+			double ceil_t = OtherFunction.CCI_T.get(ceil * 10); // 获取上限t值
+			double floor_t = OtherFunction.CCI_T.get(floor * 10); // 获取下限t值
 			t = floor_t + ((num - floor) / 10) * (floor_t - ceil_t);
 		}
 		return t;
@@ -479,23 +478,26 @@ public class OtherFunction {
 	
 	// 计算部件技术状况评分
 	public double calCCI(double[] eval, int ele_num, int major_flag) {
-		if (major_flag == 1) { // 是主要部件
-			for (int i = 0; i < eval.length - 1; i++) {
-		    	if (eval[i] < 40.0) {
-					return eval[i];
-				}
-		    }			
+		if (eval.length == 0) {
+			return 100.0;
 		}
 		
 		double eval_min = min(eval); // 找出数组中的最小值
+		
+		if (major_flag == 1) { // 是主要部件
+			if (eval_min < 40.0) {
+				return eval_min;
+			}		
+		}
 
 		double avgnum = 0.0;
-	    for (int i = 0; i < eval.length - 1; i++) {
+	    for (int i = 0; i < eval.length; i++) {
 	    	avgnum += eval[i];
 	    }
 	    avgnum += 100.0 * (ele_num - eval.length); // 没有病害的全部按100分计算
 		
 		double eval_avg = avgnum / ele_num; // 找出数组中的平均值
+		
 		double t_val = getTValue(ele_num); // t值
 		
 		return (eval_avg - ((100 - eval_min) / t_val));

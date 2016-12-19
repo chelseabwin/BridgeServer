@@ -31,6 +31,8 @@
 			<td>
 			<button class="btn green" onclick="loadPage('/BridgeServer/disease!showDisease?bg_id=<s:property value="bridge_code"/>');"><i class="m-icon-swapright m-icon-white"></i> 查看详情</button>
 			<a href="#" onclick="doCreateReport('/BridgeServer/disease!createReport?bg_id=<s:property value="bridge_code"/>');" class="btn blue"><i class="m-icon-swapright m-icon-white"></i> 生成病害报告</a>
+			<button class="btn blue" style="margin-left:10px" onclick="loadPage('/BridgeServer/disease!getAllMember?bg_id=<s:property value="bridge_code"/>');"><i class="m-icon-swapright m-icon-white"></i> 测试病害打分</button>
+									
 			</td>
 		</tr>
 		
