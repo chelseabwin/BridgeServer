@@ -3119,7 +3119,13 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		request.put("bg_name", this.getBg_name());
 		request.put("item_name", this.getItem_name());
 		
+		System.out.println(this.getTable_name());
+		System.out.println(this.getBg_id());
+		System.out.println(this.getBg_name());
+		System.out.println(this.getItem_name());
+		
 		List<Map<String, String>> evallist = evaluationBiz.getEvaluationByTwo(this.getTable_name(), this.getBg_id());
+		System.out.println(evallist.size());
 		
 		String evalstr = new String();
 		if (evallist.size() != 0) {
@@ -3131,6 +3137,10 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		}		
 
 		List<QueryObject> qo = new ArrayList<QueryObject>();
+		
+		if (this.getBg_id() != null && !this.getBg_id().trim().equals("")) {
+			qo.add(new QueryObject("bg_id", this.getBg_id().trim(), null));
+		}
 		
 		QueryItems qi = new QueryItems(qo, null, null, this.getPageNo(), Constant.PAGE_SIZE);
 		

@@ -195,7 +195,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 		   Index.initMiniCharts();
 		   Index.initDashboardDaterange();
 		   Index.initIntro();		   		   Gallery.init();
-		});				function loadPage(url){			$("#page_content").html("<img src=\"/BridgeServer/media/image/ajax-loading.gif\"/>");			$.axs(url, null, function(data){				$("#page_content").html(data);            });		};		function active(id){			$("li[title='active']").attr("class", " ");			$("#active"+id).attr("class", "active");		};
+		});				function loadPage(url){			$("#page_content").html("<img src=\"/BridgeServer/media/image/ajax-loading.gif\"/>");						var new_url = url;			var url_arr = new_url.split("&bg_name=");			if (url_arr.length > 1) {				var encode_url = encodeURIComponent(url_arr[1]); // #号转义				var new_url = url_arr[0] + "&bg_name=" + encode_url;			}			$.axs(new_url, null, function(data){				$("#page_content").html(data);            });		};		function active(id){			$("li[title='active']").attr("class", " ");			$("#active"+id).attr("class", "active");		};
 	</script>
 	<!-- END JAVASCRIPTS -->
 <script type="text/javascript">  var _gaq = _gaq || [];  _gaq.push(['_setAccount', 'UA-37564768-1']);  _gaq.push(['_setDomainName', 'keenthemes.com']);  _gaq.push(['_setAllowLinker', true]);  _gaq.push(['_trackPageview']);  (function() {    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);  })();</script></body>
