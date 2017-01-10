@@ -250,73 +250,76 @@
 									</div>												
 
 								</form>
-									
-								<form id="image_form" action="" class="form-horizontal" method="post" enctype="multipart/form-data">
-									<input type="hidden" name="bg_id" value="<s:property value="#request.bridge_code"/>">
-									<input type="hidden" name="id" value="<s:property value="#request.id"/>">
-									<input type="hidden" name="table_name" value="base1">
-									
-									<div class="control-group">
+								
+								<form id="image_form1" action="" class="form-horizontal" method="post" enctype="multipart/form-data">
+								<input type="hidden" name="bg_id" value="<s:property value="#request.bridge_code"/>">
+								<input type="hidden" name="id" value="<s:property value="#request.id"/>">
+								<input type="hidden" name="table_name" value="base1">
+								
+										<div class="control-group">
 
-										<label class="control-label">正面照</label>
-										
-										<div class="controls">
-										    
-										    <input id="img1_id" type="file" size="40" name="img1" class="file" accept="image/*">
-									
-										</div>
-									
-									</div>
-									
-									<div id="img1_div" class="control-group">
-
-										<label class="control-label"></label>
-										
-										<div class="controls">
-										    
-										    <img id="bg_img1_id" src="/BridgeServer/bridge_image/<s:property value="#request.img1_name"/>" width="400" height="300" />
-										
-										</div>
-									
-									</div>
-									
-									<div class="control-group">
-
-										<label class="control-label">立面照</label>
-										
-										<div class="controls">
-										    
-										    <input id="img2_id" type="file" size="40" name="img2" class="file" accept="image/*">
-									
-										</div>
-									
-									</div>
-									
-									<div id="img2_div" class="control-group">
-
-										<label class="control-label"></label>
-										
-										<div class="controls">
-										    
-										    <img id="bg_img2_id" src="/BridgeServer/bridge_image/<s:property value="#request.img2_name"/>" width="400" height="300" />
-										
-										</div>
-									
-									</div>
-									
-									<div class="control-group">
-
-										<label class="control-label"></label>
-										
-										<div class="controls">
-										    
-										    <input type="button" class="btn green" value="上传" onclick="doUpload()" />
+											<label class="control-label">正面照</label>
+											
+											<div class="controls">
 											    
-											(注：图片文件名请勿带有中文字符，以免无法识别！ 请先分别选择“正面照”和“立面照”之后再点击“上传”按钮)
-									
+											    <input id="img1_id" type="file" size="40" name="img1" class="file" accept="image/*">
+											    
+											    <input type="button" class="btn green" value="上传" onclick="doUploadImg1()" />
+											    
+											    (注：图片文件名请勿带有中文字符，以免无法识别！图片大小尽量小于1M)
+										
+											</div>
+										
 										</div>
-									
-									</div>
+										
+										<div id="img1_div" class="control-group">
+
+											<label class="control-label"></label>
+											
+											<div class="controls">
+											    
+											    <!-- <img id="dis_img_id" src="data:<s:property value="#request.image_type"/>;base64,<s:property value="#request.disease_image"/>" width="400" height="300" /> -->
+												<img id="bg_img1_id" src="/BridgeServer/bridge_image/<s:property value="#request.img1_name"/>" width="400" height="300" />
+											
+											</div>
+										
+										</div>
+										
+								</form>
+								
+								<form id="image_form2" action="" class="form-horizontal" method="post" enctype="multipart/form-data">
+								<input type="hidden" name="bg_id" value="<s:property value="#request.bridge_code"/>">
+								<input type="hidden" name="id" value="<s:property value="#request.id"/>">
+								<input type="hidden" name="table_name" value="base1">
+								
+										<div class="control-group">
+
+											<label class="control-label">立面照</label>
+											
+											<div class="controls">
+											    
+											    <input id="img2_id" type="file" size="40" name="img2" class="file" accept="image/*">
+											    
+											    <input type="button" class="btn green" value="上传" onclick="doUploadImg2()" />
+											    
+											    (注：图片文件名请勿带有中文字符，以免无法识别！图片大小尽量小于1M)
+										
+											</div>
+										
+										</div>
+										
+										<div id="img2_div" class="control-group">
+
+											<label class="control-label"></label>
+											
+											<div class="controls">
+											    
+											    <!-- <img id="dis_img_id" src="data:<s:property value="#request.image_type"/>;base64,<s:property value="#request.disease_image"/>" width="400" height="300" /> -->
+												<img id="bg_img2_id" src="/BridgeServer/bridge_image/<s:property value="#request.img2_name"/>" width="400" height="300" />
+											
+											</div>
+										
+										</div>
 										
 								</form>
 
@@ -363,10 +366,10 @@ function submitData(url){
     });
 };
 
-function doUpload() {
-    var formData = new FormData($("#image_form")[0]);
+function doUploadImg1() {
+    var formData = new FormData($("#image_form1")[0]);
     $.ajax({
-         url: '/BridgeServer/bridge!upload' ,
+         url: '/BridgeServer/bridge!uploadImg1' ,
          type: 'POST',
          data: formData,
          async: false,
@@ -375,20 +378,40 @@ function doUpload() {
          processData: false,
          success: function (returndata) {
         	 if (returndata == "faild") {
-        		 alert("上传失败！");
+        		 alert("上传失败！文件格式错误或文件过大！");
         	 }
         	 else {
         		 var obj = JSON.parse(returndata);
-        		 $("#bridge_image1_id").attr("value", obj.img1_str);
-        		 $("#img1_name_id").attr("value", obj.img1_name);
-        		 $("#image1_type_id").attr("value", obj.img1_type);
-        		 $("#bg_img1_id").attr("src", "/BridgeServer/bridge_image/" + obj.img1_name);
+        		 $("#bridge_image1_id").attr("value", obj.img_str);
+        		 $("#img1_name_id").attr("value", obj.img_name);
+        		 $("#image1_type_id").attr("value", obj.img_type);
+        		 $("#bg_img1_id").attr("src", "/BridgeServer/bridge_image/" + obj.img_name);
         		 $("#img1_div").show();
-        		 
-        		 $("#bridge_image2_id").attr("value", obj.img2_str);
-        		 $("#img2_name_id").attr("value", obj.img2_name);
-        		 $("#image2_type_id").attr("value", obj.img2_type);
-        		 $("#bg_img2_id").attr("src", "/BridgeServer/bridge_image/" + obj.img2_name);
+        	 }
+         }
+    });
+}
+
+function doUploadImg2() {
+    var formData = new FormData($("#image_form2")[0]);
+    $.ajax({
+         url: '/BridgeServer/bridge!uploadImg2' ,
+         type: 'POST',
+         data: formData,
+         async: false,
+         cache: false,
+         contentType: false,
+         processData: false,
+         success: function (returndata) {
+        	 if (returndata == "faild") {
+        		 alert("上传失败！文件格式错误或文件过大！");
+        	 }
+        	 else {
+        		 var obj = JSON.parse(returndata);        		 
+        		 $("#bridge_image2_id").attr("value", obj.img_str);
+        		 $("#img2_name_id").attr("value", obj.img_name);
+        		 $("#image2_type_id").attr("value", obj.img_type);
+        		 $("#bg_img2_id").attr("src", "/BridgeServer/bridge_image/" + obj.img_name);
         		 $("#img2_div").show();
         	 }
          }

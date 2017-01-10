@@ -287,7 +287,7 @@
 											    
 											    <input type="button" class="btn green" value="上传" onclick="doUpload()" />
 											    
-											    (注：图片文件名请勿带有中文字符，以免无法识别！)
+											    (注：图片文件名请勿带有中文字符，以免无法识别！图片大小尽量小于1M)
 										
 											</div>
 										
@@ -464,7 +464,7 @@ function doUpload() {
          processData: false,
          success: function (returndata) {
         	 if (returndata == "faild") {
-        		 alert("上传失败！");
+        		 alert("上传失败！文件格式错误或文件过大！");
         	 }
         	 else {
 				 var obj = JSON.parse(returndata);

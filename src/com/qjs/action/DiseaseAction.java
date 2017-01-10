@@ -833,7 +833,12 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			ServletActionContext.getRequest().setAttribute("typeError", "您要上传的文件类型不正确");
 
 			result = "上传错误:" + getImgContentType() + " 文件类型不正确！";
-		} else {
+		}
+		else if(getFileSize(getImg()) > 1048576) {
+			System.out.println("文件过大");
+			result = "上传错误:文件过大！";
+		}
+		else {
 			System.out.println("当前文件大小为：" + FormetFileSize(getFileSize(getImg())));
 			FileOutputStream fos = null;
 			FileInputStream fis = null;
@@ -3061,7 +3066,6 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		return null;
 	}
 	
-	@SuppressWarnings("deprecation")
 	public String changeLighting() throws IOException {
 		Disease_lighting lighting = new Disease_lighting();
 		lighting.setBg_id(this.getBg_id());

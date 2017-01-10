@@ -1175,94 +1175,121 @@ public class BridgeAction extends ActionSupport implements RequestAware,SessionA
 	}
 	
 	/**
-	 * 上传照片操作
+	 * 上传正面照操作
 	 * 
 	 * @return
 	 * @throws Exception
 	 */
-	public void upload() throws Exception {
-		String result1 = "未知错误";
-		String result2 = "未知错误";
+	public void uploadImg1() throws Exception {
+		String result = "未知错误";
 		PrintWriter out = ServletActionContext.getResponse().getWriter();
-		String img1FilePath = null;
-		String img2FilePath = null;
+		String imgFilePath = null;
 		if (!filterType(getImg1ContentType())) {
 			System.out.println("文件类型不正确");
 			ServletActionContext.getRequest().setAttribute("typeError", "您要上传的文件类型不正确");
 
-			result1 = "上传错误:" + getImg1ContentType() + " 文件类型不正确！";
-		} else {
-			System.out.println("当前文件1大小为：" + FormetFileSize(getFileSize(getImg1())));
-			FileOutputStream fos1 = null;
-			FileInputStream fis1 = null;
+			result = "上传错误:" + getImg1ContentType() + " 文件类型不正确！";
+		}
+		else if(getFileSize(getImg1()) > 1048576) {
+			System.out.println("文件过大");
+			result = "上传错误:文件过大！";
+		}
+		else {
+			System.out.println("当前文件大小为：" + FormetFileSize(getFileSize(getImg1())));
+			FileOutputStream fos = null;
+			FileInputStream fis = null;
 			try {
 				
 				// 保存文件那一个路径
-				img1FilePath = getSavePath() + "\\" + Math.random()*1000 + "." + getImg1ContentType().split("/")[1];
-				
-				fos1 = new FileOutputStream(img1FilePath);
-				fis1 = new FileInputStream(getImg1());
+				imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + getImg1ContentType().split("/")[1];
+				fos = new FileOutputStream(imgFilePath);
+				fis = new FileInputStream(getImg1());
 				byte[] buffer = new byte[1024];
 				int len = 0;
-				while ((len = fis1.read(buffer)) > 0) {
-					fos1.write(buffer, 0, len);
+				while ((len = fis.read(buffer)) > 0) {
+					fos.write(buffer, 0, len);
 				}
-				result1 = "success";
+				result = "success";
 			} catch (Exception e) {
-				result1 = "faild";
+				result = "faild";
 				e.printStackTrace();
 			} finally {
-				fos1.close();
-				fis1.close();
+				fos.close();
+				fis.close();
 			}
 		}
-		
-		if (!filterType(getImg2ContentType())) {
-			System.out.println("文件类型不正确");
-			ServletActionContext.getRequest().setAttribute("typeError", "您要上传的文件类型不正确");
-
-			result2 = "上传错误:" + getImg1ContentType() + " 文件类型不正确！";
-		} else {
-			System.out.println("当前文件2大小为：" + FormetFileSize(getFileSize(getImg2())));
-			FileOutputStream fos2 = null;
-			FileInputStream fis2 = null;
-			try {
-				
-				// 保存文件那一个路径
-				img2FilePath = getSavePath() + "\\" + Math.random()*1000 + "." + getImg2ContentType().split("/")[1];
-				
-				fos2 = new FileOutputStream(img2FilePath);
-				fis2 = new FileInputStream(getImg2());
-				byte[] buffer = new byte[1024];
-				int len = 0;
-				while ((len = fis2.read(buffer)) > 0) {
-					fos2.write(buffer, 0, len);
-				}
-				result2 = "success";
-			} catch (Exception e) {
-				result2 = "faild";
-				e.printStackTrace();
-			} finally {
-				fos2.close();
-				fis2.close();
-			}
-		}
-		
-		if (result1.equals("success") || result2.equals("success")) {
-			String img1Str = getImageStr(img1FilePath);
-			String img2Str = getImageStr(img2FilePath);
+		if (result.equals("success")) {
+			String imgStr = getImageStr(imgFilePath);
 			
 			//创建JSONObject对象
 			JSONObject json = new JSONObject();
 			
 			//向json中添加数据
-			json.put("img1_name", new File(img1FilePath).getName());
-			json.put("img1_str", img1Str);
-			json.put("img1_type", getImg1ContentType());
+			json.put("img_name", new File(imgFilePath).getName());
+			json.put("img_str", imgStr);
+			json.put("img_type", getImg1ContentType());
+
+			out.write(json.toString());
+		}
+		else {
+			out.write("faild");
+		}
+	}
+	
+	/**
+	 * 上传立面照操作
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public void uploadImg2() throws Exception {
+		String result = "未知错误";
+		PrintWriter out = ServletActionContext.getResponse().getWriter();
+		String imgFilePath = null;
+		if (!filterType(getImg2ContentType())) {
+			System.out.println("文件类型不正确");
+			ServletActionContext.getRequest().setAttribute("typeError", "您要上传的文件类型不正确");
+
+			result = "上传错误:" + getImg2ContentType() + " 文件类型不正确！";
+		}
+		else if(getFileSize(getImg2()) > 1048576) {
+			System.out.println("文件过大");
+			result = "上传错误:文件过大！";
+		}
+		else {
+			System.out.println("当前文件大小为：" + FormetFileSize(getFileSize(getImg2())));
+			FileOutputStream fos = null;
+			FileInputStream fis = null;
+			try {
+				
+				// 保存文件那一个路径
+				imgFilePath = getSavePath() + "\\" + Math.random()*1000 + "." + getImg2ContentType().split("/")[1];
+				fos = new FileOutputStream(imgFilePath);
+				fis = new FileInputStream(getImg2());
+				byte[] buffer = new byte[1024];
+				int len = 0;
+				while ((len = fis.read(buffer)) > 0) {
+					fos.write(buffer, 0, len);
+				}
+				result = "success";
+			} catch (Exception e) {
+				result = "faild";
+				e.printStackTrace();
+			} finally {
+				fos.close();
+				fis.close();
+			}
+		}
+		if (result.equals("success")) {
+			String imgStr = getImageStr(imgFilePath);
 			
-			json.put("img2_name", new File(img2FilePath).getName());
-			json.put("img2_str", img2Str);
-			json.put("img2_type", getImg2ContentType());
+			//创建JSONObject对象
+			JSONObject json = new JSONObject();
+			
+			//向json中添加数据
+			json.put("img_name", new File(imgFilePath).getName());
+			json.put("img_str", imgStr);
+			json.put("img_type", getImg2ContentType());
 
 			out.write(json.toString());
 		}
