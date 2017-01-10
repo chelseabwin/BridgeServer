@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -1382,66 +1383,68 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 	public String addDisease() throws IOException {
 		HttpServletResponse response = ServletActionContext.getResponse();
 		
+		String id_name = "bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(this.getBg_name(),"UTF-8");		
+		
 		switch (this.getTable_name()) {
 		case "disease_girder":
-			response.sendRedirect("disease!showGirder?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showGirder?" + id_name);
 			return null;
 		case "disease_wetjoint":
-			response.sendRedirect("disease!showWetjoint?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showWetjoint?" + id_name);
 			return null;
 		case "disease_support":
-			response.sendRedirect("disease!showSupport?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showSupport?" + id_name);
 			return null;
 		case "disease_pier":
-			response.sendRedirect("disease!showPier?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showPier?" + id_name);
 			return null;
 		case "disease_bentcap":
-			response.sendRedirect("disease!showBentcap?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showBentcap?" + id_name);
 			return null;
 		case "disease_tiebeam":
-			response.sendRedirect("disease!showTiebeam?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showTiebeam?" + id_name);
 			return null;			
 		case "disease_atbody":
-			response.sendRedirect("disease!showAtbody?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showAtbody?" + id_name);
 			return null;
 		case "disease_atcapping":
-			response.sendRedirect("disease!showAtcapping?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showAtcapping?" + id_name);
 			return null;
 		case "disease_pa":
-			response.sendRedirect("disease!showPa?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showPa?" + id_name);
 			return null;
 		case "disease_bed":
-			response.sendRedirect("disease!showBed?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showBed?" + id_name);
 			return null;
 		case "disease_regstruc":
-			response.sendRedirect("disease!showRegstruc?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showRegstruc?" + id_name);
 			return null;
 		case "disease_wingwall":
-			response.sendRedirect("disease!showWingwall?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showWingwall?" + id_name);
 			return null;
 		case "disease_conslope":
-			response.sendRedirect("disease!showConslope?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showConslope?" + id_name);
 			return null;
 		case "disease_proslope":
-			response.sendRedirect("disease!showProslope?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showProslope?" + id_name);
 			return null;
 		case "disease_deck":
-			response.sendRedirect("disease!showDeck?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showDeck?" + id_name);
 			return null;
 		case "disease_joint":
-			response.sendRedirect("disease!showJoint?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showJoint?" + id_name);
 			return null;
 		case "disease_sidewalk":
-			response.sendRedirect("disease!showSidewalk?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showSidewalk?" + id_name);
 			return null;
 		case "disease_fence":
-			response.sendRedirect("disease!showFence?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showFence?" + id_name);
 			return null;
 		case "disease_watertight":
-			response.sendRedirect("disease!showWatertight?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showWatertight?" + id_name);
 			return null;
 		case "disease_lighting":
-			response.sendRedirect("disease!showLighting?bg_name=" + this.getBg_name() + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!showLighting?" + id_name);
 			return null;
 		default:
 			break;
@@ -1483,9 +1486,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 			}
-		}		
-		request.put("bg_id", this.getBg_id());
-		request.put("bg_name", this.getBg_name());
+		}
 		
 		return "disease_girder";
 	}
@@ -2108,7 +2109,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_girderBiz.updateDisease_girder(girder);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_girder&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_girder&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -2117,7 +2118,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_girderBiz.addDisease_girder(girder);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_girder&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_girder&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -2168,7 +2169,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_wetjointBiz.updateDisease_wetjoint(wetjoint);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_wetjoint&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_wetjoint&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -2177,7 +2178,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_wetjointBiz.addDisease_wetjoint(wetjoint);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_wetjoint&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_wetjoint&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -2218,8 +2219,8 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 				
-				disease_supportBiz.updateDisease_support(support);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_support&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				disease_supportBiz.updateDisease_support(support);
+				response.sendRedirect("disease!viewDisease?table_name=disease_support&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -2228,7 +2229,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_supportBiz.addDisease_support(support);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_support&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_support&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -2279,7 +2280,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_pierBiz.updateDisease_pier(pier);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_pier&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_pier&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -2288,7 +2289,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_pierBiz.addDisease_pier(pier);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_pier&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_pier&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -2330,7 +2331,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_bentcapBiz.updateDisease_bentcap(bentcap);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_bentcap&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_bentcap&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -2339,7 +2340,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_bentcapBiz.addDisease_bentcap(bentcap);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_bentcap&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_bentcap&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -2381,7 +2382,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_tiebeamBiz.updateDisease_tiebeam(tiebeam);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_tiebeam&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_tiebeam&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -2390,7 +2391,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_tiebeamBiz.addDisease_tiebeam(tiebeam);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_tiebeam&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_tiebeam&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -2434,7 +2435,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_atbodyBiz.updateDisease_atbody(atbody);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_atbody&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_atbody&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -2443,7 +2444,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_atbodyBiz.addDisease_atbody(atbody);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_atbody&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_atbody&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -2485,7 +2486,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_atcappingBiz.updateDisease_atcapping(atcapping);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_atcapping&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_atcapping&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -2494,7 +2495,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_atcappingBiz.addDisease_atcapping(atcapping);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_atcapping&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_atcapping&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -2536,7 +2537,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_paBiz.updateDisease_pa(pa);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_pa&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_pa&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -2545,7 +2546,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_paBiz.addDisease_pa(pa);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_pa&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_pa&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -2587,7 +2588,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_bedBiz.updateDisease_bed(bed);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_bed&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_bed&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -2596,7 +2597,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_bedBiz.addDisease_bed(bed);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_bed&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_bed&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -2638,7 +2639,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_regstrucBiz.updateDisease_regstruc(regstruc);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_regstruc&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_regstruc&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -2647,7 +2648,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_regstrucBiz.addDisease_regstruc(regstruc);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_regstruc&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_regstruc&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -2689,7 +2690,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_wingwallBiz.updateDisease_wingwall(wingwall);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_wingwall&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_wingwall&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -2698,7 +2699,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_wingwallBiz.addDisease_wingwall(wingwall);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_wingwall&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_wingwall&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -2740,7 +2741,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_conslopeBiz.updateDisease_conslope(conslope);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_conslope&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_conslope&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -2749,7 +2750,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_conslopeBiz.addDisease_conslope(conslope);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_conslope&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_conslope&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -2791,7 +2792,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_proslopeBiz.updateDisease_proslope(proslope);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_proslope&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_proslope&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -2800,7 +2801,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_proslopeBiz.addDisease_proslope(proslope);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_proslope&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_proslope&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -2842,7 +2843,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_deckBiz.updateDisease_deck(deck);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_deck&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_deck&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -2851,7 +2852,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_deckBiz.addDisease_deck(deck);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_deck&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_deck&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -2893,7 +2894,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_jointBiz.updateDisease_joint(joint);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_joint&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_joint&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -2902,7 +2903,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_jointBiz.addDisease_joint(joint);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_joint&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_joint&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -2944,7 +2945,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_sidewalkBiz.updateDisease_sidewalk(sidewalk);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_sidewalk&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_sidewalk&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -2953,7 +2954,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_sidewalkBiz.addDisease_sidewalk(sidewalk);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_sidewalk&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_sidewalk&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -2995,7 +2996,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_fenceBiz.updateDisease_fence(fence);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_fence&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_fence&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -3004,7 +3005,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_fenceBiz.addDisease_fence(fence);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_fence&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_fence&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -3046,7 +3047,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_watertightBiz.updateDisease_watertight(watertight);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_watertight&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_watertight&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -3055,11 +3056,12 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_watertightBiz.addDisease_watertight(watertight);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_watertight&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_watertight&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public String changeLighting() throws IOException {
 		Disease_lighting lighting = new Disease_lighting();
 		lighting.setBg_id(this.getBg_id());
@@ -3097,7 +3099,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				}
 				
 				disease_lightingBiz.updateDisease_lighting(lighting);				
-				response.sendRedirect("disease!viewDisease?table_name=disease_lighting&id=" + this.getId() + "&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+				response.sendRedirect("disease!viewDisease?table_name=disease_lighting&id=" + this.getId() + "&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 			}
 		}
 		else { // 添加
@@ -3106,7 +3108,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			if (this.getItem_name().length() != 0 && this.getParts_id().length() != 0) {
 				disease_lightingBiz.addDisease_lighting(lighting);				
 			}
-			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_lighting&bg_name=" + bg_name + "&bg_id=" + this.getBg_id());
+			response.sendRedirect("disease!getBaseDiseaseList?table_name=disease_lighting&bg_id=" + this.getBg_id() + "&bg_name=" + URLEncoder.encode(bg_name, "UTF-8"));
 		}		
 		return null;
 	}
@@ -3119,13 +3121,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		request.put("bg_name", this.getBg_name());
 		request.put("item_name", this.getItem_name());
 		
-		System.out.println(this.getTable_name());
-		System.out.println(this.getBg_id());
-		System.out.println(this.getBg_name());
-		System.out.println(this.getItem_name());
-		
 		List<Map<String, String>> evallist = evaluationBiz.getEvaluationByTwo(this.getTable_name(), this.getBg_id());
-		System.out.println(evallist.size());
 		
 		String evalstr = new String();
 		if (evallist.size() != 0) {

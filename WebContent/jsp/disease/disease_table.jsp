@@ -48,7 +48,7 @@
 			<td><s:if test="#data.real_eval!=null && #data.real_eval!=''"><s:property value="real_eval"/>类</s:if></td>
 			
 			<td>
-			<button class="btn green" onclick="loadPage('/BridgeServer/disease!viewDisease?table_name=<s:property value="table_name"/>&id=<s:property value="id"/>&bg_name=<s:property value="bg_name"/>&bg_id=<s:property value="bg_id"/>');"><i class="m-icon-swapright m-icon-white"></i> 查看详情</button>
+			<button class="btn green" onclick="loadPage('/BridgeServer/disease!viewDisease?table_name=<s:property value="table_name"/>&id=<s:property value="id"/>&bg_id=<s:property value="bg_id"/>&bg_name=<s:property value="bg_name"/>');"><i class="m-icon-swapright m-icon-white"></i> 查看详情</button>
 			<!--<a href="#" onclick="loadPage('/BridgeServer/bridge!update?id=<s:property value="id"/>');" class="btn blue"><i class="m-icon-swapright m-icon-white"></i> 修改</a>
 			<a href="#" onclick="loadPage('/BridgeServer/bridge!delete?id=<s:property value="id"/>');" class="btn red"><i class="m-icon-swapright m-icon-white"></i> 删除</a>
 			  -->

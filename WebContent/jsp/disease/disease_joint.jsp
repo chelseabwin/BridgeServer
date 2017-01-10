@@ -197,10 +197,10 @@
 								<div class="form-actions">
 									<a href="#" class="btn blue" onclick="submitData('/BridgeServer/disease!changeJoint');"><i class="icon-ok"></i> 保存</a>
 									<s:if test="#request.id!=null">
-										<a href="#" class="btn" onclick="loadPage('/BridgeServer/disease!viewDisease?table_name=disease_joint&id=<s:property value="id"/>&bg_name=<s:property value="bg_name"/>&bg_id=<s:property value="bg_id"/>');">取消</a>
+										<a href="#" class="btn" onclick="loadPage('/BridgeServer/disease!viewDisease?table_name=disease_joint&id=<s:property value="id"/>&bg_id=<s:property value="bg_id"/>&bg_name=<s:property value="bg_name"/>');">取消</a>
 									</s:if>
 									<s:else>
-										<a href="#" class="btn" onclick="loadPage('/BridgeServer/disease!getBaseDiseaseList?table_name=disease_joint&bg_name=<s:property value="bg_name"/>&bg_id=<s:property value="bg_id"/>');">取消</a>
+										<a href="#" class="btn" onclick="loadPage('/BridgeServer/disease!getBaseDiseaseList?table_name=disease_joint&bg_id=<s:property value="bg_id"/>&bg_name=<s:property value="bg_name"/>');">取消</a>
 									</s:else>
 								</div>
 
