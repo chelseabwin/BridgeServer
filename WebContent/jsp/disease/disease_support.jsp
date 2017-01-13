@@ -97,7 +97,7 @@
 
 													<div class="controls">   
 
-														<input class="m-wrap medium" type="text" name="item_name" value="<s:property value="#request.item_name"/>" />
+														<s:select class="medium m-wrap" name="item_name" id="itemNameId" list="{'支座','桥面板'}" />
 
 													</div>
 
@@ -225,6 +225,8 @@
 
 			</div>
 <script>
+$("#itemNameId").val("<s:property value="#request.item_name"/>");
+
 $("input[name=rg_feature][value='<s:property value="#request.rg_feature"/>']").attr("checked",true);
 
 if ($("#disease_image_id").val() == "") {

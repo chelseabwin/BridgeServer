@@ -97,7 +97,7 @@
 
 													<div class="controls">   
 
-														<input class="m-wrap medium" type="text" name="item_name" value="<s:property value="#request.item_name"/>" />
+														<input class="m-wrap medium" type="text" name="item_name" value="照明、标志" readOnly/>
 
 													</div>
 

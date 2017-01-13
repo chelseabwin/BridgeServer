@@ -97,8 +97,8 @@
 
 										<div class="controls">   
 
-											<input class="m-wrap medium" type="text" name="item_name" value="<s:property value="#request.item_name"/>" />
-
+											<s:select class="medium m-wrap" name="item_name" id="itemNameId" list="{'主梁','空心板','主拱圈','钢、桁架拱片','上部承重构件'}" />
+		
 										</div>
 
 									</div>
@@ -398,6 +398,8 @@
 
 			</div>
 <script>
+$("#itemNameId").val("<s:property value="#request.item_name"/>");
+
 $("input[name=rg_feature][value='<s:property value="#request.rg_feature"/>']").attr("checked",true);
 $("input[name=rg_location][value='<s:property value="#request.rg_location"/>']").attr("checked",true);
 

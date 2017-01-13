@@ -975,6 +975,13 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		count[18] = disease_watertightBiz.getDisease_watertightCodeByBridgeCode(this.getBg_id());
 		count[19] = disease_lightingBiz.getDisease_lightingCodeByBridgeCode(this.getBg_id());
 		
+		Parts1 parts1 = parts1Biz.getParts1ByBridgeCode(this.getBg_id());
+		Parts2 parts2 = parts2Biz.getParts2ByBridgeCode(this.getBg_id());
+		Pier_detail pier_detail = pier_detailBiz.getPier_detailByBridgeCode(this.getBg_id());
+		Load_detail load_detail = load_detailBiz.getLoad_detailByBridgeCode(this.getBg_id());
+		General_detail general_detail = general_detailBiz.getGeneral_detailByBridgeCode(this.getBg_id());
+		Support_detail support_detail = support_detailBiz.getSupport_detailByBridgeCode(this.getBg_id());
+		
 		List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
 		for (int i = 0; i < 20; i++) {
 			Map<String, Object> obj = new HashMap<String, Object>();
@@ -982,6 +989,25 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			obj.put("item_name", item_name[i]);
 			obj.put("disease_count", count[i]);
 			obj.put("table_name", table_name[i]);
+			
+			if (i == 0 && load_detail != null)
+				obj.put("element", "1");
+			
+			if (i == 1 && general_detail != null)
+				obj.put("element", "1");
+			
+			if (i == 2 && support_detail != null)
+				obj.put("element", "1");
+			
+			if ((i == 3 || i == 4 || i == 5) && pier_detail != null)
+				obj.put("element", "1");
+			
+			if ((i == 6 || i == 7 || i == 8 || i == 9 || i == 10 || i == 11 || i == 12 || i == 13) && parts1 != null)
+				obj.put("element", "1");
+			
+			if ((i == 14 || i == 15 || i == 16 || i == 17 || i == 18 || i == 19) && parts2 != null)
+				obj.put("element", "1");
+			
 			dataList.add(obj);
 		}
 		
