@@ -81,6 +81,89 @@
 							</div>
 
 							<div class="portlet-body form">
+							
+								<div class="control-group">
+
+									<button class="btn blue" data-toggle="modal" data-target="#myModal">批量添加</button>
+									
+									<button type="button" class="btn red" onclick="deleteAll()">清除所有支座信息</button>
+		
+								</div>
+								
+								<!-- 模态框（Modal） -->
+								<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+												<h4 class="modal-title" id="myModalLabel">
+													新建支座信息
+												</h4>
+											</div>
+											
+											<div class="modal-body">
+											
+											<form id="modal_form" action="" class="form-horizontal" method="post">
+												
+												<div class="control-group">
+
+													<label class="control-label">起始墩（台）号</label>
+			
+													<div class="controls">   
+			
+														<input class="m-wrap medium" type="text" name="startSupport" id="startSupportId"/>
+			
+													</div>
+			
+												</div>
+												
+												<div class="control-group">
+
+													<label class="control-label">终止墩（台）号</label>
+			
+													<div class="controls">   
+			
+														<input class="m-wrap medium" type="text" name="endSupport" id="endSupportId"/>
+			
+													</div>
+			
+												</div>
+												
+												<div class="control-group">
+
+													<label class="control-label">每墩（台）排数</label>
+			
+													<div class="controls">   
+			
+														<input class="m-wrap medium" type="text" name="perRowNum" id="perRowNumId"/>
+			
+													</div>
+			
+												</div>
+												
+												<div class="control-group">
+
+													<label class="control-label">每排支座数</label>
+			
+													<div class="controls">   
+			
+														<input class="m-wrap medium" type="text" name="perSupportNum" id="perSupportNumId"/>
+			
+													</div>
+			
+												</div>
+												
+											</form>
+												
+											</div>
+											
+											<div class="modal-footer">
+											    <input type="button" class="btn green" value="提交" onclick="updateModal()" />
+												<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+											</div>
+										</div><!-- /.modal-content -->
+									</div><!-- /.modal -->
+								</div>
 
 								<!-- BEGIN FORM-->
 
@@ -93,7 +176,7 @@
 
 													<div class="controls">
 													
-														<textarea class="form-control" rows="5" name="supportDetails"><s:property value="#request.support_details"/></textarea>
+														<textarea class="form-control" style="width:400px;" rows="5" name="supportDetails" id="supportDetailsId"><s:property value="#request.support_details"/></textarea>
 
 													</div>
 
@@ -105,7 +188,7 @@
 
 													<div class="controls">
 													
-														<textarea class="form-control" rows="5" name="supportNums"><s:property value="#request.support_nums"/></textarea>
+														<textarea class="form-control" style="width:500px;" rows="5" name="supportNums" id="supportNumsId"><s:property value="#request.support_nums"/></textarea>
 
 													</div>
 
@@ -139,5 +222,43 @@ function submitData(url){
 		$("#page_content").html(data);
     });
 };
+
+function updateModal() {
+	var start_support = $("input[name='startSupport']").val();
+	var end_support = $("input[name='endSupport']").val();
+	var per_row_num = $("input[name='perRowNum']").val();
+	var per_support_num = $("input[name='perSupportNum']").val();
+	
+	var support_details = "从" + start_support + "墩台到" + end_support + "墩台，每墩台" + per_row_num + "排，每排" + per_support_num + "个\n";
+    var support_nums = "";
+    
+    for (var i = parseInt(start_support); i <= parseInt(end_support); i++) {
+		for (var j = 1; j <= parseInt(per_row_num); j++) {
+			for (var k = 1; k <= parseInt(per_support_num); k++) {
+				support_nums += i + "-" + j + "-" + k + "; "; // 设置支座编号
+			}		            					
+		}
+		support_nums += "\n";
+	}
+	
+	// 写入文本框
+	var old_support_details = $("textarea[name='supportDetails']").val();
+	var old_support_nums = $("textarea[name='supportNums']").val();
+	
+	$("#supportDetailsId").val(old_support_details + support_details);
+	$("#supportNumsId").val(old_support_nums + support_nums);
+	
+	// 关闭dialog
+	$("#startSupportId").val("");
+	$("#endSupportId").val("");
+	$("#perRowNumId").val("");
+	$("#perSupportNumId").val("");
+	$("#myModal").modal('hide');
+}
+
+function deleteAll() {
+	$("#supportDetailsId").val("");
+	$("#supportNumsId").val("");
+}
 
 </script>

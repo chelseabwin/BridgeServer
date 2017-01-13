@@ -81,6 +81,77 @@
 							</div>
 
 							<div class="portlet-body form">
+							
+								<div class="control-group">
+
+									<button class="btn blue" data-toggle="modal" data-target="#myModal">批量添加</button>
+									
+									<button type="button" class="btn red" onclick="deleteAll()">清除所有上部一般构件信息</button>
+		
+								</div>
+								
+								<!-- 模态框（Modal） -->
+								<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+												<h4 class="modal-title" id="myModalLabel">
+													新建上部一般构件信息
+												</h4>
+											</div>
+											
+											<div class="modal-body">
+											
+											<form id="modal_form" action="" class="form-horizontal" method="post">
+												
+												<div class="control-group">
+
+													<label class="control-label">起始跨号</label>
+			
+													<div class="controls">   
+			
+														<input class="m-wrap medium" type="text" name="startGeneral" id="startGeneralId"/>
+			
+													</div>
+			
+												</div>
+												
+												<div class="control-group">
+
+													<label class="control-label">终止跨号</label>
+			
+													<div class="controls">   
+			
+														<input class="m-wrap medium" type="text" name="endGeneral" id="endGeneralId"/>
+			
+													</div>
+			
+												</div>
+												
+												<div class="control-group">
+
+													<label class="control-label">每跨个数</label>
+			
+													<div class="controls">   
+			
+														<input class="m-wrap medium" type="text" name="perGeneralNum" id="perGeneralNumId"/>
+			
+													</div>
+			
+												</div>
+												
+											</form>
+												
+											</div>
+											
+											<div class="modal-footer">
+											    <input type="button" class="btn green" value="提交" onclick="updateModal()" />
+												<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+											</div>
+										</div><!-- /.modal-content -->
+									</div><!-- /.modal -->
+								</div>
 
 								<!-- BEGIN FORM-->
 
@@ -93,7 +164,7 @@
 
 													<div class="controls">
 													
-														<textarea class="form-control" rows="5" name="generalDetails"><s:property value="#request.general_details"/></textarea>
+														<textarea class="form-control" style="width:400px;" rows="5" name="generalDetails" id="generalDetailsId"><s:property value="#request.general_details"/></textarea>
 
 													</div>
 
@@ -105,7 +176,7 @@
 
 													<div class="controls">
 													
-														<textarea class="form-control" rows="5" name="generalNums"><s:property value="#request.general_nums"/></textarea>
+														<textarea class="form-control" style="width:400px;" rows="5" name="generalNums" id="generalNumsId"><s:property value="#request.general_nums"/></textarea>
 
 													</div>
 
@@ -139,5 +210,39 @@ function submitData(url){
 		$("#page_content").html(data);
     });
 };
+
+function updateModal() {
+	var start_general = $("input[name='startGeneral']").val();
+	var end_general = $("input[name='endGeneral']").val();
+	var per_general_num = $("input[name='perGeneralNum']").val();
+	
+	var general_details = "从" + start_general + "跨到" + end_general + "跨，每跨" + per_general_num + "个\n";
+    var general_nums = "";
+    
+    for (var i = parseInt(start_general); i <= parseInt(end_general); i++) {
+		for (var j = 1; j <= parseInt(per_general_num); j++) {
+			general_nums += i + "-" + j + "; "; // 设置桥跨编号                    			
+		}
+		general_nums += "\n";
+	}
+	
+	// 写入文本框
+	var old_general_details = $("textarea[name='generalDetails']").val();
+	var old_general_nums = $("textarea[name='generalNums']").val();
+	
+	$("#generalDetailsId").val(old_general_details + general_details);
+	$("#generalNumsId").val(old_general_nums + general_nums);
+	
+	// 关闭dialog
+	$("#startGeneralId").val("");
+	$("#endGeneralId").val("");
+	$("#perGeneralNumId").val("");
+	$("#myModal").modal('hide');
+}
+
+function deleteAll() {
+	$("#generalDetailsId").val("");
+	$("#generalNumsId").val("");
+}
 
 </script>
