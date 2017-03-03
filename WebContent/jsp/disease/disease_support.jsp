@@ -109,7 +109,7 @@
 
 													<div class="controls">   
 
-														<input class="m-wrap medium" type="text" name="parts_id" value="<s:property value="#request.parts_id"/>" <s:if test="#request.id!=null">readOnly="true"</s:if> />
+														<select class="medium m-wrap" name="parts_id" id="partsIdId"></select>
 
 													</div>
 
@@ -225,6 +225,15 @@
 
 			</div>
 <script>
+var parts_nums = "<s:property value="#request.parts_nums"/>";
+var parts_nums_arr = parts_nums.split("; ");
+
+for (var i = 0; i < parts_nums_arr.length; i++) {
+	var option = $("<option>" + parts_nums_arr[i] + "</option>");
+	$("#partsIdId").append(option);
+}
+
+$("#partsIdId").val("<s:property value="#request.parts_id"/>");
 $("#itemNameId").val("<s:property value="#request.item_name"/>");
 
 $("input[name=rg_feature][value='<s:property value="#request.rg_feature"/>']").attr("checked",true);

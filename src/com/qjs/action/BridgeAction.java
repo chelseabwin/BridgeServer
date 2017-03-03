@@ -2110,68 +2110,6 @@ public class BridgeAction extends ActionSupport implements RequestAware,SessionA
 			e.printStackTrace();
 		}
 		
-//		HttpServletResponse response = ServletActionContext.getResponse();
-		
-		//得到文件名字和路径    
-//	    String filename = request.getParameter("filename");  
-//	    String filepath = request.getParameter("filepath");  
-//	    String displayfilename = URLEncoder.encode(file,"UTF-8");
-//		
-//		try {
-//	        response.setContentType("application/x-download");
-//	        response.setHeader("Content-Disposition","attachment;filename=\"" + displayfilename + "\"");
-//	        //HttpServletContext httpServletContext = (HttpServletContext)application;  
-//	        RequestDispatcher dis = application.getRequestDispatcher(real_path + file);
-//	        //application.getRequestDispatcher(url)这里的url只能是相对路径,如/upload/1.jpg  
-//	        if (dis != null) {
-//	            dis.forward(request,response);  
-//	        }
-//	        response.flushBuffer();
-//	    } catch (Exception e) {
-//	        e.printStackTrace();
-//	        System.out.println("下载取消：" + filepath + filename);
-//	    }   
-//	    out.clear();  
-//	    out = pageContext.pushBody();
-		
-//		System.out.println(real_path + file_name);
-//		
-//		response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(file_name, "utf-8"));
-//        FileInputStream file_input = new FileInputStream(real_path + file_name);
-//        OutputStream os = response.getOutputStream();
-//        
-//        byte[] b=new byte[1024];
-//        int len=0;
-//        while((len = file_input.read(b)) != -1){
-//            os.write(b,0,len);
-//        }
-//        file_input.close();
-		
-		
-//		// 构造URL
-//	    URL url = new URL(real_path + file_name);
-//	    // 打开连接
-//	    URLConnection con = url.openConnection();
-//	    // 输入流
-//	    InputStream is = con.getInputStream();
-//	    // 1K的数据缓冲
-//	    byte[] bs = new byte[1024];
-//	    // 读取到的数据长度
-//	    int len;
-//	    // 输出的文件流
-//	    OutputStream os = new FileOutputStream(file_name);
-//	    // 开始读取
-//	    while ((len = is.read(bs)) != -1) {
-//	      os.write(bs, 0, len);
-//	    }
-//	    // 完毕，关闭所有链接
-//	    os.close();
-//	    is.close();
-		
-		
-		
-		
-		
 		// 返回ajax处理文件下载
         if (result.equals("success")) {
         	outWriter.write(file_name);

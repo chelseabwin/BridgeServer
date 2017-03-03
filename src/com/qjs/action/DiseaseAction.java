@@ -1519,6 +1519,17 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 			}
 		}
 		
+		Load_detail load_detail = load_detailBiz.getLoad_detailByBridgeCode(this.getBg_id());
+		if (load_detail != null) {
+			String parts_nums = load_detail.getLoad_nums().replaceAll("\r|\n", "");
+			parts_nums = parts_nums.substring(0, parts_nums.length()-2);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		
 		return "disease_girder";
 	}
 	
@@ -1550,9 +1561,18 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					if (generateImage(imgStr, imgFilePath)) {
 						request.put("img_name", new File(imgFilePath).getName());
 					}
-				}
+				}				
 			}
-		}		
+		}
+		
+		General_detail general_detail = general_detailBiz.getGeneral_detailByBridgeCode(this.getBg_id());
+		if (general_detail != null) {
+			String parts_nums = general_detail.getGeneral_nums().replaceAll("\r|\n", "");
+			parts_nums = parts_nums.substring(0, parts_nums.length()-2);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -1581,7 +1601,16 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 			}
-		}		
+		}
+		
+		Support_detail support_detail = support_detailBiz.getSupport_detailByBridgeCode(this.getBg_id());
+		if (support_detail != null) {
+			String parts_nums = support_detail.getSupport_nums().replaceAll("\r|\n", "");
+			parts_nums = parts_nums.substring(0, parts_nums.length()-2);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -1618,7 +1647,16 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 			}
-		}		
+		}
+		
+		Pier_detail pier_detail = pier_detailBiz.getPier_detailByBridgeCode(this.getBg_id());
+		if (pier_detail != null) {
+			String parts_nums = pier_detail.getPier_nums().replaceAll("\r|\n", "");
+			parts_nums = parts_nums.substring(0, parts_nums.length()-2);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -1647,7 +1685,16 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 			}
-		}		
+		}
+		
+		Pier_detail pier_detail = pier_detailBiz.getPier_detailByBridgeCode(this.getBg_id());
+		if (pier_detail != null) {
+			String parts_nums = pier_detail.getBent_cap_nums();
+			parts_nums = parts_nums.substring(0, parts_nums.length()-2);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -1676,7 +1723,16 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 			}
-		}		
+		}
+		
+		Pier_detail pier_detail = pier_detailBiz.getPier_detailByBridgeCode(this.getBg_id());
+		if (pier_detail != null) {
+			String parts_nums = pier_detail.getTie_beam_nums();
+			parts_nums = parts_nums.substring(0, parts_nums.length()-2);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -1706,7 +1762,19 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 			}
-		}		
+		}
+		
+		Parts1 parts1 = parts1Biz.getParts1ByBridgeCode(this.getBg_id());
+		if (parts1 != null) {
+			String parts_nums = "";
+			for (int i = 1; i <= Integer.parseInt(parts1.getAbutment_num()); i++) {
+				parts_nums += i + ",";				
+			}
+			parts_nums = parts_nums.substring(0, parts_nums.length()-1);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -1735,7 +1803,19 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 			}
-		}		
+		}
+		
+		Parts1 parts1 = parts1Biz.getParts1ByBridgeCode(this.getBg_id());
+		if (parts1 != null) {
+			String parts_nums = "";
+			for (int i = 1; i <= Integer.parseInt(parts1.getAbutment_num()); i++) {
+				parts_nums += i + ",";				
+			}
+			parts_nums = parts_nums.substring(0, parts_nums.length()-1);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -1764,7 +1844,19 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 			}
-		}		
+		}
+		
+		Parts1 parts1 = parts1Biz.getParts1ByBridgeCode(this.getBg_id());
+		if (parts1 != null) {
+			String parts_nums = "";
+			for (int i = 1; i <= Integer.parseInt(parts1.getPa_num()); i++) {
+				parts_nums += i + ",";				
+			}
+			parts_nums = parts_nums.substring(0, parts_nums.length()-1);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -1793,7 +1885,19 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 			}
-		}		
+		}
+		
+		Parts1 parts1 = parts1Biz.getParts1ByBridgeCode(this.getBg_id());
+		if (parts1 != null) {
+			String parts_nums = "";
+			for (int i = 1; i <= Integer.parseInt(parts1.getBed_num()); i++) {
+				parts_nums += i + ",";				
+			}
+			parts_nums = parts_nums.substring(0, parts_nums.length()-1);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -1822,7 +1926,19 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 			}
-		}		
+		}
+		
+		Parts1 parts1 = parts1Biz.getParts1ByBridgeCode(this.getBg_id());
+		if (parts1 != null) {
+			String parts_nums = "";
+			for (int i = 1; i <= Integer.parseInt(parts1.getReg_structure()); i++) {
+				parts_nums += i + ",";				
+			}
+			parts_nums = parts_nums.substring(0, parts_nums.length()-1);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -1851,7 +1967,30 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 			}
-		}		
+		}
+		
+		Parts1 parts1 = parts1Biz.getParts1ByBridgeCode(this.getBg_id());
+		if (parts1 != null) {
+			String will_wall = parts1.getWing_wall();
+			String parts_nums = "";
+			
+			if (will_wall.charAt(0) == '1') {
+				parts_nums += "L0,";
+			}
+			if (will_wall.charAt(1) == '1') {
+				parts_nums += "R0,";
+			}
+			if (will_wall.charAt(2) == '1') {
+				parts_nums += "L1,";
+			}
+			if (will_wall.charAt(3) == '1') {
+				parts_nums += "R1,";
+			}
+			parts_nums = parts_nums.substring(0, parts_nums.length()-1);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -1880,7 +2019,30 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 			}
-		}		
+		}
+		
+		Parts1 parts1 = parts1Biz.getParts1ByBridgeCode(this.getBg_id());
+		if (parts1 != null) {
+			String conical_slope = parts1.getConical_slope();
+			String parts_nums = "";
+			
+			if (conical_slope.charAt(0) == '1') {
+				parts_nums += "L0,";
+			}
+			if (conical_slope.charAt(1) == '1') {
+				parts_nums += "R0,";
+			}
+			if (conical_slope.charAt(2) == '1') {
+				parts_nums += "L1,";
+			}
+			if (conical_slope.charAt(3) == '1') {
+				parts_nums += "R1,";
+			}
+			parts_nums = parts_nums.substring(0, parts_nums.length()-1);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -1909,7 +2071,19 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 			}
-		}		
+		}
+		
+		Parts1 parts1 = parts1Biz.getParts1ByBridgeCode(this.getBg_id());
+		if (parts1 != null) {
+			String parts_nums = "";
+			for (int i = 1; i <= Integer.parseInt(parts1.getProtection_slope()); i++) {
+				parts_nums += i + ",";				
+			}
+			parts_nums = parts_nums.substring(0, parts_nums.length()-1);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -1938,7 +2112,19 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}				
 			}
-		}		
+		}
+		
+		Parts2 parts2 = parts2Biz.getParts2ByBridgeCode(this.getBg_id());
+		if (parts2 != null) {
+			String parts_nums = "";
+			for (int i = 1; i <= Integer.parseInt(parts2.getDeck_num()); i++) {
+				parts_nums += i + ",";				
+			}
+			parts_nums = parts_nums.substring(0, parts_nums.length()-1);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -1967,7 +2153,19 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 			}
-		}		
+		}
+		
+		Parts2 parts2 = parts2Biz.getParts2ByBridgeCode(this.getBg_id());
+		if (parts2 != null) {
+			String parts_nums = "";
+			for (int i = 1; i <= Integer.parseInt(parts2.getJoint_num()); i++) {
+				parts_nums += i + ",";				
+			}
+			parts_nums = parts_nums.substring(0, parts_nums.length()-1);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -1996,7 +2194,24 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 			}
-		}		
+		}
+		
+		Parts2 parts2 = parts2Biz.getParts2ByBridgeCode(this.getBg_id());
+		if (parts2 != null) {
+			String sidewalk = parts2.getSidewalk();
+			String parts_nums = "";
+			
+			if (sidewalk.charAt(0) == '1') {
+				parts_nums += "L,";
+			}
+			if (sidewalk.charAt(1) == '1') {
+				parts_nums += "R,";
+			}
+			parts_nums = parts_nums.substring(0, parts_nums.length()-1);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -2025,7 +2240,24 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 			}
-		}		
+		}
+		
+		Parts2 parts2 = parts2Biz.getParts2ByBridgeCode(this.getBg_id());
+		if (parts2 != null) {
+			String guardrail = parts2.getGuardrail();
+			String parts_nums = "";
+			
+			if (guardrail.charAt(0) == '1') {
+				parts_nums += "L,";
+			}
+			if (guardrail.charAt(1) == '1') {
+				parts_nums += "R,";
+			}
+			parts_nums = parts_nums.substring(0, parts_nums.length()-1);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -2054,7 +2286,19 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 			}
-		}		
+		}
+		
+		Parts2 parts2 = parts2Biz.getParts2ByBridgeCode(this.getBg_id());
+		if (parts2 != null) {
+			String parts_nums = "";
+			for (int i = 1; i <= Integer.parseInt(parts2.getDrainage_system()); i++) {
+				parts_nums += i + ",";				
+			}
+			parts_nums = parts_nums.substring(0, parts_nums.length()-1);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -2083,7 +2327,19 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 					}
 				}
 			}
-		}		
+		}
+		
+		Parts2 parts2 = parts2Biz.getParts2ByBridgeCode(this.getBg_id());
+		if (parts2 != null) {
+			String parts_nums = "";
+			for (int i = 1; i <= Integer.parseInt(parts2.getIlluminated_sign()); i++) {
+				parts_nums += i + ",";				
+			}
+			parts_nums = parts_nums.substring(0, parts_nums.length()-1);
+			
+			request.put("parts_nums", parts_nums);
+		}
+		
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
 		
@@ -3143,9 +3399,18 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		return null;
 	}
 	
+	public String showEvaluation() {
+		request.put("table_name", this.getTable_name());
+		request.put("bg_id", this.getBg_id());
+		request.put("bg_name", this.getBg_name());
+		request.put("item_name", this.getItem_name());
+		
+		return "evaluation_table";
+	}
+	
 	// 显示病害打分页面
 	@SuppressWarnings("unchecked")
-	public String showEvaluation() {
+	public String showEvaluationTable() {
 		request.put("table_name", this.getTable_name());
 		request.put("bg_id", this.getBg_id());
 		request.put("bg_name", this.getBg_name());
@@ -3286,6 +3551,20 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		request.put("datalist", dataList);
 		request.put("evalstr", evalstr);
 		request.put("count", count);
+		
+		int totalPageNumber = 0;
+		int tmpPageSize = Constant.PAGE_SIZE;
+		if (this.getPageSize() != null && this.getPageSize() > 0) {
+			tmpPageSize = this.getPageSize();
+		}
+		totalPageNumber = (int) Math.ceil(count*1.0/tmpPageSize);
+		request.put("totalPageNumber", totalPageNumber);
+		
+		if (this.getPageNo() == null || this.getPageNo() < 1) {
+			request.put("pageCur", 1);
+		} else {
+			request.put("pageCur", this.getPageNo());
+		}
 		
 		return "evaluation_table_data";
 	}

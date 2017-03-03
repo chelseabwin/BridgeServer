@@ -70,7 +70,8 @@
 	<div class="span6">
 		<p id="page_info" class="pagination pull-right"></p>
 	</div>
-	</div>
+</div>
+
 <script>
 
 var test = $("input[type=checkbox]:not(.toggle), input[type=radio]:not(.toggle, .star)");
@@ -94,6 +95,7 @@ jQuery('#sample_1 .group-checkable').change(function () {
     });
     jQuery.uniform.update(set);
 });
+
 var totalNumber = parseInt("<s:property value="#request.count"/>");
 var pageNumber = parseInt("<s:property value="#request.totalPageNumber"/>");
 var pageCur = parseInt("<s:property value="#request.pageCur"/>");
