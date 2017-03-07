@@ -91,95 +91,107 @@
 								<input type="hidden" id="image_type_id" name="image_type" value="<s:property value="#request.image_type"/>">
 								<input type="hidden" id="img_name_id" name="img_name" value="<s:property value="#request.img_name"/>">
 
-												<div class="control-group">
+									<div class="control-group">
 
-													<label class="control-label">部件名称</label>
+										<label class="control-label">部件名称</label>
 
-													<div class="controls">   
+										<div class="controls">   
 
-														<input class="m-wrap medium" type="text" name="item_name" value="桥台身" readOnly/>
+											<input class="m-wrap medium" type="text" name="item_name" value="桥台身" readOnly/>
 
-													</div>
+										</div>
 
-												</div>
-												
-												<div class="control-group">
+									</div>
+									
+									<div class="control-group">
 
-													<label class="control-label">部件编号</label>
+										<label class="control-label">部件编号</label>
 
-													<div class="controls">   
+										<div class="controls">   
 
-														<select class="medium m-wrap" name="parts_id" id="partsIdId"></select>
+											<select class="medium m-wrap" name="parts_id" id="partsIdId"></select>
 
-													</div>
+										</div>
 
-												</div>
-												
-												<div class="control-group">
+									</div>
+									
+									<div class="control-group">
 
-													<label class="control-label">病害类型</label>
+										<label class="control-label">病害类型</label>
 
-													<div class="controls">
-													
-													    <label class="radio">
-													    	<input type="radio" id="rgFeature1" name="rg_feature" value="剥落">&nbsp;剥落
-													    </label>
-													    
-													    <label class="radio">
-													        <input type="radio" id="rgFeature2" name="rg_feature" value="空洞、孔洞">&nbsp;空洞、孔洞
-													    </label>
-													    
-													    <label class="radio">
-													        <input type="radio" id="rgFeature3" name="rg_feature" value="磨损">&nbsp;磨损
-													    </label>
-													  	
-													  	<label class="radio">
-													        <input type="radio" id="rgFeature4" name="rg_feature" value="裂缝">&nbsp;裂缝
-													    </label>
-													    
-													    <label class="radio">
-													        <input type="radio" id="rgFeature5" name="rg_feature" value="圬工砌体缺陷">&nbsp;圬工砌体缺陷
-													    </label>
-													    
-													    <label class="radio">
-													        <input type="radio" id="rgFeature6" name="rg_feature" value="桥台跳车">&nbsp;桥台跳车
-													    </label>
-													    
-													    <label class="radio">
-													        <input type="radio" id="rgFeature7" name="rg_feature" value="台背排水">&nbsp;台背排水
-													    </label>
-													    
-													    <label class="radio">
-													        <input type="radio" id="rgFeature8" name="rg_feature" value="其他病害">&nbsp;其他病害
-													    </label>
-													    
-													</div>
-													
-												</div>
-												
-												<div class="control-group" id="od_div">
+										<div class="controls">
+										
+										    <label class="radio">
+										    	<input type="radio" id="rgFeature1" name="rg_feature" value="剥落">&nbsp;剥落
+										    </label>
+										    
+										    <label class="radio">
+										        <input type="radio" id="rgFeature2" name="rg_feature" value="空洞、孔洞">&nbsp;空洞、孔洞
+										    </label>
+										    
+										    <label class="radio">
+										        <input type="radio" id="rgFeature3" name="rg_feature" value="磨损">&nbsp;磨损
+										    </label>
+										  	
+										  	<label class="radio">
+										        <input type="radio" id="rgFeature4" name="rg_feature" value="裂缝">&nbsp;裂缝
+										    </label>
+										    
+										    <label class="radio">
+										        <input type="radio" id="rgFeature5" name="rg_feature" value="圬工砌体缺陷">&nbsp;圬工砌体缺陷
+										    </label>
+										    
+										    <label class="radio">
+										        <input type="radio" id="rgFeature6" name="rg_feature" value="桥台跳车">&nbsp;桥台跳车
+										    </label>
+										    
+										    <label class="radio">
+										        <input type="radio" id="rgFeature7" name="rg_feature" value="台背排水">&nbsp;台背排水
+										    </label>
+										    
+										    <label class="radio">
+										        <input type="radio" id="rgFeature8" name="rg_feature" value="其他病害">&nbsp;其他病害
+										    </label>
+										    
+										</div>
+										
+									</div>
+									
+									<div class="control-group" id="od_div">
 
-													<label class="control-label">其他病害</label>
+										<label class="control-label">其他病害</label>
 
-													<div class="controls">
-													
-														<s:select class="medium m-wrap" name="sp_otherDisease" id="spOtherDiseaseId" list="{'混凝土碳化、腐蚀','位移','其他'}" />
+										<div class="controls">
+										
+											<s:select class="medium m-wrap" name="sp_otherDisease" id="spOtherDiseaseId" list="{'混凝土碳化、腐蚀','位移','其他'}" />
 
-													</div>
+										</div>
 
-												</div>
-												
-												<div class="control-group">
+									</div>
+									
+									<div class="control-group">
 
-													<label class="control-label">病害描述</label>
+										<label class="control-label">病害描述</label>
 
-													<div class="controls">
+										<div class="controls">
 
-														<textarea class="large m-wrap" rows="3" name="add_content"><s:property value="#request.add_content"/></textarea>
+											<textarea class="large m-wrap" rows="3" name="add_content"><s:property value="#request.add_content"/></textarea>
 
-													</div>
+										</div>
 
-												</div>
+									</div>
+									
+									<div class="control-group">
+
+										<label class="control-label">检测时间</label>
+
+										<div class="controls">   
+
+											<input class="m-wrap medium" type="text" name="detect_time" value="<s:property value="#request.detect_time"/>"/>
+
+										</div>
+
+									</div>
 												
 								</form>	
 								

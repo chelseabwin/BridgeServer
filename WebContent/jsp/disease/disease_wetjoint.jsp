@@ -91,185 +91,198 @@
 								<input type="hidden" id="image_type_id" name="image_type" value="<s:property value="#request.image_type"/>">
 								<input type="hidden" id="img_name_id" name="img_name" value="<s:property value="#request.img_name"/>">
 
-												<div class="control-group">
+									<div class="control-group">
 
-													<label class="control-label">部件名称</label>
+										<label class="control-label">部件名称</label>
 
-													<div class="controls">   
+										<div class="controls">   
 
-														<s:select class="medium m-wrap" name="item_name" id="itemNameId" list="{'湿接缝','横隔板','铰缝','拱上结构','横向联结系','上部一般构件'}" />
+											<s:select class="medium m-wrap" name="item_name" id="itemNameId" list="{'湿接缝','横隔板','铰缝','拱上结构','横向联结系','上部一般构件'}" />
 
-													</div>
+										</div>
 
-												</div>
-												
-												<div class="control-group">
+									</div>
+									
+									<div class="control-group">
 
-													<label class="control-label">部件编号</label>
+										<label class="control-label">部件编号</label>
 
-													<div class="controls">   
+										<div class="controls">   
 
-														<select class="medium m-wrap" name="parts_id" id="partsIdId"></select>
-														
-													</div>
+											<select class="medium m-wrap" name="parts_id" id="partsIdId"></select>
+											
+										</div>
 
-												</div>
-												
-												<div class="control-group">
+									</div>
+									
+									<div class="control-group">
 
-													<label class="control-label">病害类型</label>
+										<label class="control-label">病害类型</label>
 
-													<div class="controls">
-													
-													    <label class="radio">
-													    	<input type="radio" id="rgFeature1" name="rg_feature" value="蜂窝、麻面">&nbsp;蜂窝、麻面
-													    </label>
-													    
-													    <label class="radio">
-													        <input type="radio" id="rgFeature2" name="rg_feature" value="剥落、掉角">&nbsp;剥落、掉角
-													    </label>
-													  	
-													  	<label class="radio">
-													        <input type="radio" id="rgFeature3" name="rg_feature" value="空洞、孔洞">&nbsp;空洞、孔洞
-													    </label>
-													    
-													    <label class="radio">
-													        <input type="radio" id="rgFeature4" name="rg_feature" value="裂缝">&nbsp;裂缝
-													    </label>
-													    
-													    <label class="radio">
-													        <input type="radio" id="rgFeature5" name="rg_feature" value="其他病害">&nbsp;其他病害
-													    </label>
-													    
-													</div>
-													
-												</div>
-												
-												<div class="control-group" id="fis_div">
+										<div class="controls">
+										
+										    <label class="radio">
+										    	<input type="radio" id="rgFeature1" name="rg_feature" value="蜂窝、麻面">&nbsp;蜂窝、麻面
+										    </label>
+										    
+										    <label class="radio">
+										        <input type="radio" id="rgFeature2" name="rg_feature" value="剥落、掉角">&nbsp;剥落、掉角
+										    </label>
+										  	
+										  	<label class="radio">
+										        <input type="radio" id="rgFeature3" name="rg_feature" value="空洞、孔洞">&nbsp;空洞、孔洞
+										    </label>
+										    
+										    <label class="radio">
+										        <input type="radio" id="rgFeature4" name="rg_feature" value="裂缝">&nbsp;裂缝
+										    </label>
+										    
+										    <label class="radio">
+										        <input type="radio" id="rgFeature5" name="rg_feature" value="其他病害">&nbsp;其他病害
+										    </label>
+										    
+										</div>
+										
+									</div>
+									
+									<div class="control-group" id="fis_div">
 
-													<label class="control-label">裂缝类型</label>
+										<label class="control-label">裂缝类型</label>
 
-													<div class="controls">
-													
-													    <label class="radio">
-													    	<input type="radio" id="rgFissure1" name="rg_fissure" value="竖向裂缝">&nbsp;竖向裂缝
-													    </label>
-													    
-													    <label class="radio">
-													        <input type="radio" id="rgFissure2" name="rg_fissure" value="横向裂缝">&nbsp;横向裂缝
-													    </label>
-													  	
-													  	<label class="radio">
-													        <input type="radio" id="rgFissure3" name="rg_fissure" value="斜向裂缝">&nbsp;斜向裂缝
-													    </label>
-													    
-													    <label class="radio">
-													        <input type="radio" id="rgFissure4" name="rg_fissure" value="纵向裂缝">&nbsp;纵向裂缝
-													    </label>
-													    
-													    <label class="radio">
-													        <input type="radio" id="rgFissure5" name="rg_fissure" value="网裂缝">&nbsp;网裂缝
-													    </label>
-													    
-													</div>
-													
-												</div>
-												
-												<div class="control-group" id="od_div">
+										<div class="controls">
+										
+										    <label class="radio">
+										    	<input type="radio" id="rgFissure1" name="rg_fissure" value="竖向裂缝">&nbsp;竖向裂缝
+										    </label>
+										    
+										    <label class="radio">
+										        <input type="radio" id="rgFissure2" name="rg_fissure" value="横向裂缝">&nbsp;横向裂缝
+										    </label>
+										  	
+										  	<label class="radio">
+										        <input type="radio" id="rgFissure3" name="rg_fissure" value="斜向裂缝">&nbsp;斜向裂缝
+										    </label>
+										    
+										    <label class="radio">
+										        <input type="radio" id="rgFissure4" name="rg_fissure" value="纵向裂缝">&nbsp;纵向裂缝
+										    </label>
+										    
+										    <label class="radio">
+										        <input type="radio" id="rgFissure5" name="rg_fissure" value="网裂缝">&nbsp;网裂缝
+										    </label>
+										    
+										</div>
+										
+									</div>
+									
+									<div class="control-group" id="od_div">
 
-													<label class="control-label">其他病害</label>
+										<label class="control-label">其他病害</label>
 
-													<div class="controls">
-													
-														<s:select class="medium m-wrap" name="sp_otherDisease" id="spOtherDiseaseId" list="{'混凝土保护层厚度','钢筋锈蚀','混凝土碳化','混凝土强度','跨中挠度','结构变位','预应力构件损伤','其他'}" />
+										<div class="controls">
+										
+											<s:select class="medium m-wrap" name="sp_otherDisease" id="spOtherDiseaseId" list="{'混凝土保护层厚度','钢筋锈蚀','混凝土碳化','混凝土强度','跨中挠度','结构变位','预应力构件损伤','其他'}" />
 
-													</div>
+										</div>
 
-												</div>
-												
-												<div class="control-group" id="1s_div">
+									</div>
+									
+									<div class="control-group" id="1s_div">
 
-													<label class="control-label">距本跨梁端起始距离</label>
+										<label class="control-label">距本跨梁端起始距离</label>
 
-													<div class="controls">   
+										<div class="controls">   
 
-														<input class="m-wrap medium" type="text" name="l1_start" value="<s:property value="#request.l1_start"/>"/>
+											<input class="m-wrap medium" type="text" name="l1_start" value="<s:property value="#request.l1_start"/>"/>
 
-													</div>
+										</div>
 
-												</div>
-												
-												<div class="control-group" id="1e_div">
+									</div>
+									
+									<div class="control-group" id="1e_div">
 
-													<label class="control-label">距本跨梁端终止距离</label>
+										<label class="control-label">距本跨梁端终止距离</label>
 
-													<div class="controls">   
+										<div class="controls">   
 
-														<input class="m-wrap medium" type="text" name="l1_end" value="<s:property value="#request.l1_end"/>"/>
+											<input class="m-wrap medium" type="text" name="l1_end" value="<s:property value="#request.l1_end"/>"/>
 
-													</div>
+										</div>
 
-												</div>
-												
-												<div class="control-group" id="ar_div">
+									</div>
+									
+									<div class="control-group" id="ar_div">
 
-													<label class="control-label">病害面积</label>
+										<label class="control-label">病害面积</label>
 
-													<div class="controls">   
+										<div class="controls">   
 
-														<input class="m-wrap medium" type="text" name="l1_area" value="<s:property value="#request.l1_area"/>"/>
+											<input class="m-wrap medium" type="text" name="l1_area" value="<s:property value="#request.l1_area"/>"/>
 
-													</div>
+										</div>
 
-												</div>
-												
-												<div class="control-group" id="2s_div">
+									</div>
+									
+									<div class="control-group" id="2s_div">
 
-													<label class="control-label">距本跨梁端起始距离</label>
+										<label class="control-label">距本跨梁端起始距离</label>
 
-													<div class="controls">   
+										<div class="controls">   
 
-														<input class="m-wrap medium" type="text" name="l2_start" value="<s:property value="#request.l2_start"/>"/>
+											<input class="m-wrap medium" type="text" name="l2_start" value="<s:property value="#request.l2_start"/>"/>
 
-													</div>
+										</div>
 
-												</div>
-												
-												<div class="control-group" id="lg_div">
+									</div>
+									
+									<div class="control-group" id="lg_div">
 
-													<label class="control-label">病害长度</label>
+										<label class="control-label">病害长度</label>
 
-													<div class="controls">   
+										<div class="controls">   
 
-														<input class="m-wrap medium" type="text" name="l2_length" value="<s:property value="#request.l2_length"/>"/>
+											<input class="m-wrap medium" type="text" name="l2_length" value="<s:property value="#request.l2_length"/>"/>
 
-													</div>
+										</div>
 
-												</div>
-												
-												<div class="control-group" id="wt_div">
+									</div>
+									
+									<div class="control-group" id="wt_div">
 
-													<label class="control-label">病害宽度</label>
+										<label class="control-label">病害宽度</label>
 
-													<div class="controls">   
+										<div class="controls">   
 
-														<input class="m-wrap medium" type="text" name="l2_width" value="<s:property value="#request.l2_width"/>"/>
+											<input class="m-wrap medium" type="text" name="l2_width" value="<s:property value="#request.l2_width"/>"/>
 
-													</div>
+										</div>
 
-												</div>
-												
-												<div class="control-group">
+									</div>
+									
+									<div class="control-group">
 
-													<label class="control-label">病害描述</label>
+										<label class="control-label">病害描述</label>
 
-													<div class="controls">
+										<div class="controls">
 
-														<textarea class="large m-wrap" rows="3" name="add_content"><s:property value="#request.add_content"/></textarea>
+											<textarea class="large m-wrap" rows="3" name="add_content"><s:property value="#request.add_content"/></textarea>
 
-													</div>
+										</div>
 
-												</div>
+									</div>
+									
+									<div class="control-group">
+
+										<label class="control-label">检测时间</label>
+
+										<div class="controls">   
+
+											<input class="m-wrap medium" type="text" name="detect_time" value="<s:property value="#request.detect_time"/>"/>
+
+										</div>
+
+									</div>
+									
 								</form>	
 								
 								<form id="image_form" action="" class="form-horizontal" method="post" enctype="multipart/form-data">

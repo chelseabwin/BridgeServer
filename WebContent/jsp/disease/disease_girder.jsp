@@ -336,6 +336,18 @@
 										</div>
 
 									</div>
+									
+									<div class="control-group">
+
+										<label class="control-label">检测时间</label>
+
+										<div class="controls">   
+
+											<input class="m-wrap medium" type="text" name="detect_time" value="<s:property value="#request.detect_time"/>"/>
+
+										</div>
+
+									</div>
 								
 								</form>	
 								

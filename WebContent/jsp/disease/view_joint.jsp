@@ -101,6 +101,13 @@
 												         <th>病害描述</th>
 												         <td class="alert alert-info"><s:property value="%{#request.disease_joint.add_content}"/></td>
 												      </tr>
+												      
+												      <tr>
+												         <th>指标标度类别</th>
+												         <td class="alert alert-info"><s:if test="#request.evaluation!=null && #request.evaluation!=''"><s:property value="%{#request.evaluation}"/>类</s:if></td>
+												         <th>检测时间</th>
+												         <td class="alert alert-info"><s:property value="%{#request.disease_joint.detect_time}"/></td>
+												      </tr>
 											          
 											          <tr>
 											         	 <th>病害图片</th>

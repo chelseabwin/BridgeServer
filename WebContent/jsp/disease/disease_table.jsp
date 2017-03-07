@@ -16,6 +16,8 @@
 			
 			<th>病害描述</th>
 			
+			<th>检测时间</th>
+			
 			<th>指标标度类别</th>
 			
 			<th>操作</th>
@@ -44,6 +46,8 @@
 			</td>
 			
 			<td><s:property value="add_content"/></td>
+			
+			<td><s:property value="detect_time"/></td>
 			
 			<td><s:if test="#data.real_eval!=null && #data.real_eval!=''"><s:property value="real_eval"/>类</s:if></td>
 			

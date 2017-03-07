@@ -94,6 +94,7 @@ public class Disease_girderBizImpl implements Disease_girderBiz {
 			obj.put("image_type", dil.getImage_type());
 			obj.put("evaluation", dil.getEvaluation());
 			obj.put("score", dil.getScore());
+			obj.put("detect_time", dil.getDetect_time());
 			disinfo.add(obj);
 		}
 		Map<String,Object> result = new HashMap<String,Object>();
@@ -169,6 +170,7 @@ public class Disease_girderBizImpl implements Disease_girderBiz {
 			obj.put("image_type", dil.getImage_type());
 			obj.put("evaluation", dil.getEvaluation());
 			obj.put("score", dil.getScore());
+			obj.put("detect_time", dil.getDetect_time());
 			disinfo.add(obj);
 		}
 		return disinfo;

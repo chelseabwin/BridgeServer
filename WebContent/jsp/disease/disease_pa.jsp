@@ -91,83 +91,95 @@
 								<input type="hidden" id="image_type_id" name="image_type" value="<s:property value="#request.image_type"/>">
 								<input type="hidden" id="img_name_id" name="img_name" value="<s:property value="#request.img_name"/>">
 
-												<div class="control-group">
+									<div class="control-group">
 
-													<label class="control-label">部件名称</label>
+										<label class="control-label">部件名称</label>
 
-													<div class="controls">   
+										<div class="controls">   
 
-														<input class="m-wrap medium" type="text" name="item_name" value="墩台基础" readOnly/>
+											<input class="m-wrap medium" type="text" name="item_name" value="墩台基础" readOnly/>
 
-													</div>
+										</div>
 
-												</div>
-												
-												<div class="control-group">
+									</div>
+									
+									<div class="control-group">
 
-													<label class="control-label">部件编号</label>
+										<label class="control-label">部件编号</label>
 
-													<div class="controls">   
+										<div class="controls">   
 
-														<select class="medium m-wrap" name="parts_id" id="partsIdId"></select>
+											<select class="medium m-wrap" name="parts_id" id="partsIdId"></select>
 
-													</div>
+										</div>
 
-												</div>
-												
-												<div class="control-group">
+									</div>
+									
+									<div class="control-group">
 
-													<label class="control-label">病害类型</label>
+										<label class="control-label">病害类型</label>
 
-													<div class="controls">
-													
-													    <label class="radio">
-													    	<input type="radio" id="rgFeature1" name="rg_feature" value="冲刷、淘空">&nbsp;冲刷、淘空
-													    </label>
-													    
-													    <label class="radio">
-													        <input type="radio" id="rgFeature2" name="rg_feature" value="剥落、露筋">&nbsp;剥落、露筋
-													    </label>
-													  	
-													  	<label class="radio">
-													        <input type="radio" id="rgFeature3" name="rg_feature" value="冲蚀">&nbsp;冲蚀
-													    </label>
-													    
-													    <label class="radio">
-													        <input type="radio" id="rgFeature4" name="rg_feature" value="河底铺砌">&nbsp;河底铺砌
-													    </label>
-													    
-													    <label class="radio">
-													        <input type="radio" id="rgFeature5" name="rg_feature" value="沉降">&nbsp;沉降
-													    </label>
-													    
-													    <label class="radio">
-													        <input type="radio" id="rgFeature6" name="rg_feature" value="滑移和倾斜">&nbsp;滑移和倾斜
-													    </label>
-													    
-													    <label class="radio">
-													        <input type="radio" id="rgFeature7" name="rg_feature" value="裂缝">&nbsp;裂缝
-													    </label>
-													    
-													    <label class="radio">
-													        <input type="radio" id="rgFeature8" name="rg_feature" value="其他病害">&nbsp;其他病害
-													    </label>
-													    
-													</div>
-													
-												</div>
-												
-												<div class="control-group">
+										<div class="controls">
+										
+										    <label class="radio">
+										    	<input type="radio" id="rgFeature1" name="rg_feature" value="冲刷、淘空">&nbsp;冲刷、淘空
+										    </label>
+										    
+										    <label class="radio">
+										        <input type="radio" id="rgFeature2" name="rg_feature" value="剥落、露筋">&nbsp;剥落、露筋
+										    </label>
+										  	
+										  	<label class="radio">
+										        <input type="radio" id="rgFeature3" name="rg_feature" value="冲蚀">&nbsp;冲蚀
+										    </label>
+										    
+										    <label class="radio">
+										        <input type="radio" id="rgFeature4" name="rg_feature" value="河底铺砌">&nbsp;河底铺砌
+										    </label>
+										    
+										    <label class="radio">
+										        <input type="radio" id="rgFeature5" name="rg_feature" value="沉降">&nbsp;沉降
+										    </label>
+										    
+										    <label class="radio">
+										        <input type="radio" id="rgFeature6" name="rg_feature" value="滑移和倾斜">&nbsp;滑移和倾斜
+										    </label>
+										    
+										    <label class="radio">
+										        <input type="radio" id="rgFeature7" name="rg_feature" value="裂缝">&nbsp;裂缝
+										    </label>
+										    
+										    <label class="radio">
+										        <input type="radio" id="rgFeature8" name="rg_feature" value="其他病害">&nbsp;其他病害
+										    </label>
+										    
+										</div>
+										
+									</div>
+									
+									<div class="control-group">
 
-													<label class="control-label">病害描述</label>
+										<label class="control-label">病害描述</label>
 
-													<div class="controls">
+										<div class="controls">
 
-														<textarea class="large m-wrap" rows="3" name="add_content"><s:property value="#request.add_content"/></textarea>
+											<textarea class="large m-wrap" rows="3" name="add_content"><s:property value="#request.add_content"/></textarea>
 
-													</div>
+										</div>
 
-												</div>
+									</div>
+									
+									<div class="control-group">
+
+										<label class="control-label">检测时间</label>
+
+										<div class="controls">   
+
+											<input class="m-wrap medium" type="text" name="detect_time" value="<s:property value="#request.detect_time"/>"/>
+
+										</div>
+
+									</div>
 												
 								</form>	
 								

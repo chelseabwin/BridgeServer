@@ -36,6 +36,9 @@
         <property name="score" type="java.lang.String">
              <column name="score" length="200" />
         </property>
+        <property name="detect_time" type="java.lang.String">
+             <column name="detect_time" length="200" />
+        </property>
         <property name="flag" type="java.lang.String">
              <column name="flag" length="10" />
         </property>

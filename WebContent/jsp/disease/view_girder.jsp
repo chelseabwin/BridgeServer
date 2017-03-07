@@ -167,9 +167,9 @@
 												      
 												      <tr>
 												         <th>指标标度类别</th>
-												         <td class="alert alert-info"><s:property value="%{#request.disease_girder.evaluation}"/></td>
-												         <th></th>
-												         <td class="alert alert-info"></td>
+												         <td class="alert alert-info"><s:if test="#request.evaluation!=null && #request.evaluation!=''"><s:property value="%{#request.evaluation}"/>类</s:if></td>
+												         <th>检测时间</th>
+												         <td class="alert alert-info"><s:property value="%{#request.disease_girder.detect_time}"/></td>
 												      </tr>
 												      
 												      <tr>

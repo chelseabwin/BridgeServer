@@ -131,6 +131,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 	private String image_type;
 	private String evaluation;
 	private String score;
+	private String detect_time;
 	private String flag;
 	
 	// Disease_wetjoint
@@ -385,6 +386,14 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 
 	public void setScore(String score) {
 		this.score = score;
+	}
+	
+	public String getDetect_time() {
+		return detect_time;
+	}
+
+	public void setDetect_time(String detect_time) {
+		this.detect_time = detect_time;
 	}
 	
 	public String getFlag() {
@@ -1161,6 +1170,11 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		request.put("table_name", this.getTable_name());
 		request.put("item_name", this.getItem_name());
 		
+		Evaluation eval = evaluationBiz.getEvaluationExactly(this.getTable_name(), this.getBg_id(), this.getId().toString());
+		if (eval != null) {
+			request.put("evaluation", eval.getEvaluation());
+		}
+		
 		switch (this.getTable_name()) {
 		case "disease_girder":
 			Disease_girder disease_girder = disease_girderBiz.getDisease_girderById(this.getId());
@@ -1508,6 +1522,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_girder.getDisease_image());
 				request.put("image_type", disease_girder.getImage_type());
 				request.put("evaluation", disease_girder.getEvaluation());
+				request.put("detect_time", disease_girder.getDetect_time());
 				
 				String imgStr = disease_girder.getDisease_image();
 				if (imgStr != "") {
@@ -1554,6 +1569,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_wetjoint.getDisease_image());
 				request.put("image_type", disease_wetjoint.getImage_type());
 				request.put("evaluation", disease_wetjoint.getEvaluation());
+				request.put("detect_time", disease_wetjoint.getDetect_time());
 				
 				String imgStr = disease_wetjoint.getDisease_image();
 				if (imgStr != "") {
@@ -1592,6 +1608,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_support.getDisease_image());
 				request.put("image_type", disease_support.getImage_type());
 				request.put("evaluation", disease_support.getEvaluation());
+				request.put("detect_time", disease_support.getDetect_time());
 				
 				String imgStr = disease_support.getDisease_image();
 				if (imgStr != "") {
@@ -1638,6 +1655,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_pier.getDisease_image());
 				request.put("image_type", disease_pier.getImage_type());
 				request.put("evaluation", disease_pier.getEvaluation());
+				request.put("detect_time", disease_pier.getDetect_time());
 				
 				String imgStr = disease_pier.getDisease_image();
 				if (imgStr != "") {
@@ -1676,6 +1694,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_bentcap.getDisease_image());
 				request.put("image_type", disease_bentcap.getImage_type());
 				request.put("evaluation", disease_bentcap.getEvaluation());
+				request.put("detect_time", disease_bentcap.getDetect_time());
 				
 				String imgStr = disease_bentcap.getDisease_image();
 				if (imgStr != "") {
@@ -1714,6 +1733,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_tiebeam.getDisease_image());
 				request.put("image_type", disease_tiebeam.getImage_type());
 				request.put("evaluation", disease_tiebeam.getEvaluation());
+				request.put("detect_time", disease_tiebeam.getDetect_time());
 				
 				String imgStr = disease_tiebeam.getDisease_image();
 				if (imgStr != "") {
@@ -1753,6 +1773,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_atbody.getDisease_image());
 				request.put("image_type", disease_atbody.getImage_type());
 				request.put("evaluation", disease_atbody.getEvaluation());
+				request.put("detect_time", disease_atbody.getDetect_time());
 				
 				String imgStr = disease_atbody.getDisease_image();
 				if (imgStr != "") {
@@ -1794,6 +1815,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_atcapping.getDisease_image());
 				request.put("image_type", disease_atcapping.getImage_type());
 				request.put("evaluation", disease_atcapping.getEvaluation());
+				request.put("detect_time", disease_atcapping.getDetect_time());
 				
 				String imgStr = disease_atcapping.getDisease_image();
 				if (imgStr != "") {
@@ -1835,6 +1857,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_pa.getDisease_image());
 				request.put("image_type", disease_pa.getImage_type());
 				request.put("evaluation", disease_pa.getEvaluation());
+				request.put("detect_time", disease_pa.getDetect_time());
 				
 				String imgStr = disease_pa.getDisease_image();
 				if (imgStr != "") {
@@ -1876,6 +1899,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_bed.getDisease_image());
 				request.put("image_type", disease_bed.getImage_type());
 				request.put("evaluation", disease_bed.getEvaluation());
+				request.put("detect_time", disease_bed.getDetect_time());
 				
 				String imgStr = disease_bed.getDisease_image();
 				if (imgStr != "") {
@@ -1917,6 +1941,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_regstruc.getDisease_image());
 				request.put("image_type", disease_regstruc.getImage_type());
 				request.put("evaluation", disease_regstruc.getEvaluation());
+				request.put("detect_time", disease_regstruc.getDetect_time());
 				
 				String imgStr = disease_regstruc.getDisease_image();
 				if (imgStr != "") {
@@ -1958,6 +1983,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_wingwall.getDisease_image());
 				request.put("image_type", disease_wingwall.getImage_type());
 				request.put("evaluation", disease_wingwall.getEvaluation());
+				request.put("detect_time", disease_wingwall.getDetect_time());
 				
 				String imgStr = disease_wingwall.getDisease_image();
 				if (imgStr != "") {
@@ -2010,6 +2036,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_conslope.getDisease_image());
 				request.put("image_type", disease_conslope.getImage_type());
 				request.put("evaluation", disease_conslope.getEvaluation());
+				request.put("detect_time", disease_conslope.getDetect_time());
 				
 				String imgStr = disease_conslope.getDisease_image();
 				if (imgStr != "") {
@@ -2062,6 +2089,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_proslope.getDisease_image());
 				request.put("image_type", disease_proslope.getImage_type());
 				request.put("evaluation", disease_proslope.getEvaluation());
+				request.put("detect_time", disease_proslope.getDetect_time());
 				
 				String imgStr = disease_proslope.getDisease_image();
 				if (imgStr != "") {
@@ -2103,6 +2131,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_deck.getDisease_image());
 				request.put("image_type", disease_deck.getImage_type());
 				request.put("evaluation", disease_deck.getEvaluation());
+				request.put("detect_time", disease_deck.getDetect_time());
 				
 				String imgStr = disease_deck.getDisease_image();
 				if (imgStr != "") {
@@ -2144,6 +2173,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_joint.getDisease_image());
 				request.put("image_type", disease_joint.getImage_type());
 				request.put("evaluation", disease_joint.getEvaluation());
+				request.put("detect_time", disease_joint.getDetect_time());
 				
 				String imgStr = disease_joint.getDisease_image();
 				if (imgStr != "") {
@@ -2185,6 +2215,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_sidewalk.getDisease_image());
 				request.put("image_type", disease_sidewalk.getImage_type());
 				request.put("evaluation", disease_sidewalk.getEvaluation());
+				request.put("detect_time", disease_sidewalk.getDetect_time());
 				
 				String imgStr = disease_sidewalk.getDisease_image();
 				if (imgStr != "") {
@@ -2231,6 +2262,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_fence.getDisease_image());
 				request.put("image_type", disease_fence.getImage_type());
 				request.put("evaluation", disease_fence.getEvaluation());
+				request.put("detect_time", disease_fence.getDetect_time());
 				
 				String imgStr = disease_fence.getDisease_image();
 				if (imgStr != "") {
@@ -2277,6 +2309,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_watertight.getDisease_image());
 				request.put("image_type", disease_watertight.getImage_type());
 				request.put("evaluation", disease_watertight.getEvaluation());
+				request.put("detect_time", disease_watertight.getDetect_time());
 				
 				String imgStr = disease_watertight.getDisease_image();
 				if (imgStr != "") {
@@ -2318,6 +2351,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 				request.put("disease_image", disease_lighting.getDisease_image());
 				request.put("image_type", disease_lighting.getImage_type());
 				request.put("evaluation", disease_lighting.getEvaluation());
+				request.put("detect_time", disease_lighting.getDetect_time());
 				
 				String imgStr = disease_lighting.getDisease_image();
 				if (imgStr != "") {
@@ -2367,6 +2401,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		girder.setAdd_content(this.getAdd_content());
 		girder.setDisease_image(this.getDisease_image());
 		girder.setImage_type(this.getImage_type());
+		girder.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -2427,6 +2462,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		wetjoint.setAdd_content(this.getAdd_content());
 		wetjoint.setDisease_image(this.getDisease_image());
 		wetjoint.setImage_type(this.getImage_type());
+		wetjoint.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -2479,6 +2515,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		support.setAdd_content(this.getAdd_content());
 		support.setDisease_image(this.getDisease_image());
 		support.setImage_type(this.getImage_type());
+		support.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -2538,6 +2575,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		pier.setAdd_content(this.getAdd_content());
 		pier.setDisease_image(this.getDisease_image());
 		pier.setImage_type(this.getImage_type());
+		pier.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -2590,6 +2628,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		bentcap.setAdd_content(this.getAdd_content());
 		bentcap.setDisease_image(this.getDisease_image());
 		bentcap.setImage_type(this.getImage_type());
+		bentcap.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -2641,6 +2680,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		tiebeam.setAdd_content(this.getAdd_content());
 		tiebeam.setDisease_image(this.getDisease_image());
 		tiebeam.setImage_type(this.getImage_type());
+		tiebeam.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -2693,6 +2733,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		atbody.setAdd_content(this.getAdd_content());
 		atbody.setDisease_image(this.getDisease_image());
 		atbody.setImage_type(this.getImage_type());
+		atbody.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -2745,6 +2786,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		atcapping.setAdd_content(this.getAdd_content());
 		atcapping.setDisease_image(this.getDisease_image());
 		atcapping.setImage_type(this.getImage_type());
+		atcapping.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -2796,6 +2838,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		pa.setAdd_content(this.getAdd_content());
 		pa.setDisease_image(this.getDisease_image());
 		pa.setImage_type(this.getImage_type());
+		pa.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -2847,6 +2890,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		bed.setAdd_content(this.getAdd_content());
 		bed.setDisease_image(this.getDisease_image());
 		bed.setImage_type(this.getImage_type());
+		bed.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -2898,6 +2942,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		regstruc.setAdd_content(this.getAdd_content());
 		regstruc.setDisease_image(this.getDisease_image());
 		regstruc.setImage_type(this.getImage_type());
+		regstruc.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -2949,6 +2994,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		wingwall.setAdd_content(this.getAdd_content());
 		wingwall.setDisease_image(this.getDisease_image());
 		wingwall.setImage_type(this.getImage_type());
+		wingwall.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -3000,6 +3046,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		conslope.setAdd_content(this.getAdd_content());
 		conslope.setDisease_image(this.getDisease_image());
 		conslope.setImage_type(this.getImage_type());
+		conslope.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -3051,6 +3098,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		proslope.setAdd_content(this.getAdd_content());
 		proslope.setDisease_image(this.getDisease_image());
 		proslope.setImage_type(this.getImage_type());
+		proslope.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -3102,6 +3150,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		deck.setAdd_content(this.getAdd_content());
 		deck.setDisease_image(this.getDisease_image());
 		deck.setImage_type(this.getImage_type());
+		deck.setDetect_time(this.getDetect_time());
 		
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -3153,6 +3202,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		joint.setAdd_content(this.getAdd_content());
 		joint.setDisease_image(this.getDisease_image());
 		joint.setImage_type(this.getImage_type());
+		joint.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -3204,6 +3254,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		sidewalk.setAdd_content(this.getAdd_content());
 		sidewalk.setDisease_image(this.getDisease_image());
 		sidewalk.setImage_type(this.getImage_type());
+		sidewalk.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -3255,6 +3306,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		fence.setAdd_content(this.getAdd_content());
 		fence.setDisease_image(this.getDisease_image());
 		fence.setImage_type(this.getImage_type());
+		fence.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -3306,6 +3358,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		watertight.setAdd_content(this.getAdd_content());
 		watertight.setDisease_image(this.getDisease_image());
 		watertight.setImage_type(this.getImage_type());
+		watertight.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -3357,6 +3410,7 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		lighting.setAdd_content(this.getAdd_content());
 		lighting.setDisease_image(this.getDisease_image());
 		lighting.setImage_type(this.getImage_type());
+		lighting.setDetect_time(this.getDetect_time());
 
 		String bg_name = base1Biz.getBase1ByBridgeCode(this.getBg_id()).getBridge_name();		
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -3598,21 +3652,14 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 	}
 	
 	public String getAllMember () {
-		System.out.println("aaaaaaaaaaaaaaaaaa");
 		Parts1 parts1 = parts1Biz.getParts1ByBridgeCode(this.getBg_id());
 		Parts2 parts2 = parts2Biz.getParts2ByBridgeCode(this.getBg_id());
 		Pier_detail pier_detail = pier_detailBiz.getPier_detailByBridgeCode(this.getBg_id());
 		Load_detail load_detail = load_detailBiz.getLoad_detailByBridgeCode(this.getBg_id());
 		General_detail general_detail = general_detailBiz.getGeneral_detailByBridgeCode(this.getBg_id());
 		Support_detail support_detail = support_detailBiz.getSupport_detailByBridgeCode(this.getBg_id());
-		System.out.println("bbbbbbbbbbbbbbbb");
 		
-		// 上部
-//		int load_num = 0;
-//		if (load_detail != null) {
-//			load_num = load_detail.getLoad_nums().split(";").length-1; // 上部承重构件个数
-//		}
-		
+		// 上部		
 		int load_num = load_detail.getLoad_nums().split(";").length-1; // 上部承重构件个数
 		int general_num = general_detail.getGeneral_nums().split(";").length-1; // 上部一般构件个数
 		int support_num = support_detail.getSupport_nums().split(";").length-1; // 支座个数
@@ -3662,7 +3709,6 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 		List<Map<String, Object>> result_watertight = disease_watertightBiz.getAllDisease_watertightByBridgeCode(this.getBg_id());
 		List<Map<String, Object>> result_lighting = disease_lightingBiz.getAllDisease_lightingByBridgeCode(this.getBg_id());
 		
-		System.out.println("ccccccccccccccc");
 		//计算MCI
 		double[] mci_girder = getMCI(result_girder, "disease_girder");
 		System.out.println("mci_girder:" + Arrays.toString(mci_girder)); // 输出数组
@@ -3795,14 +3841,12 @@ public class DiseaseAction extends ActionSupport implements RequestAware,Session
 	// 桥梁构件技术状况评分
 	public double[] getMCI(List<Map<String, Object>> datalist, String table_name) {
 		if (datalist == null) {
-			System.out.println("kkkkkkkkkkkkkk");
 			double[] mci_arr = {};
 			return mci_arr;
 		}
 		Map<String, List<String>> evalmap = new HashMap<>();
 		
 		for (int i = 0; i < datalist.size(); i++) {
-//			String evalname = datalist.get(i).get("parts_id") + "#" + datalist.get(i).get("item_name"); // 病害打分构件号
 			String evalname = datalist.get(i).get("parts_id").toString(); // 病害打分构件号
 			Evaluation eval = evaluationBiz.getEvaluationExactly(table_name, 
 					datalist.get(i).get("bg_id").toString(), datalist.get(i).get("id").toString());  // 获取精确evaluation

@@ -103,6 +103,13 @@
 												      </tr>
 												      
 												      <tr>
+												         <th>指标标度类别</th>
+												         <td class="alert alert-info"><s:if test="#request.evaluation!=null && #request.evaluation!=''"><s:property value="%{#request.evaluation}"/>类</s:if></td>
+												         <th>检测时间</th>
+												         <td class="alert alert-info"><s:property value="%{#request.disease_conslope.detect_time}"/></td>
+												      </tr>
+												      
+												      <tr>
 											         	 <th>病害图片</th>
 											         	 <!-- <td colspan="3"><s:if test="#request.disease_deck.disease_image!=null"><img src="data:<s:property value="%{#request.disease_deck.image_type}"/>;base64,<s:property value="%{#request.disease_deck.disease_image}"/>" width="400" height="300" /></s:if></td> -->
 											         	 <td colspan="3"><s:if test="#request.img_name!=null"><img src="/BridgeServer/disease_image/<s:property value="%{#request.img_name}"/>" width="400" height="300" /></s:if></td>
